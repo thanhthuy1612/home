@@ -8,15 +8,14 @@ import {
   updateListCost,
   updateListLocation,
   updateListType,
-} from '../../lib/features/listRoom';
-import { useListRoom } from '../../utils/useListRoom';
-import { ISelected } from '../../interface/ISelected';
+} from '@/lib/features/listRoom';
 import { Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
-import Filter from '../components/filter/Filter';
-import ListRoom from '../components/listRoom/ListRoom';
 import { useRouter } from 'next/navigation';
+import { useListRoom } from '@/utils/useListRoom';
+import { ISelected } from '@/interface/ISelected';
+import ListRoom from '@/components/listRoom/ListRoom';
+import Filter from '@/components/filter/Filter';
 
 const mock: ISelected[] = [
   { value: 'jack', label: 'Jack' },

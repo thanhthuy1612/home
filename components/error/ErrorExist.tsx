@@ -1,16 +1,22 @@
+'use client';
+
 import React from 'react';
 import { Button, Result } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 const ErrorExist: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   return (
     <Result
       status="404"
       title="404"
       subTitle="Xin lỗi, trang bạn truy cập không tồn tại."
       extra={
-        <Button type="primary" className="hover:!bg-colorSelect" onClick={() => navigate('/')}>
+        <Button
+          type="primary"
+          className="hover:!bg-colorSelect"
+          onClick={() => router.push('/')}
+        >
           Back Home
         </Button>
       }

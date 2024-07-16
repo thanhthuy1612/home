@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Descriptions, Flex, Image, DescriptionsProps } from 'antd';
 import React from 'react';

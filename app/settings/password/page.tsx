@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Button, Form, FormProps, Input } from 'antd';
 import React from 'react';
@@ -15,7 +15,9 @@ const Password: React.FC = () => {
 
   const [form] = Form.useForm();
 
-  const onFinish: FormProps<ChangePasswordType>['onFinish'] = async (values) => {
+  const onFinish: FormProps<ChangePasswordType>['onFinish'] = async (
+    values,
+  ) => {
     console.log(values);
     setIsDisable(false);
   };
@@ -36,7 +38,11 @@ const Password: React.FC = () => {
         name="current"
         rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
       >
-        <Input.Password disabled={isDisable} placeholder="Mật khẩu hiện tại" size="large" />
+        <Input.Password
+          disabled={isDisable}
+          placeholder="Mật khẩu hiện tại"
+          size="large"
+        />
       </Form.Item>
 
       <Form.Item<ChangePasswordType>
@@ -44,7 +50,11 @@ const Password: React.FC = () => {
         name="password"
         rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
       >
-        <Input.Password disabled={isDisable} placeholder="Mật khẩu mới" size="large" />
+        <Input.Password
+          disabled={isDisable}
+          placeholder="Mật khẩu mới"
+          size="large"
+        />
       </Form.Item>
 
       <Form.Item<ChangePasswordType>
@@ -60,12 +70,18 @@ const Password: React.FC = () => {
               if (!value || getFieldValue('password') === value) {
                 return Promise.resolve();
               }
-              return Promise.reject(new Error('The new password that you entered do not match!'));
+              return Promise.reject(
+                new Error('The new password that you entered do not match!'),
+              );
             },
           }),
         ]}
       >
-        <Input.Password disabled={isDisable} placeholder="Nhập lại mật khẩu" size="large" />
+        <Input.Password
+          disabled={isDisable}
+          placeholder="Nhập lại mật khẩu"
+          size="large"
+        />
       </Form.Item>
 
       <Form.Item className=" flex justify-center">

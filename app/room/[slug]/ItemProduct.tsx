@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { CheckOutlined } from '@ant-design/icons';
 import { Flex } from 'antd';
@@ -16,10 +16,12 @@ const ItemProduct: React.FC<IItemProduct> = ({ list }) => {
     <>
       {list.map((item) => (
         <div key={item.title}>
-          <div className=" font-[600] mb-[8px] mt-[24px] border-b-[1px] w-fit border-colorSelect">{item.title}</div>
+          <div className=" font-[600] mb-[8px] mt-[24px] border-b-[1px] w-fit border-colorSelect">
+            {item.title}
+          </div>
           <Flex wrap gap={20}>
             {item.contents.map((content) => (
-              <Flex key={content} gap={5} justify='center' align='center'>
+              <Flex key={content} gap={5} justify="center" align="center">
                 <CheckOutlined className=" text-[10px] text-bgColor rounded-[50%] p-[2px] bg-colorSelect" />
                 {content}
               </Flex>

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Descriptions, DescriptionsProps } from 'antd';
 import React from 'react';
@@ -35,10 +35,16 @@ const PriceProduct: React.FC<IPriceProduct> = (props) => {
   ];
   return (
     <div>
-      <div className=" font-[600] mb-[8px] mt-[24px] border-b-[1px] w-fit border-colorSelect">GIÁ DỊCH VỤ</div>
+      <div className=" font-[600] mb-[8px] mt-[24px] border-b-[1px] w-fit border-colorSelect">
+        GIÁ DỊCH VỤ
+      </div>
       <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
-      <div className=" font-[600] mb-[8px] mt-[24px] border-b-[1px] w-fit border-colorSelect">GIÁ THUÊ PHÒNG</div>
-      <div className=' font-[600] text-colorError text-[24px]'>{cost/1000000} triệu / tháng</div>
+      <div className=" font-[600] mb-[8px] mt-[24px] border-b-[1px] w-fit border-colorSelect">
+        GIÁ THUÊ PHÒNG
+      </div>
+      <div className=" font-[600] text-colorError text-[24px]">
+        {cost / 1000000} triệu / tháng
+      </div>
     </div>
   );
 };

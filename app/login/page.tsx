@@ -5,7 +5,7 @@ import { Flex, Menu, type MenuProps } from 'antd';
 import { LoginOutlined, UserAddOutlined } from '@ant-design/icons';
 import FormLogin from './components/FormLogin';
 import FormRegister from './components/FormRegister';
-import Label from '../components/label/Label';
+import Label from '@/components/label/Label';
 
 enum LoginMenu {
   LOGIN = 0,
@@ -81,7 +81,9 @@ const Login: React.FC = () => {
           mode="horizontal"
           items={items}
         />
-        <Flex className=" flex-col my-[50px] mx-[100px] items-center justify-center">{renderBody()}</Flex>
+        <Flex className=" flex-col my-[50px] mx-[100px] items-center justify-center">
+          {renderBody()}
+        </Flex>
       </div>
     </Flex>
   );

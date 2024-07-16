@@ -1,12 +1,18 @@
-'use client'
+'use client';
 
+import Filter from '@/components/filter/Filter';
+import ListRoom from '@/components/listRoom/ListRoom';
 import { ISelected } from '@/interface/ISelected';
-import { resetStateListRoom, updateIsLoadingListFilter, updateListCost, updateListLocation, updateListType } from '@/lib/features/listRoom';
+import {
+  resetStateListRoom,
+  updateIsLoadingListFilter,
+  updateListCost,
+  updateListLocation,
+  updateListType,
+} from '@/lib/features/listRoom';
 import { useAppDispatch } from '@/lib/hooks';
 import { useListRoom } from '@/utils/useListRoom';
 import React from 'react';
-import Filter from './components/filter/Filter';
-import ListRoom from './components/listRoom/ListRoom';
 
 const mock: ISelected[] = [
   { value: 'jack', label: 'Jack' },

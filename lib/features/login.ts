@@ -9,7 +9,10 @@ export interface LoginState {
 const initialState: LoginState = {
   isLoadingForm: false,
   isLoadingConnect: false,
-  width: 0,
+  width:
+    typeof window !== 'undefined'
+      ? window.innerWidth * window.devicePixelRatio
+      : 0,
 };
 
 export const loginSlice = createSlice({

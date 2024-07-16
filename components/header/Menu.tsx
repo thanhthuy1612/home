@@ -21,14 +21,18 @@ const MenuHeader: React.FC = () => {
   const pathname = usePathname();
 
   const onResize = () => {
-    dispatch(updateWidth(window.innerWidth * window.devicePixelRatio));
+    if (typeof window !== 'undefined') {
+      dispatch(updateWidth(window.innerWidth * window.devicePixelRatio));
+    }
   };
 
   React.useEffect(() => {
-    window.addEventListener('resize', onResize);
-    return () => {
-      window.removeEventListener('resize', onResize);
-    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', onResize);
+      return () => {
+        window.removeEventListener('resize', onResize);
+      };
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

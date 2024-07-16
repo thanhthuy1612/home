@@ -1,16 +1,22 @@
+'use client';
+
 import React from 'react';
 import { Button, Result } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 const ErrorAuthorized: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   return (
     <Result
       status="403"
       title="403"
       subTitle="Xin lỗi, bạn không được phép truy cập trang này."
       extra={
-        <Button type="primary" className='hover:!bg-colorSelect' onClick={() => navigate('/')}>
+        <Button
+          type="primary"
+          className="hover:!bg-colorSelect"
+          onClick={() => router.push('/')}
+        >
           Back Home
         </Button>
       }

@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
 import React from 'react';
 import { Button, Form, Input, type FormProps } from 'antd';
-import { UserFieldType } from '../../../enum/UserFieldType';
 import HeaderSettings from '../components/HeaderSettings';
+import { UserFieldType } from '@/enum/UserFieldType';
 
 const Profile: React.FC = () => {
   const [isDisable, setIsDisable] = React.useState<boolean>(false);
