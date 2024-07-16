@@ -1,19 +1,20 @@
 'use client';
 
 import React from 'react';
-import { Button, Drawer, Menu, MenuProps, theme } from 'antd';
+import { Button, Drawer, Menu, MenuProps } from 'antd';
 import Logo from './Logo';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import Label from '../label/Label';
-import { updateWidth } from '@/lib/features/login';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { updateWidth } from '@/lib/features/login';
+import { menuLayout } from '@/default/menuHeader';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 const MenuHeader: React.FC = () => {
   const [selectedMenu, setSelectedMenu] = React.useState<string>('');
-  const [collapsed, setCollapsed] = React.useState(false);
+  const [collapsed, setCollapsed] = React.useState<boolean>(false);
   const { width } = useAppSelector((state) => state.login);
   const dispatch = useAppDispatch();
 
@@ -40,28 +41,14 @@ const MenuHeader: React.FC = () => {
     setSelectedMenu(pathname ?? '/');
   }, [pathname]);
 
-  const initItems: MenuItem[] = [
-    {
-      key: '/',
-      label: <Label title="Trang chủ" />,
-      onClick: () => router.push('/'),
-    },
-    {
-      key: '/introduce',
-      label: <Label title="Về chúng tôi" />,
-      onClick: () => router.push('/introduce'),
-    },
-    {
-      key: '/saler',
-      label: <Label title="Đối tác" />,
-      onClick: () => router.push('/saler'),
-    },
-    {
-      key: '/contact',
-      label: <Label title="Liên hệ" />,
-      onClick: () => router.push('/contact'),
-    },
-  ];
+  const initItems: MenuItem[] = menuLayout.map((item) => {
+    return {
+      key: item.url,
+      label: <Label title={item.title} />,
+      onClick: () => router.push(item.url),
+      style: { display: 'flex', alignItems: 'center' },
+    };
+  });
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -96,7 +83,8 @@ const MenuHeader: React.FC = () => {
             mode="horizontal"
             items={initItems}
             selectedKeys={[selectedMenu ?? '']}
-            style={{ flex: 1, minWidth: 0 }}
+            style={{ flex: 1, minWidth: 0, height: '64px' }}
+            className="border-b-[1px] border-colorPrimary"
           />
         </>
       )}

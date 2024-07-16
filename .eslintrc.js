@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['next', 'prettier', 'plugin:prettier/recommended'],
+  extends: ['next', 'prettier'],
   plugins: ['prettier'],
   rules: {
     'prettier/prettier': 'error',

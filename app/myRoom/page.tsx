@@ -14,8 +14,17 @@ import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import { useListRoom } from '@/utils/useListRoom';
 import { ISelected } from '@/interface/ISelected';
-import ListRoom from '@/components/listRoom/ListRoom';
-import Filter from '@/components/filter/Filter';
+import dynamic from 'next/dynamic';
+
+const Filter = dynamic(() => import('@/components/filter/Filter'), {
+  loading: () => <></>,
+  ssr: false,
+});
+
+const ListRoom = dynamic(() => import('@/components/listRoom/ListRoom'), {
+  loading: () => <></>,
+  ssr: false,
+});
 
 const mock: ISelected[] = [
   { value: 'jack', label: 'Jack' },
@@ -43,14 +52,16 @@ const MyRoom: React.FC = () => {
   return (
     <>
       <Filter />
-      <Button
-        icon={<PlusOutlined />}
-        className=" mt-[24px] mx-[48px]"
-        size="large"
-        onClick={() => router.push('/create')}
-      >
-        Thêm phòng mới
-      </Button>
+      <div>
+        <Button
+          icon={<PlusOutlined />}
+          className=" mt-[24px] mx-[48px]"
+          size="large"
+          onClick={() => router.push('/create')}
+        >
+          Thêm phòng mới
+        </Button>
+      </div>
       <ListRoom
         isMyAccount={true}
         title="DANH SÁCH PHÒNG QUẢN LÝ"

@@ -1,7 +1,5 @@
 'use client';
 
-import Filter from '@/components/filter/Filter';
-import ListRoom from '@/components/listRoom/ListRoom';
 import { ISelected } from '@/interface/ISelected';
 import {
   resetStateListRoom,
@@ -12,7 +10,26 @@ import {
 } from '@/lib/features/listRoom';
 import { useAppDispatch } from '@/lib/hooks';
 import { useListRoom } from '@/utils/useListRoom';
+import dynamic from 'next/dynamic';
 import React from 'react';
+
+const CarouselHome = dynamic(
+  () => import('@/components/carouselHome/CarouselHome'),
+  {
+    loading: () => <></>,
+    ssr: false,
+  },
+);
+
+const Filter = dynamic(() => import('@/components/filter/Filter'), {
+  loading: () => <></>,
+  ssr: false,
+});
+
+const ListRoom = dynamic(() => import('@/components/listRoom/ListRoom'), {
+  loading: () => <></>,
+  ssr: false,
+});
 
 const mock: ISelected[] = [
   { value: 'jack', label: 'Jack' },
@@ -38,6 +55,7 @@ const Home: React.FC = () => {
 
   return (
     <>
+      <CarouselHome />
       <Filter />
       <ListRoom title="DANH SÁCH PHÒNG" fetchData={fetchData} />
     </>

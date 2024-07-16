@@ -1,18 +1,22 @@
 import React from 'react';
-import { Flex, Layout } from 'antd';
-import MenuHeader from './Menu';
-import LoginButton from './LoginButton';
+import dynamic from 'next/dynamic';
 
-const { Header } = Layout;
+const MenuLayout = dynamic(() => import('./MenuLayout'), {
+  loading: () => <></>,
+  ssr: false,
+});
+
+const LoginButton = dynamic(() => import('./LoginButton'), {
+  loading: () => <></>,
+  ssr: false,
+});
 
 const HeaderLayout: React.FC = () => {
   return (
-    <Header className=" border-b-[1px] border-borderHeader border-solid bg-bgColor">
-      <Flex className=" items-center justify-between gap-[30px]">
-        <MenuHeader />
-        <LoginButton />
-      </Flex>
-    </Header>
+    <div className=" px-[48px] h-[64px] border-b-[1px] border-colorPrimary border-solid bg-bgColor flex items-center justify-between gap-[30px]">
+      <MenuLayout />
+      <LoginButton />
+    </div>
   );
 };
 

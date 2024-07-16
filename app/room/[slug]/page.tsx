@@ -4,7 +4,6 @@ import { Descriptions, Flex, Image, DescriptionsProps } from 'antd';
 import React from 'react';
 import ItemProduct, { List } from './ItemProduct';
 import PriceProduct from './PriceProduct';
-import FormBook from './FormBook';
 import { useAppSelector } from '@/lib/hooks';
 
 const Product = ({ params }: { params: { slug: string } }) => {
@@ -89,7 +88,6 @@ const Product = ({ params }: { params: { slug: string } }) => {
           />
         </Flex>
       </Flex>
-      <FormBook />
     </Flex>
   );
 };

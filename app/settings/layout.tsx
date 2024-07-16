@@ -1,6 +1,6 @@
 'use client';
 
-import { Layout, theme } from 'antd';
+import { theme } from 'antd';
 import React from 'react';
 import Breadcrumb, { ItemType } from 'antd/es/breadcrumb/Breadcrumb';
 import { usePathname } from 'next/navigation';
@@ -8,8 +8,6 @@ import { usePathname } from 'next/navigation';
 export interface ISettingLayout {
   children: React.ReactNode;
 }
-
-const { Content } = Layout;
 
 const SettingLayout: React.FC<ISettingLayout> = ({ children }) => {
   const [breadcrumb, setBreadcrumb] = React.useState<ItemType[]>();
@@ -56,22 +54,18 @@ const SettingLayout: React.FC<ISettingLayout> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
   return (
-    <Content
-      style={{ padding: '0 48px', height: 'calc(100vh - 64px)' }}
-      className=" bg-borderHeader overflow-y-auto"
-    >
+    <div className=" bg-borderHeader h-[100%] px-[48px] pb-[24px]">
       <Breadcrumb className="py-[16px]" items={breadcrumb}></Breadcrumb>
       <div
         style={{
           margin: 0,
           background: colorBgContainer,
           borderRadius: borderRadiusLG,
-          marginBottom: '24px',
         }}
       >
-        <div>{children}</div>
+        {children}
       </div>
-    </Content>
+    </div>
   );
 };
 

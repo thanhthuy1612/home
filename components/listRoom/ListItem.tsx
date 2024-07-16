@@ -2,9 +2,14 @@
 
 import React from 'react';
 import { Button, List } from 'antd';
-import Item from './Item';
 import LoadingSpin from '../loading/LoadingSpin';
 import { useAppSelector } from '@/lib/hooks';
+import dynamic from 'next/dynamic';
+
+const Item = dynamic(() => import('./Item'), {
+  loading: () => <></>,
+  ssr: false,
+});
 
 export interface IListItem {
   fetchData: () => Promise<void>;
@@ -34,7 +39,7 @@ const ListItem: React.FC<IListItem> = (props) => {
       >
         <Button
           disabled={isLoadingListRoom}
-          className=" w-[200px] mb-[24px]"
+          className=" w-[200px]"
           onClick={onLoadMore}
         >
           {isLoadingListRoom ? <LoadingSpin /> : 'Xem thêm'}
@@ -44,7 +49,6 @@ const ListItem: React.FC<IListItem> = (props) => {
 
   return (
     <List
-      className="demo-loadmore-list"
       loading={isInitLoadingListRoom}
       itemLayout="horizontal"
       loadMore={loadMore}

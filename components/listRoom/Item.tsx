@@ -86,12 +86,7 @@ const Item: React.FC<IItem> = (props) => {
             className=" w-[250px] hover:!bg-colorSelect"
             onClick={bookRoom}
           >
-            <Flex>
-              <div className=" px-[10px] border-r-bgColor border-r-[1px]">
-                {(cost ?? 0) / 1000000} triệu / tháng
-              </div>
-              <div className=" px-[10px]">Đặt lịch xem</div>
-            </Flex>
+            {(cost ?? 0) / 1000000} triệu / tháng
           </Button>
         ) : (
           <Flex gap={20}>

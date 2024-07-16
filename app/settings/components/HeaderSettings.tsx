@@ -9,7 +9,7 @@ export interface IHeaderSettings {
 
 const HeaderSettings: React.FC<IHeaderSettings> = ({ title }) => {
   return (
-    <Flex className="text-[25px] mb-[24px] justify-center text-colorPrimary">
+    <Flex className=" font-[600] text-[25px] mb-[24px] justify-center text-colorPrimary">
       {title}
     </Flex>
   );
