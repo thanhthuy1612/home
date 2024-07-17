@@ -18,7 +18,8 @@ export interface IItem {
 const Item: React.FC<IItem> = (props) => {
   const [items, setItems] = React.useState<DescriptionsProps['items']>([]);
   const { width } = useAppSelector((state) => state.login);
-  const { src, title, description, cost, address, people, isMyAccount } = props;
+  const { src, title, description, cost, address, people, isMyAccount, id } =
+    props;
 
   const router = useRouter();
   React.useEffect(() => {
@@ -54,7 +55,7 @@ const Item: React.FC<IItem> = (props) => {
   }, []);
 
   const bookRoom = () => {
-    router.push(`/room/${1}`);
+    router.push(`/room/${id}`);
   };
   return (
     <Flex

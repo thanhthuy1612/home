@@ -40,6 +40,7 @@ const mock: ISelected[] = [
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
   const { fetchData } = useListRoom();
+
   React.useEffect(() => {
     const initData = () => {
       dispatch(resetStateListRoom());
@@ -54,11 +55,11 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <CarouselHome />
       <Filter />
       <ListRoom title="DANH SÁCH PHÒNG" fetchData={fetchData} />
-    </>
+    </div>
   );
 };
 

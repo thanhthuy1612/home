@@ -2,20 +2,17 @@ import { ISelected } from '@/interface/ISelected';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface DataType {
-  gender?: string;
-  name: {
-    title?: string;
-    first?: string;
-    last?: string;
-  };
-  email?: string;
-  picture: {
-    large?: string;
-    medium?: string;
-    thumbnail?: string;
-  };
-  nat?: string;
-  loading: boolean;
+  id: string;
+  title: string;
+  description: string;
+  previewPicture: string;
+  address: string;
+  maxPeople: number;
+  price: number;
+  roomType: number;
+  roomStatus: number;
+  postsStatus: 1;
+  updatedTime: Date;
 }
 
 export interface ListRoomState {

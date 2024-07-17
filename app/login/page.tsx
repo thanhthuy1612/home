@@ -3,9 +3,24 @@
 import React from 'react';
 import { Flex, Menu, type MenuProps } from 'antd';
 import { LoginOutlined, UserAddOutlined } from '@ant-design/icons';
-import FormLogin from './components/FormLogin';
-import FormRegister from './components/FormRegister';
-import Label from '@/components/label/Label';
+import dynamic from 'next/dynamic';
+import { resetStateLogin } from '@/lib/features/login';
+import { useAppDispatch } from '@/lib/hooks';
+
+const FormLogin = dynamic(() => import('./components/FormLogin'), {
+  loading: () => <></>,
+  ssr: false,
+});
+
+const FormRegister = dynamic(() => import('./components/FormRegister'), {
+  loading: () => <></>,
+  ssr: false,
+});
+
+const Label = dynamic(() => import('@/components/label/Label'), {
+  loading: () => <></>,
+  ssr: false,
+});
 
 enum LoginMenu {
   LOGIN = 0,
@@ -15,11 +30,11 @@ enum LoginMenu {
 const Login: React.FC = () => {
   const [auth, setAuth] = React.useState<LoginMenu>(LoginMenu.LOGIN);
 
-  // const dispatch = useAppDispatch()
-  // React.useEffect(() => {
-  //   dispatch(resetStateLogin())
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+  const dispatch = useAppDispatch();
+  React.useEffect(() => {
+    dispatch(resetStateLogin());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const items: MenuProps['items'] = [
     {

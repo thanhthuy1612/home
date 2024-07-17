@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { IStatusCode } from '../interface/IStatusCode';
 import { updateNotification } from '../lib/features/notification';
 import { useAppDispatch } from '../lib/hooks';
@@ -5,11 +6,11 @@ import { useAppDispatch } from '../lib/hooks';
 export const useNotification = () => {
   const dispatch = useAppDispatch();
   const setNotification = (
-    result: any,
+    result: AxiosResponse<any, any>,
     description: string,
     action: () => void,
   ) => {
-    if (result?.statusCode === IStatusCode.SUCCESS) {
+    if (result.status === IStatusCode.SUCCESS) {
       action();
       dispatch(
         updateNotification({
@@ -18,7 +19,7 @@ export const useNotification = () => {
         }),
       );
     }
-    if (result?.statusCode === IStatusCode.ERROR) {
+    if (result.status === IStatusCode.ERROR) {
       dispatch(
         updateNotification({
           type: 'fail',

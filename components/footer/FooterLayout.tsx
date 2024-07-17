@@ -12,13 +12,16 @@ const FooterLayout: React.FC = () => {
           <HomeOutlined className=" text-bgColor mr-[10px]" />
           HOME.VM
         </div>
-        <div>Chuyên kênh thông tin phòng trọ cho thuê, căn hộ mini.</div>
+        <div>Chuyên kênh thông tin phòng trọ cho thuê.</div>
       </div>
       <div className=" min-w-[300px]">
-        <div className=" underline text-[16px] mb-[8px]">Cộng đồng :</div>
+        <div className=" underline text-[16px] mb-[8px]">Cộng đồng:</div>
         <div>
           {iconFooter.map((item) => (
-            <div className=" flex cursor-pointer hover:text-colorSelect">
+            <div
+              key={item.title}
+              className=" flex cursor-pointer hover:text-colorSelect"
+            >
               <item.Icon className=" mr-[10px]" />
               {item.title}
             </div>
@@ -27,7 +30,7 @@ const FooterLayout: React.FC = () => {
       </div>
       <div className=" min-w-[300px]">
         <div className=" underline text-[16px] mb-[8px]">
-          Thông tin liên lạc :
+          Thông tin liên lạc:
         </div>
         <div>
           {infoFooter.map((item) => (

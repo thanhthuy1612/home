@@ -2,9 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { IUser } from '../../interface/IUser';
 
 const initialState: IUser = {
-  id: '',
-  email: '',
-  username: '',
+  id: undefined,
 };
 
 export const userSlice = createSlice({
@@ -28,4 +26,5 @@ export const userSlice = createSlice({
 
 export default userSlice.reducer;
 
-export const { resetStateUser, updateUsername, updateEmail, updateUser } = userSlice.actions;
+export const { resetStateUser, updateUsername, updateEmail, updateUser } =
+  userSlice.actions;

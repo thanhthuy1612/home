@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Button, List } from 'antd';
+import { Button, Empty, List } from 'antd';
 import LoadingSpin from '../loading/LoadingSpin';
 import { useAppSelector } from '@/lib/hooks';
 import dynamic from 'next/dynamic';
@@ -53,15 +53,23 @@ const ListItem: React.FC<IListItem> = (props) => {
       itemLayout="horizontal"
       loadMore={loadMore}
       dataSource={listRoom}
+      locale={{
+        emptyText: (
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description="Không có dữ liệu"
+          />
+        ),
+      }}
       renderItem={(item) => (
         <Item
-          src={item.picture.large}
-          title={'Phòng 12345'}
-          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-          id={item.name?.last}
-          cost={4000000}
-          address="699 Phạm Văn Bạch, Phường 12, Gò Vấp"
-          people={2}
+          src={item?.previewPicture}
+          title={item?.title}
+          description={item?.description}
+          id={item?.id}
+          cost={item?.price}
+          address={item?.address}
+          people={item?.maxPeople}
           isMyAccount={isMyAccount}
         />
       )}

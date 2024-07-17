@@ -51,7 +51,7 @@ export default function Notification({
           description: notificationInfo?.description,
           placement: notificationInfo?.placement,
           icon: onRenderIcon(),
-          style: { backgroundColor: '#FBF9F1', borderRadius: '15px' },
+          style: { borderRadius: '15px' },
         });
         dispatch(resetStateNotification());
       };

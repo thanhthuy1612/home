@@ -50,7 +50,7 @@ const MyRoom: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <Filter />
       <div>
         <Button
@@ -67,7 +67,7 @@ const MyRoom: React.FC = () => {
         title="DANH SÁCH PHÒNG QUẢN LÝ"
         fetchData={fetchData}
       />
-    </>
+    </div>
   );
 };
 

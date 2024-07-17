@@ -2,59 +2,84 @@
 
 import React from 'react';
 import { Button, Form, type FormProps, Input } from 'antd';
-import { KeyOutlined, MailOutlined } from '@ant-design/icons';
-import { useAppSelector } from '@/lib/hooks';
+import { KeyOutlined, UserOutlined } from '@ant-design/icons';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { useNotification } from '@/utils/useNotification';
+import { useRouter } from 'next/navigation';
+import handleUsers from '@/app/api/HandUsers';
+import { updateIsLoadingForm } from '@/lib/features/login';
+import { updateUser } from '@/lib/features/user';
 
 type FieldType = {
-  email?: string;
+  username?: string;
   password?: string;
-  remember?: boolean;
 };
 
 const FormLogin: React.FC = () => {
   const [isDisable, setIsDisable] = React.useState<boolean>(false);
 
-  const { isLoadingConnect, isLoadingForm } = useAppSelector((state) => state.login);
-  // const navigate = useNavigate();
-  // const dispatch = useAppDispatch();
+  const { isLoadingConnect, isLoadingForm } = useAppSelector(
+    (state) => state.login,
+  );
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  // const { setNotification } = useNotification();
+  const { setNotification } = useNotification();
 
   React.useEffect(() => {
     setIsDisable(isLoadingConnect || isLoadingForm);
   }, [isLoadingConnect, isLoadingForm]);
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    console.log(values);
+    if (values.username && values.password) {
+      dispatch(updateIsLoadingForm(true));
+      const fetchLogin = await handleUsers.signIn({
+        username: values.username,
+        password: values.password,
+      });
+      const onSuccess = () => {
+        dispatch(updateUser(fetchLogin?.data));
+        localStorage.setItem('token', fetchLogin.data.accessToken);
+        router.push('/');
+      };
+      setNotification(fetchLogin, 'Logged in successfully', onSuccess);
+      dispatch(updateIsLoadingForm(false));
+    }
   };
   return (
-    <Form name="login" style={{ width: '100%' }} initialValues={{ remember: true }} onFinish={onFinish}>
+    <Form
+      name="login"
+      style={{ width: '100%' }}
+      initialValues={{ remember: true }}
+      onFinish={onFinish}
+    >
       <Form.Item<FieldType>
-        name="email"
-        rules={[
-          {
-            type: 'email',
-            message: 'The input is not valid E-mail!',
-          },
-          { required: true, message: 'Please input your email!' },
-        ]}
+        name="username"
+        rules={[{ required: true, message: 'Please input your email!' }]}
       >
         <Input
           disabled={isDisable}
-          placeholder="Email"
+          placeholder="Username"
           style={{ borderRadius: '50px' }}
           size="large"
-          prefix={<MailOutlined style={{ marginLeft: '5px', marginRight: '5px' }} />}
+          prefix={
+            <UserOutlined style={{ marginLeft: '5px', marginRight: '5px' }} />
+          }
         />
       </Form.Item>
 
-      <Form.Item<FieldType> name="password" rules={[{ required: true, message: 'Please input your password!' }]}>
+      <Form.Item<FieldType>
+        name="password"
+        rules={[{ required: true, message: 'Please input your password!' }]}
+      >
         <Input.Password
           disabled={isDisable}
           placeholder="Mật khẩu"
           style={{ borderRadius: '50px' }}
           size="large"
-          prefix={<KeyOutlined style={{ marginLeft: '5px', marginRight: '5px' }} />}
+          prefix={
+            <KeyOutlined style={{ marginLeft: '5px', marginRight: '5px' }} />
+          }
         />
       </Form.Item>
 
@@ -68,11 +93,17 @@ const FormLogin: React.FC = () => {
         </Button>
       </div>
 
-      <Form.Item style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
+      <Form.Item
+        style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}
+      >
         <Button
           type="primary"
           className="hover:!bg-colorSelect"
-          style={{ borderRadius: '50px', paddingLeft: '60px', paddingRight: '60px' }}
+          style={{
+            borderRadius: '50px',
+            paddingLeft: '60px',
+            paddingRight: '60px',
+          }}
           htmlType="submit"
           size="large"
         >

@@ -9,18 +9,22 @@ import {
   MenuOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { useAppSelector } from '@/lib/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import LoadingSpin from '../loading/LoadingSpin';
 import { useRouter, usePathname } from 'next/navigation';
+import { resetStateUser } from '@/lib/features/user';
 
 const LoginButton: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
 
+  const dispatch = useAppDispatch();
+
   const { isLoadingPage } = useAppSelector((state) => state.reload);
   const { id } = useAppSelector((state) => state.user);
 
   const onClickLogout = () => {
+    dispatch(resetStateUser());
     // Perform localStorage action
     localStorage.clear();
     router.push('/');
@@ -82,7 +86,7 @@ const LoginButton: React.FC = () => {
   };
 
   const renderButtonLogin = () => {
-    return id ? (
+    return !id ? (
       <Button
         type="primary"
         className=" hover:!bg-colorSelect"

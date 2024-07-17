@@ -6,7 +6,6 @@ import { useAppSelector } from '@/lib/hooks';
 
 const CarouselHome: React.FC = () => {
   const { width } = useAppSelector((state) => state.login);
-  console.log(width);
   return (
     <Carousel autoplay arrows>
       {carouseImage.map((item) => (

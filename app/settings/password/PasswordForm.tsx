@@ -3,6 +3,7 @@
 import { Button, Form, FormProps, Input } from 'antd';
 import React from 'react';
 import HeaderSettings from '../components/HeaderSettings';
+import handleUsers from '@/app/api/HandUsers';
 
 export type ChangePasswordType = {
   current?: string;
@@ -18,8 +19,18 @@ const PasswordForm: React.FC = () => {
   const onFinish: FormProps<ChangePasswordType>['onFinish'] = async (
     values,
   ) => {
-    console.log(values);
-    setIsDisable(false);
+    if (
+      values.current &&
+      values.password &&
+      values.rePassword === values.password
+    ) {
+      setIsDisable(true);
+      const res = await handleUsers.changePassword({
+        oldPassword: values.current,
+        newPassword: values.password,
+      });
+      setIsDisable(false);
+    }
   };
 
   return (
