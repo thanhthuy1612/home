@@ -42,7 +42,7 @@ const FormLogin: React.FC = () => {
         localStorage.setItem('token', fetchLogin.data.accessToken);
         router.push('/');
       };
-      setNotification(fetchLogin, 'Logged in successfully', onSuccess);
+      setNotification(fetchLogin, 'Đăng nhập thành công', onSuccess);
       dispatch(updateIsLoadingForm(false));
     }
   };
@@ -59,7 +59,7 @@ const FormLogin: React.FC = () => {
       >
         <Input
           disabled={isDisable}
-          placeholder="Username"
+          placeholder="Tài khoản"
           style={{ borderRadius: '50px' }}
           size="large"
           prefix={
@@ -70,7 +70,17 @@ const FormLogin: React.FC = () => {
 
       <Form.Item<FieldType>
         name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
+        rules={[
+          { required: true, message: 'Please input your password!' },
+          () => ({
+            validator(_, value) {
+              if (!value || value.length >= 8) {
+                return Promise.resolve();
+              }
+              return Promise.reject(new Error('Mật khẩu lớn hơn 8 ký tự'));
+            },
+          }),
+        ]}
       >
         <Input.Password
           disabled={isDisable}

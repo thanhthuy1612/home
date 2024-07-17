@@ -1,5 +1,6 @@
 import axiosAuth from './axiosAuth';
 import axiosClient from './axiosClient';
+import { IChangeInformation } from './interfaces/IChangeInformation';
 import { IChangePassword } from './interfaces/IChangePassword';
 import { ISignIn } from './interfaces/ISignIn';
 
@@ -13,6 +14,12 @@ class HandUsers {
   };
   changePassword = async (body: IChangePassword) => {
     return await axiosAuth.post(`${path}/changepwd`, { ...body });
+  };
+  changeInfo = async (body: IChangeInformation) => {
+    return await axiosAuth.post(`${path}/information`, { ...body });
+  };
+  getInfo = async () => {
+    return await axiosAuth.get(`${path}/information`);
   };
 }
 

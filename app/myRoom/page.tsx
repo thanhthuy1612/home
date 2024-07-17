@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { useAppDispatch } from '../../lib/hooks';
+import { ISelected } from '@/interface/ISelected';
 import {
   resetStateListRoom,
   updateIsLoadingListFilter,
@@ -9,17 +8,12 @@ import {
   updateListLocation,
   updateListType,
 } from '@/lib/features/listRoom';
-import { Button } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { useRouter } from 'next/navigation';
 import { useListRoom } from '@/utils/useListRoom';
-import { ISelected } from '@/interface/ISelected';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
+import React from 'react';
+import { useAppDispatch } from '../../lib/hooks';
 
-const Filter = dynamic(() => import('@/components/filter/Filter'), {
-  loading: () => <></>,
-  ssr: false,
-});
 
 const ListRoom = dynamic(() => import('@/components/listRoom/ListRoom'), {
   loading: () => <></>,
@@ -35,7 +29,7 @@ const mock: ISelected[] = [
 const MyRoom: React.FC = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { fetchData } = useListRoom();
+  const { fetchDataPostMe } = useListRoom();
   React.useEffect(() => {
     const initData = () => {
       dispatch(resetStateListRoom());
@@ -44,28 +38,17 @@ const MyRoom: React.FC = () => {
       dispatch(updateListLocation(mock));
       dispatch(updateListType(mock));
       dispatch(updateIsLoadingListFilter(false));
-      fetchData(true);
+      fetchDataPostMe(true);
     };
     initData();
   }, []);
 
   return (
     <div>
-      <Filter />
-      <div>
-        <Button
-          icon={<PlusOutlined />}
-          className=" mt-[24px] mx-[48px]"
-          size="large"
-          onClick={() => router.push('/create')}
-        >
-          Thêm phòng mới
-        </Button>
-      </div>
       <ListRoom
         isMyAccount={true}
         title="DANH SÁCH PHÒNG QUẢN LÝ"
-        fetchData={fetchData}
+        fetchData={fetchDataPostMe}
       />
     </div>
   );

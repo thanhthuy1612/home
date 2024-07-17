@@ -28,6 +28,7 @@ export interface ListRoomState {
   isLoadingListRoom: boolean;
   listRoom: DataType[];
   totalListRoom: number;
+  pageNumberListRoom: number;
 }
 
 const initialState: ListRoomState = {
@@ -43,6 +44,7 @@ const initialState: ListRoomState = {
   isLoadingListRoom: true,
   listRoom: [],
   totalListRoom: 0,
+  pageNumberListRoom: 1,
 };
 
 export const listRoomSlice = createSlice({
@@ -85,6 +87,9 @@ export const listRoomSlice = createSlice({
     updateTotalListRoom: (state, action: PayloadAction<number>) => {
       state.totalListRoom = action.payload;
     },
+    updatePageNumberListRoom: (state, action: PayloadAction<number>) => {
+      state.pageNumberListRoom = action.payload;
+    },
     resetStateListRoom: () => initialState,
   },
 });
@@ -105,4 +110,5 @@ export const {
   updateListRoom,
   updateTotalListRoom,
   resetStateListRoom,
+  updatePageNumberListRoom,
 } = listRoomSlice.actions;

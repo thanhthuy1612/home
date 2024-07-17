@@ -4,15 +4,31 @@ import React from 'react';
 import { Button, Form, Input, type FormProps } from 'antd';
 import HeaderSettings from '../components/HeaderSettings';
 import { UserFieldType } from '@/enum/UserFieldType';
+import handleUsers from '@/app/api/HandUsers';
+import { useNotification } from '@/utils/useNotification';
+import { useRouter } from 'next/navigation';
 
 const ProfileForm: React.FC = () => {
   const [isDisable, setIsDisable] = React.useState<boolean>(false);
 
   const [form] = Form.useForm();
+  const router = useRouter();
+  const { setNotification } = useNotification();
 
   const onFinish: FormProps<UserFieldType>['onFinish'] = async (values) => {
-    console.log(values);
     setIsDisable(true);
+    const res = await handleUsers.changeInfo({
+      fullname: values?.username,
+      email: values?.email,
+      phone: values?.phone,
+      zalo: values?.zalo,
+    });
+    const onSuccess = () => {
+      router.push('/');
+    };
+    setNotification(res, 'Đổi thông tin', onSuccess);
+
+    setIsDisable(false);
   };
   return (
     <Form

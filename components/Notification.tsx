@@ -35,11 +35,11 @@ export default function Notification({
   const onRenderMessage = () => {
     switch (notificationInfo?.type) {
       case 'success':
-        return 'Success';
+        return 'Thành công';
       case 'fail':
-        return 'Fail';
+        return 'Lỗi';
       case 'warning':
-        return 'Warning';
+        return 'Cảnh báo';
     }
   };
 

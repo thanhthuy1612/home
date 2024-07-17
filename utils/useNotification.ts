@@ -23,7 +23,7 @@ export const useNotification = () => {
       dispatch(
         updateNotification({
           type: 'fail',
-          description: result.data,
+          description: result?.data,
         }),
       );
     }

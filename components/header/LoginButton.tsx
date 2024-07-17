@@ -12,7 +12,10 @@ import {
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import LoadingSpin from '../loading/LoadingSpin';
 import { useRouter, usePathname } from 'next/navigation';
-import { resetStateUser } from '@/lib/features/user';
+import { resetStateUser, updateUser } from '@/lib/features/user';
+import { updateIsLoadingPage } from '@/lib/features/reload';
+import { IStatusCode } from '@/interface/IStatusCode';
+import handleUsers from '@/app/api/HandUsers';
 
 const LoginButton: React.FC = () => {
   const router = useRouter();
@@ -29,6 +32,24 @@ const LoginButton: React.FC = () => {
     localStorage.clear();
     router.push('/');
   };
+
+  async function isConnected() {
+    dispatch(updateIsLoadingPage(true));
+    const res = await handleUsers.getInfo();
+    console.log(res);
+    if (res.status === IStatusCode.SUCCESS) {
+      console.log(1);
+      dispatch(updateUser(res.data));
+    } else {
+      dispatch(updateUser({ id: '' }));
+      localStorage.clear();
+    }
+    dispatch(updateIsLoadingPage(false));
+  }
+
+  React.useEffect(() => {
+    isConnected();
+  }, []);
 
   const handleMenuClick: MenuProps['onClick'] = (e) => {
     if (pathname === e.key) {

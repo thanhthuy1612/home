@@ -4,6 +4,8 @@ import { Button, Form, FormProps, Input } from 'antd';
 import React from 'react';
 import HeaderSettings from '../components/HeaderSettings';
 import handleUsers from '@/app/api/HandUsers';
+import { useRouter } from 'next/navigation';
+import { useNotification } from '@/utils/useNotification';
 
 export type ChangePasswordType = {
   current?: string;
@@ -15,6 +17,8 @@ const PasswordForm: React.FC = () => {
   const [isDisable, setIsDisable] = React.useState<boolean>(false);
 
   const [form] = Form.useForm();
+  const router = useRouter();
+  const { setNotification } = useNotification();
 
   const onFinish: FormProps<ChangePasswordType>['onFinish'] = async (
     values,
@@ -29,6 +33,11 @@ const PasswordForm: React.FC = () => {
         oldPassword: values.current,
         newPassword: values.password,
       });
+      const onSuccess = () => {
+        router.push('/');
+      };
+      setNotification(res, 'Đổi mật khẩu thành công', onSuccess);
+
       setIsDisable(false);
     }
   };
@@ -47,7 +56,17 @@ const PasswordForm: React.FC = () => {
       <Form.Item<ChangePasswordType>
         label="Mật khẩu hiện tại"
         name="current"
-        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          () => ({
+            validator(_, value) {
+              if (!value || value.length >= 8) {
+                return Promise.resolve();
+              }
+              return Promise.reject(new Error('Mật khẩu lớn hơn 8 ký tự'));
+            },
+          }),
+        ]}
       >
         <Input.Password
           disabled={isDisable}
@@ -82,7 +101,7 @@ const PasswordForm: React.FC = () => {
                 return Promise.resolve();
               }
               return Promise.reject(
-                new Error('The new password that you entered do not match!'),
+                new Error('Mật khẩu mới bạn nhập không khớp!'),
               );
             },
           }),
