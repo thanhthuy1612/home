@@ -13,7 +13,7 @@ import { SearchOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Flex, Input, InputNumber, Select } from 'antd';
 import React from 'react';
 
-const Filter: React.FC = () => {
+const FilterAdmin: React.FC = () => {
   const { width } = useAppSelector((state) => state.login);
   const { cost, array, type, maxPeople, searchValue } = useAppSelector(
     (state) => state.listRoom,
@@ -51,39 +51,32 @@ const Filter: React.FC = () => {
       className=" px-[48px] py-[16px] border-borderHeader border-b-[1px] justify-between items-center"
     >
       <Input
-        style={{ width: width < 1600 ? '100%' : 'calc((100% - 250px) / 5' }}
+        style={{ width: width < 1600 ? '100%' : 'calc((100% - 240px) / 4' }}
         onChange={handleChangeSearchValue}
         prefix={<SearchOutlined />}
         placeholder="Địa chỉ"
         value={searchValue}
       />
       <InputNumber
-        style={{ width: width < 1600 ? '100%' : 'calc((100% - 250px) / 5' }}
+        style={{ width: width < 1600 ? '100%' : 'calc((100% - 240px) / 4' }}
         onChange={handleChangePeopleMax}
         prefix={<UserOutlined />}
         placeholder="Số lượng người tối đa"
         value={maxPeople}
       />
       <Select
-        style={{ width: width < 1600 ? '100%' : 'calc((100% - 250px) / 5' }}
+        style={{ width: width < 1600 ? '100%' : 'calc((100% - 240px) / 4' }}
         placeholder="Mức giá"
         onChange={handleChangeCost}
         value={cost}
         options={listPrice}
       />
       <Select
-        style={{ width: width < 1600 ? '100%' : 'calc((100% - 250px) / 5' }}
+        style={{ width: width < 1600 ? '100%' : 'calc((100% - 240px) / 4' }}
         onChange={handleChangeType}
         placeholder="Phân loại"
         value={type}
         options={listRoomType}
-      />
-      <Select
-        style={{ width: width < 1600 ? '100%' : 'calc((100% - 250px) / 5' }}
-        onChange={handleChangeLocation}
-        placeholder="Sắp xếp"
-        value={array}
-        options={listArrayPrice}
       />
       <Button
         onClick={onClickSearch}
@@ -97,4 +90,4 @@ const Filter: React.FC = () => {
   );
 };
 
-export default Filter;
+export default FilterAdmin;

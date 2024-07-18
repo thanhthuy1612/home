@@ -9,4 +9,5 @@ export interface IUser {
   role?: number;
   password?: string;
   rePassword?: string;
+  active?: boolean;
 }

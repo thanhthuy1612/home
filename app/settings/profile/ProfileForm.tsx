@@ -7,6 +7,8 @@ import { UserFieldType } from '@/enum/UserFieldType';
 import handleUsers from '@/app/api/HandUsers';
 import { useNotification } from '@/utils/useNotification';
 import { useRouter } from 'next/navigation';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { updateUser } from '@/lib/features/user';
 
 const ProfileForm: React.FC = () => {
   const [isDisable, setIsDisable] = React.useState<boolean>(false);
@@ -14,19 +16,31 @@ const ProfileForm: React.FC = () => {
   const [form] = Form.useForm();
   const router = useRouter();
   const { setNotification } = useNotification();
+  const dispatch = useAppDispatch();
+
+  const { fullname, email, phone, zalo, facebook } = useAppSelector(
+    (state) => state.user,
+  );
+  const { isLoadingConnect } = useAppSelector((state) => state.login);
+
+  React.useEffect(() => {
+    setIsDisable(isLoadingConnect);
+  }, [isLoadingConnect]);
 
   const onFinish: FormProps<UserFieldType>['onFinish'] = async (values) => {
     setIsDisable(true);
     const res = await handleUsers.changeInfo({
-      fullname: values?.username,
+      fullname: values?.fullname,
       email: values?.email,
       phone: values?.phone,
       zalo: values?.zalo,
+      facebook: values?.facebook,
     });
     const onSuccess = () => {
+      dispatch(updateUser(res?.data));
       router.push('/');
     };
-    setNotification(res, 'Đổi thông tin', onSuccess);
+    setNotification(res, 'Cập nhật thông tin', onSuccess);
 
     setIsDisable(false);
   };
@@ -39,10 +53,17 @@ const ProfileForm: React.FC = () => {
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 14 }}
       className=" mx-[16px]"
+      initialValues={{
+        fullname: fullname,
+        email: email,
+        phone: phone,
+        zalo: zalo,
+        facebook: facebook,
+      }}
     >
       <HeaderSettings title="Cập nhật thông tin" />
       <Form.Item<UserFieldType>
-        name="username"
+        name="fullname"
         label="Họ và Tên"
         rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
       >

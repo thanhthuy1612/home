@@ -1,10 +1,9 @@
-export type UserFieldType = {
+export interface IRegister {
   username?: string;
   password?: string;
+  fullname?: string;
   email?: string;
-  rePassword?: string;
   phone?: string;
   facebook?: string;
   zalo?: string;
-  fullname?: string;
-};
+}

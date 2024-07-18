@@ -55,12 +55,22 @@ const FormLogin: React.FC = () => {
     >
       <Form.Item<FieldType>
         name="username"
-        rules={[{ required: true, message: 'Please input your email!' }]}
+        rules={[
+          { required: true, message: 'Please input your email!' },
+          () => ({
+            validator(_, value) {
+              if (!value || value.length >= 8) {
+                return Promise.resolve();
+              }
+              return Promise.reject(new Error('Mật khẩu lớn hơn 8 ký tự'));
+            },
+          }),
+        ]}
       >
         <Input
           disabled={isDisable}
           placeholder="Tài khoản"
-          style={{ borderRadius: '50px' }}
+          style={{ borderRadius: '50px', width: '100%' }}
           size="large"
           prefix={
             <UserOutlined style={{ marginLeft: '5px', marginRight: '5px' }} />
@@ -85,7 +95,7 @@ const FormLogin: React.FC = () => {
         <Input.Password
           disabled={isDisable}
           placeholder="Mật khẩu"
-          style={{ borderRadius: '50px' }}
+          style={{ borderRadius: '50px', width: '100%' }}
           size="large"
           prefix={
             <KeyOutlined style={{ marginLeft: '5px', marginRight: '5px' }} />
@@ -93,7 +103,7 @@ const FormLogin: React.FC = () => {
         />
       </Form.Item>
 
-      <div className="flex justify-end">
+      {/* <div className="flex justify-end">
         <Button
           disabled={isDisable}
           type="link"
@@ -101,7 +111,7 @@ const FormLogin: React.FC = () => {
         >
           Quên mật khẩu?
         </Button>
-      </div>
+      </div> */}
 
       <Form.Item
         style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}
@@ -111,6 +121,7 @@ const FormLogin: React.FC = () => {
           className="hover:!bg-colorSelect"
           style={{
             borderRadius: '50px',
+            width: '100%',
             paddingLeft: '60px',
             paddingRight: '60px',
           }}

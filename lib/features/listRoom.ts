@@ -17,12 +17,10 @@ export interface DataType {
 
 export interface ListRoomState {
   cost?: string;
-  location?: string;
+  array?: string;
   type?: string;
-  listCost: ISelected[];
-  listLocation: ISelected[];
-  listType: ISelected[];
   searchValue: string;
+  maxPeople: number | undefined | null;
   isLoadingListFilter: boolean;
   isInitLoadingListRoom: boolean;
   isLoadingListRoom: boolean;
@@ -33,13 +31,11 @@ export interface ListRoomState {
 
 const initialState: ListRoomState = {
   cost: undefined,
-  location: undefined,
-  type: undefined,
-  listCost: [],
-  listLocation: [],
-  listType: [],
+  array: '0',
+  type: '1',
   isLoadingListFilter: false,
   searchValue: '',
+  maxPeople: undefined,
   isInitLoadingListRoom: true,
   isLoadingListRoom: true,
   listRoom: [],
@@ -54,8 +50,8 @@ export const listRoomSlice = createSlice({
     updateCost: (state, action: PayloadAction<string | undefined>) => {
       state.cost = action.payload;
     },
-    updateLocation: (state, action: PayloadAction<string | undefined>) => {
-      state.location = action.payload;
+    updateArray: (state, action: PayloadAction<string | undefined>) => {
+      state.array = action.payload;
     },
     updateType: (state, action: PayloadAction<string | undefined>) => {
       state.type = action.payload;
@@ -63,14 +59,8 @@ export const listRoomSlice = createSlice({
     updateSearchValue: (state, action: PayloadAction<string>) => {
       state.searchValue = action.payload;
     },
-    updateListCost: (state, action: PayloadAction<ISelected[]>) => {
-      state.listCost = action.payload;
-    },
-    updateListLocation: (state, action: PayloadAction<ISelected[]>) => {
-      state.listLocation = action.payload;
-    },
-    updateListType: (state, action: PayloadAction<ISelected[]>) => {
-      state.listType = action.payload;
+    updateMaxPeople: (state, action: PayloadAction<number | null>) => {
+      state.maxPeople = action.payload;
     },
     updateIsLoadingListFilter: (state, action: PayloadAction<boolean>) => {
       state.isLoadingListFilter = action.payload;
@@ -98,12 +88,10 @@ export default listRoomSlice.reducer;
 
 export const {
   updateCost,
-  updateLocation,
+  updateArray,
   updateType,
   updateSearchValue,
-  updateListCost,
-  updateListLocation,
-  updateListType,
+  updateMaxPeople,
   updateIsLoadingListFilter,
   updateIsInitLoadingListRoom,
   updateIsLoadingListRoom,

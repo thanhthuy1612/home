@@ -11,24 +11,50 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { UserFieldType } from '@/enum/UserFieldType';
-import { useAppSelector } from '@/lib/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { useRouter } from 'next/navigation';
+import { updateIsLoadingForm } from '@/lib/features/login';
+import { updateUser } from '@/lib/features/user';
+import handleUsers from '@/app/api/HandUsers';
+import { useNotification } from '@/utils/useNotification';
 
 const FormRegister: React.FC = () => {
   const [isDisable, setIsDisable] = React.useState<boolean>(true);
   const { isLoadingConnect, isLoadingForm } = useAppSelector(
     (state) => state.login,
   );
-  // const navigate = useNavigate();
-  // const dispatch = useAppDispatch();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  // const { setNotification } = useNotification();
+  const { setNotification } = useNotification();
 
   React.useEffect(() => {
     setIsDisable(isLoadingConnect || isLoadingForm);
   }, [isLoadingConnect, isLoadingForm]);
 
   const onFinish: FormProps<UserFieldType>['onFinish'] = async (values) => {
-    console.log(values);
+    dispatch(updateIsLoadingForm(true));
+    const fetchRegister = await handleUsers.register({
+      username: values.username,
+      password: values.password,
+      fullname: values.fullname,
+      email: values.email,
+      phone: values.phone,
+      facebook: values.facebook,
+      zalo: values.zalo,
+    });
+    const onSuccess = () => {
+      dispatch(updateUser(fetchRegister?.data));
+      localStorage.setItem('token', fetchRegister.data.accessToken);
+      router.push('/');
+    };
+    setNotification(
+      fetchRegister,
+      'Đăng ký thành công',
+      onSuccess,
+      'Tài khoản bị trùng',
+    );
+    dispatch(updateIsLoadingForm(false));
   };
 
   return (
@@ -40,12 +66,37 @@ const FormRegister: React.FC = () => {
       autoComplete="off"
     >
       <Form.Item<UserFieldType>
-        name="username"
+        name="fullname"
         rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
       >
         <Input
           disabled={isDisable}
           placeholder="Họ và tên"
+          style={{ borderRadius: '50px' }}
+          size="large"
+          prefix={
+            <UserOutlined style={{ marginLeft: '5px', marginRight: '5px' }} />
+          }
+        />
+      </Form.Item>
+
+      <Form.Item<UserFieldType>
+        name="username"
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          () => ({
+            validator(_, value) {
+              if (!value || value.length >= 8) {
+                return Promise.resolve();
+              }
+              return Promise.reject(new Error('Mật khẩu lớn hơn 8 ký tự'));
+            },
+          }),
+        ]}
+      >
+        <Input
+          disabled={isDisable}
+          placeholder="Tài khoản"
           style={{ borderRadius: '50px' }}
           size="large"
           prefix={

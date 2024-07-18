@@ -60,7 +60,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
     <Flex className=" flex-col items-center py-[24px] px-[48px]">
       <Flex justify="center">
         <div className=" mb-[24px] font-[600] text-[25px] border-b-[2px] border-colorSelect">
-          Phòng 123 {params.slug}
+          Phòng 123 {params?.slug}
         </div>
       </Flex>
       <Flex

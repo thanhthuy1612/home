@@ -1,6 +1,9 @@
 'use client';
 
-import { resetStateListRoom } from '@/lib/features/listRoom';
+import {
+  resetStateListRoom,
+  updateIsLoadingListFilter,
+} from '@/lib/features/listRoom';
 import { useAppDispatch } from '@/lib/hooks';
 import { useListRoom } from '@/utils/useListRoom';
 import dynamic from 'next/dynamic';
@@ -23,14 +26,16 @@ const ListRoom = dynamic(() => import('@/components/listRoom/ListRoom'), {
   loading: () => <></>,
   ssr: false,
 });
-
-const Home: React.FC = () => {
+const ListPost = ({ params }: { params: { slug: string } }) => {
   const dispatch = useAppDispatch();
   const { fetchData } = useListRoom();
+
+  console.log(params?.slug);
 
   React.useEffect(() => {
     const initData = () => {
       dispatch(resetStateListRoom());
+      dispatch(updateIsLoadingListFilter(false));
       fetchData(true);
     };
     initData();
@@ -45,4 +50,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default ListPost;
