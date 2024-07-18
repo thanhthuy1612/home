@@ -1,6 +1,11 @@
-'use client'
+'use client';
 
-import { updateCost, updateLocation, updateSearchValue, updateType } from '@/lib/features/listRoom';
+import {
+  updateCost,
+  updateLocation,
+  updateSearchValue,
+  updateType,
+} from '@/lib/features/listRoom';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Flex, Input, Select } from 'antd';
@@ -18,6 +23,8 @@ const Filter: React.FC = () => {
     listType,
   } = useAppSelector((state) => state.listRoom);
   const dispatch = useAppDispatch();
+
+  console.log(width);
 
   const handleChangeCost = (value: string) => {
     dispatch(updateCost(value));
@@ -46,13 +53,13 @@ const Filter: React.FC = () => {
       className=" px-[48px] py-[16px] border-borderHeader border-b-[1px] justify-between items-center"
     >
       <Input
-        style={{ width: width < 800 ? '100%' : 'calc((100% - 240px) / 4' }}
+        style={{ width: width < 1600 ? '100%' : 'calc((100% - 240px) / 4' }}
         onChange={handleChangeSearchValue}
         prefix={<SearchOutlined />}
         placeholder="Tìm kiếm phòng trọ..."
       />
       <Select
-        style={{ width: width < 800 ? '100%' : 'calc((100% - 240px) / 4' }}
+        style={{ width: width < 1600 ? '100%' : 'calc((100% - 240px) / 4' }}
         placeholder="Mức giá"
         onChange={handleChangeCost}
         value={cost}
@@ -60,7 +67,7 @@ const Filter: React.FC = () => {
         loading={isLoadingListFilter}
       />
       <Select
-        style={{ width: width < 800 ? '100%' : 'calc((100% - 240px) / 4' }}
+        style={{ width: width < 1600 ? '100%' : 'calc((100% - 240px) / 4' }}
         onChange={handleChangeLocation}
         placeholder="Vị trí"
         value={location}
@@ -68,7 +75,7 @@ const Filter: React.FC = () => {
         loading={isLoadingListFilter}
       />
       <Select
-        style={{ width: width < 800 ? '100%' : 'calc((100% - 240px) / 4' }}
+        style={{ width: width < 1600 ? '100%' : 'calc((100% - 240px) / 4' }}
         onChange={handleChangeType}
         placeholder="Phân loại"
         value={type}

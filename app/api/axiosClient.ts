@@ -7,14 +7,14 @@ axiosClient.interceptors.request.use(async (config: any) => {
   (config.headers = {
     ...config.headers,
   }),
-    config.data;
+    config?.data;
 
   return config;
 });
 
 axiosClient.interceptors.response.use(
   (response) => {
-    if (response.status === 200 && response.data) {
+    if (response?.status === 200 && response?.data) {
       return response;
     }
 

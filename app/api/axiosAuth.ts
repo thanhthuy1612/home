@@ -16,7 +16,7 @@ axiosAuth.interceptors.request.use(async (config: any) => {
 
 axiosAuth.interceptors.response.use(
   (response) => {
-    if (response.status === 200 && response.data) {
+    if (response?.status === 200 && response?.data) {
       return response;
     }
 

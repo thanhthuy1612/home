@@ -60,14 +60,14 @@ const Item: React.FC<IItem> = (props) => {
   return (
     <Flex
       className=" py-[10px] border-b-[2px] border-borderHeader"
-      style={{ flexDirection: width < 500 ? 'column' : 'row' }}
+      style={{ flexDirection: width < 1600 ? 'column' : 'row' }}
       wrap
       gap={20}
     >
       <Image width={200} height={200} src={src} />
       <Flex
         className=" flex-col justify-between"
-        style={{ width: width < 500 ? '100%' : 'calc(100% - 240px)' }}
+        style={{ width: width < 1600 ? '100%' : 'calc(100% - 240px)' }}
       >
         <Descriptions
           title={

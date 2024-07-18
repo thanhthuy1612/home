@@ -66,16 +66,16 @@ const Product = ({ params }: { params: { slug: string } }) => {
       <Flex
         gap={20}
         wrap
-        style={{ flexDirection: width < 500 ? 'column' : 'row' }}
+        style={{ flexDirection: width < 1600 ? 'column' : 'row' }}
       >
         <Image
-          height={width < 800 ? 300 : 500}
-          width={width < 800 ? 300 : 500}
+          height={width < 1600 ? 300 : 500}
+          width={width < 1600 ? 300 : 500}
           src={'https://randomuser.me/api/portraits/men/18.jpg'}
         />
         <Flex
           className=" flex-col justify-between"
-          style={{ width: width < 800 ? '100%' : 'calc(100% - 520px)' }}
+          style={{ width: width < 1600 ? '100%' : 'calc(100% - 520px)' }}
         >
           <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
           <ItemProduct list={listIntroduce} />

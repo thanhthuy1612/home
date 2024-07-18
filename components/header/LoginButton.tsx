@@ -1,10 +1,11 @@
 'use client';
 
 import React from 'react';
-import { Avatar, Button, Dropdown, MenuProps } from 'antd';
+import { Avatar, Button, Dropdown, MenuProps, Tooltip } from 'antd';
 import {
   FileAddOutlined,
   KeyOutlined,
+  LoginOutlined,
   LogoutOutlined,
   MenuOutlined,
   UserOutlined,
@@ -25,6 +26,7 @@ const LoginButton: React.FC = () => {
 
   const { isLoadingPage } = useAppSelector((state) => state.reload);
   const { id } = useAppSelector((state) => state.user);
+  const { width } = useAppSelector((state) => state.login);
 
   const onClickLogout = () => {
     dispatch(resetStateUser());
@@ -36,9 +38,7 @@ const LoginButton: React.FC = () => {
   async function isConnected() {
     dispatch(updateIsLoadingPage(true));
     const res = await handleUsers.getInfo();
-    console.log(res);
-    if (res.status === IStatusCode.SUCCESS) {
-      console.log(1);
+    if (res?.status === IStatusCode.SUCCESS) {
       dispatch(updateUser(res.data));
     } else {
       dispatch(updateUser({ id: '' }));
@@ -106,8 +106,15 @@ const LoginButton: React.FC = () => {
     router.push('/login');
   };
 
-  const renderButtonLogin = () => {
-    return !id ? (
+  const renderLogin = () => {
+    return width < 1600 ? (
+      <Tooltip title="Đăng nhập">
+        <LoginOutlined
+          className=" text-colorPrimary border-[1px] border-colorPrimary p-[10px] rounded-[50%]"
+          onClick={onClickLogin}
+        />
+      </Tooltip>
+    ) : (
       <Button
         type="primary"
         className=" hover:!bg-colorSelect"
@@ -115,6 +122,11 @@ const LoginButton: React.FC = () => {
       >
         Đăng nhập
       </Button>
+    );
+  };
+  const renderButtonLogin = () => {
+    return !id ? (
+      renderLogin()
     ) : (
       <Dropdown
         menu={{ items, onClick: handleMenuClick, style: { minWidth: '200px' } }}

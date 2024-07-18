@@ -10,7 +10,7 @@ export const useNotification = () => {
     description: string,
     action: () => void,
   ) => {
-    if (result.status === IStatusCode.SUCCESS) {
+    if (result?.status === IStatusCode.SUCCESS) {
       action();
       dispatch(
         updateNotification({
@@ -19,7 +19,7 @@ export const useNotification = () => {
         }),
       );
     }
-    if (result.status === IStatusCode.ERROR) {
+    if (result?.status === IStatusCode.ERROR) {
       dispatch(
         updateNotification({
           type: 'fail',

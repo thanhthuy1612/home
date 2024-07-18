@@ -28,7 +28,7 @@ export const useListRoom = () => {
       roomType: 1,
       priceDescending: true,
     });
-    if (res.status === IStatusCode.SUCCESS) {
+    if (res?.status === IStatusCode.SUCCESS) {
       dispatch(
         updateListRoom(
           isFirst ? res.data?.values : [...listRoom, ...res.data?.values],
@@ -47,7 +47,7 @@ export const useListRoom = () => {
       index: isFirst ? 1 : pageNumberListRoom,
       size: defaultPageSize,
     });
-    if (res.status === IStatusCode.SUCCESS) {
+    if (res?.status === IStatusCode.SUCCESS) {
       dispatch(
         updateListRoom(
           isFirst ? res.data?.values : [...listRoom, ...res.data?.values],

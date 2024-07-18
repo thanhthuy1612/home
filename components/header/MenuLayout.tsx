@@ -56,7 +56,7 @@ const MenuHeader: React.FC = () => {
 
   return (
     <>
-      {width < 800 ? (
+      {width < 1600 ? (
         <>
           <Button type="primary" onClick={toggleCollapsed}>
             {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
