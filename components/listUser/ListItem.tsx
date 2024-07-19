@@ -13,14 +13,13 @@ const Item = dynamic(() => import('./Item'), {
 
 export interface IListItem {
   fetchData: () => Promise<void>;
-  isMyAccount?: boolean;
 }
 
 const ListItem: React.FC<IListItem> = (props) => {
-  const { fetchData, isMyAccount } = props;
+  const { fetchData } = props;
 
-  const { isLoadingListRoom, isInitLoadingListRoom, listRoom, totalListRoom } =
-    useAppSelector((state) => state.listRoom);
+  const { isInitLoadingListUser, isLoadingListUser, totalListUser, listUser } =
+    useAppSelector((state) => state.listUser);
 
   const onLoadMore = async () => {
     await fetchData();
@@ -28,7 +27,7 @@ const ListItem: React.FC<IListItem> = (props) => {
   };
 
   const loadMore =
-    listRoom.length < totalListRoom ? (
+    listUser.length < totalListUser ? (
       <div
         style={{
           textAlign: 'center',
@@ -38,21 +37,21 @@ const ListItem: React.FC<IListItem> = (props) => {
         }}
       >
         <Button
-          disabled={isLoadingListRoom}
+          disabled={isLoadingListUser}
           className=" w-[200px]"
           onClick={onLoadMore}
         >
-          {isLoadingListRoom ? <LoadingSpin /> : 'Xem thêm'}
+          {isLoadingListUser ? <LoadingSpin /> : 'Xem thêm'}
         </Button>
       </div>
     ) : null;
 
   return (
     <List
-      loading={isInitLoadingListRoom}
+      loading={isInitLoadingListUser}
       itemLayout="horizontal"
       loadMore={loadMore}
-      dataSource={listRoom}
+      dataSource={listUser}
       locale={{
         emptyText: (
           <Empty
@@ -61,7 +60,7 @@ const ListItem: React.FC<IListItem> = (props) => {
           />
         ),
       }}
-      renderItem={(item) => <Item item={item} isMyAccount={isMyAccount} />}
+      renderItem={(item) => <Item item={item} />}
     />
   );
 };

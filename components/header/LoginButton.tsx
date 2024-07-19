@@ -44,7 +44,6 @@ const LoginButton: React.FC = () => {
       dispatch(updateUser(res.data));
     } else {
       dispatch(updateUser({ id: '' }));
-      router.push('/');
       localStorage.clear();
     }
     dispatch(updateIsLoadingPage(false));

@@ -1,4 +1,3 @@
-import { ISelected } from '@/interface/ISelected';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface DataType {
@@ -11,7 +10,7 @@ export interface DataType {
   price: number;
   roomType: number;
   roomStatus: number;
-  postsStatus: 1;
+  postsStatus: number;
   updatedTime: Date;
 }
 

@@ -20,6 +20,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "antd": "^5.19.1",
+    "antd-img-crop": "^4.22.0",
     "axios": "^1.7.2",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",

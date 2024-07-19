@@ -14,6 +14,16 @@ class HandlePost {
   getMePosts = async (body: IPostMe) => {
     return await axiosAuth.post(`${path}/me`, { ...body });
   };
+  getCreatePost = async (formData: FormData) => {
+    return await axiosAuth.post(path, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  };
+  getImg = async (id: string, file: string) => {
+    return await axiosAuth.get(`${path}/${id}/${file}`);
+  };
 }
 
 const handlePosts = new HandlePost();

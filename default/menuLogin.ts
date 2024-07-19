@@ -51,6 +51,11 @@ export const menuAdmin: MenuLogin[] = [
     Icon: KeyOutlined,
   },
   {
+    key: '/listPost',
+    label: 'Danh sách phòng',
+    Icon: MenuOutlined,
+  },
+  {
     key: '/listUser',
     label: 'Danh sách người dùng',
     Icon: UserSwitchOutlined,

@@ -58,14 +58,7 @@ const PasswordForm: React.FC = () => {
         name="current"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
-          () => ({
-            validator(_, value) {
-              if (!value || value.length >= 8) {
-                return Promise.resolve();
-              }
-              return Promise.reject(new Error('Mật khẩu lớn hơn 8 ký tự'));
-            },
-          }),
+          { min: 8, message: 'Mật khẩu phải có ít nhất 8 ký tự' },
         ]}
       >
         <Input.Password
@@ -78,7 +71,10 @@ const PasswordForm: React.FC = () => {
       <Form.Item<ChangePasswordType>
         label="Mật khẩu mới"
         name="password"
-        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { min: 8, message: 'Mật khẩu phải có ít nhất 8 ký tự' },
+        ]}
       >
         <Input.Password
           disabled={isDisable}

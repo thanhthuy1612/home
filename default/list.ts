@@ -22,3 +22,15 @@ export const listRoomType: ISelected[] = [
   { value: '5', label: 'Văn phòng' },
   { value: '6', label: 'Căn hộ' },
 ];
+
+export const listRoomStatus: ISelected[] = [
+  { value: '1', label: 'Còn phòng trống' },
+  { value: '10', label: 'Sắp có phòng trống' },
+  { value: '20', label: 'Hết phòng' },
+];
+
+export const listPostStatus: ISelected[] = [
+  { value: '1', label: 'Chờ duyệt' },
+  { value: '2', label: 'Đã duyệt' },
+  { value: '3', label: 'Đã ẩn' },
+];

@@ -8,6 +8,7 @@ axiosAuth.interceptors.request.use(async (config: any) => {
   (config.headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${accessToken}`,
+    ...config.headers,
   }),
     config.data;
 

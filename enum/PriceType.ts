@@ -1,5 +1,5 @@
 export enum PriceType {
-  Dien = 1,
+  PriceType = 1,
   Nuoc = 2,
   DichVuVeSinh = 3,
   RacThai = 4,

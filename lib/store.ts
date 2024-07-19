@@ -4,6 +4,7 @@ import reloadSlice from './features/reload';
 import loginSlice from './features/login';
 import userSlice from './features/user';
 import listRoomSlice from './features/listRoom';
+import listUserSlice from './features/listUser';
 
 export const makeStore = () => {
   return configureStore({
@@ -13,6 +14,7 @@ export const makeStore = () => {
       login: loginSlice,
       user: userSlice,
       listRoom: listRoomSlice,
+      listUser: listUserSlice,
     },
   });
 };

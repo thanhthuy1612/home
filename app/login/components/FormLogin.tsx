@@ -56,15 +56,8 @@ const FormLogin: React.FC = () => {
       <Form.Item<FieldType>
         name="username"
         rules={[
-          { required: true, message: 'Please input your email!' },
-          () => ({
-            validator(_, value) {
-              if (!value || value.length >= 8) {
-                return Promise.resolve();
-              }
-              return Promise.reject(new Error('Mật khẩu lớn hơn 8 ký tự'));
-            },
-          }),
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { min: 8, message: 'Tài khoản phải có ít nhất 8 ký tự' },
         ]}
       >
         <Input
@@ -81,15 +74,8 @@ const FormLogin: React.FC = () => {
       <Form.Item<FieldType>
         name="password"
         rules={[
-          { required: true, message: 'Please input your password!' },
-          () => ({
-            validator(_, value) {
-              if (!value || value.length >= 8) {
-                return Promise.resolve();
-              }
-              return Promise.reject(new Error('Mật khẩu lớn hơn 8 ký tự'));
-            },
-          }),
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { min: 8, message: 'Mật khẩu phải có ít nhất 8 ký tự' },
         ]}
       >
         <Input.Password

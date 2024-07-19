@@ -1,5 +1,6 @@
 'use client';
 
+import FilterAdmin from '@/components/filter/FilterAdmin';
 import {
   resetStateListRoom,
   updateIsLoadingListFilter,
@@ -16,11 +17,6 @@ const CarouselHome = dynamic(
     ssr: false,
   },
 );
-
-const Filter = dynamic(() => import('@/components/filter/Filter'), {
-  loading: () => <></>,
-  ssr: false,
-});
 
 const ListRoom = dynamic(() => import('@/components/listRoom/ListRoom'), {
   loading: () => <></>,
@@ -44,7 +40,7 @@ const ListPost = ({ params }: { params: { slug: string } }) => {
   return (
     <div>
       <CarouselHome />
-      <Filter />
+      <FilterAdmin />
       <ListRoom title="DANH SÁCH PHÒNG" fetchData={fetchData} />
     </div>
   );
