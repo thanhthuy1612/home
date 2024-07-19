@@ -31,7 +31,7 @@ export interface ListRoomState {
 const initialState: ListRoomState = {
   cost: undefined,
   array: '0',
-  type: '1',
+  type: undefined,
   isLoadingListFilter: false,
   searchValue: '',
   maxPeople: undefined,

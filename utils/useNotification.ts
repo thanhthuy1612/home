@@ -2,7 +2,6 @@ import { AxiosResponse } from 'axios';
 import { IStatusCode } from '../interface/IStatusCode';
 import { updateNotification } from '../lib/features/notification';
 import { useAppDispatch } from '../lib/hooks';
-import { error } from 'console';
 
 export const useNotification = () => {
   const dispatch = useAppDispatch();

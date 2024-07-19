@@ -12,7 +12,7 @@ const Item = dynamic(() => import('./Item'), {
 });
 
 export interface IListItem {
-  fetchData: () => Promise<void>;
+  fetchData: (isFirst?: boolean) => Promise<void>;
 }
 
 const ListItem: React.FC<IListItem> = (props) => {
@@ -60,7 +60,7 @@ const ListItem: React.FC<IListItem> = (props) => {
           />
         ),
       }}
-      renderItem={(item) => <Item item={item} />}
+      renderItem={(item) => <Item item={item} fetchData={fetchData} />}
     />
   );
 };

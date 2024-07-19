@@ -22,36 +22,35 @@ export const useListRoom = () => {
     type,
     array,
   } = useAppSelector((state) => state.listRoom);
+  const checkCost: () => {
+    priceFrom: number | null;
+    priceTo: number | null;
+  } = () => {
+    switch (cost) {
+      case '1':
+        return { priceFrom: 0, priceTo: 3000000 };
+      case '2':
+        return { priceFrom: 3000000, priceTo: 5000000 };
+      case '3':
+        return { priceFrom: 5000000, priceTo: 7000000 };
 
+      case '4':
+        return { priceFrom: 7000000, priceTo: 7000000 };
+      case '5':
+        return { priceFrom: 10000000, priceTo: null };
+      default:
+        return { priceFrom: 0, priceTo: null };
+    }
+  };
   const fetchData = async (isFirst?: boolean) => {
-    const checkCost: () => {
-      priceFrom: number;
-      priceTo: number;
-    } = () => {
-      switch (cost) {
-        case '1':
-          return { priceFrom: 0, priceTo: 3000000 };
-        case '2':
-          return { priceFrom: 3000000, priceTo: 5000000 };
-        case '3':
-          return { priceFrom: 5000000, priceTo: 7000000 };
-
-        case '4':
-          return { priceFrom: 7000000, priceTo: 7000000 };
-        case '5':
-          return { priceFrom: 10000000, priceTo: 1000000000000 };
-        default:
-          return { priceFrom: 0, priceTo: 0 };
-      }
-    };
     dispatch(updateIsLoadingListRoom(true));
     const res = await handlePosts.getListPosts({
       index: isFirst ? 1 : pageNumberListRoom,
       size: defaultPageSize,
       address: searchValue ?? '',
       ...checkCost(),
-      maxPeople: maxPeople ?? 0,
-      roomType: Number(type) ?? 0,
+      maxPeople: maxPeople ?? null,
+      roomType: type !== '0' ? Number(type) : null,
       priceDescending: Boolean(array === '0'),
     });
     if (res?.status === IStatusCode.SUCCESS) {
@@ -86,35 +85,15 @@ export const useListRoom = () => {
     dispatch(updateIsLoadingListRoom(false));
   };
 
-  const fetchDataAdmin = async (ownerId: string, isFirst?: boolean) => {
-    const checkCost: () => {
-      priceFrom: number;
-      priceTo: number;
-    } = () => {
-      switch (cost) {
-        case '1':
-          return { priceFrom: 0, priceTo: 3000000 };
-        case '2':
-          return { priceFrom: 3000000, priceTo: 5000000 };
-        case '3':
-          return { priceFrom: 5000000, priceTo: 7000000 };
-
-        case '4':
-          return { priceFrom: 7000000, priceTo: 7000000 };
-        case '5':
-          return { priceFrom: 10000000, priceTo: 1000000000000 };
-        default:
-          return { priceFrom: 0, priceTo: 0 };
-      }
-    };
+  const fetchDataAdmin = async (ownerId: string | null, isFirst?: boolean) => {
     dispatch(updateIsLoadingListRoom(true));
     const res = await handleAdmin.getListPostAdmin({
       index: isFirst ? 1 : pageNumberListRoom,
       size: defaultPageSize,
       address: searchValue ?? '',
       ...checkCost(),
-      maxPeople: maxPeople ?? 0,
-      roomType: Number(type) ?? 0,
+      maxPeople: maxPeople ?? null,
+      roomType: type !== '0' ? Number(type) : null,
       ownerId: ownerId,
     });
     if (res?.status === IStatusCode.SUCCESS) {

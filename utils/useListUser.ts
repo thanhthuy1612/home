@@ -3,10 +3,10 @@ import { defaultPageSize } from './utils';
 import {
   updateIsInitLoadingListUser,
   updateIsLoadingListUser,
+  updateListUser,
   updatePageNumberListUser,
   updateTotalListUser,
 } from '@/lib/features/listUser';
-import { updateListRoom } from '@/lib/features/listRoom';
 import { IStatusCode } from '@/interface/IStatusCode';
 import handleAdmin from '@/app/api/HandAdmin';
 
@@ -21,11 +21,11 @@ export const useListUser = () => {
     const res = await handleAdmin.getListUserAdmin({
       index: isFirst ? 1 : pageNumberListUser,
       size: defaultPageSize,
-      searchText: searchValue,
+      searchText: searchValue ?? null,
     });
     if (res?.status === IStatusCode.SUCCESS) {
       dispatch(
-        updateListRoom(
+        updateListUser(
           isFirst ? res.data?.values : [...listUser, ...res.data?.values],
         ),
       );

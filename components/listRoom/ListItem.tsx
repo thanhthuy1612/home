@@ -5,6 +5,7 @@ import { Button, Empty, List } from 'antd';
 import LoadingSpin from '../loading/LoadingSpin';
 import { useAppSelector } from '@/lib/hooks';
 import dynamic from 'next/dynamic';
+import { Role } from '@/enum/Role';
 
 const Item = dynamic(() => import('./Item'), {
   loading: () => <></>,
@@ -12,12 +13,12 @@ const Item = dynamic(() => import('./Item'), {
 });
 
 export interface IListItem {
-  fetchData: () => Promise<void>;
-  isMyAccount?: boolean;
+  fetchData: (isFirst?: boolean) => Promise<void>;
+  role?: Role;
 }
 
 const ListItem: React.FC<IListItem> = (props) => {
-  const { fetchData, isMyAccount } = props;
+  const { fetchData, role } = props;
 
   const { isLoadingListRoom, isInitLoadingListRoom, listRoom, totalListRoom } =
     useAppSelector((state) => state.listRoom);
@@ -61,7 +62,7 @@ const ListItem: React.FC<IListItem> = (props) => {
           />
         ),
       }}
-      renderItem={(item) => <Item item={item} isMyAccount={isMyAccount} />}
+      renderItem={(item) => <Item item={item} role={role} />}
     />
   );
 };

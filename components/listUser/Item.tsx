@@ -1,89 +1,114 @@
 'use client';
 
 import { useAppSelector } from '@/lib/hooks';
-import {
-  Button,
-  Collapse,
-  Descriptions,
-  DescriptionsProps,
-  Flex,
-  Image,
-} from 'antd';
+import { Button, Collapse, Descriptions, DescriptionsProps, Flex } from 'antd';
 import React from 'react';
-import { useRouter } from 'next/navigation';
 import { IListUser } from '@/interface/IListUser';
+import { Role } from '@/enum/Role';
+import { useRouter } from 'next/navigation';
+import handleAdmin from '@/app/api/HandAdmin';
+import { useNotification } from '@/utils/useNotification';
 
 export interface IItem {
   item: IListUser;
+  fetchData: (isFirst?: boolean) => Promise<void>;
 }
 const Item: React.FC<IItem> = (props) => {
   const [items, setItems] = React.useState<DescriptionsProps['items']>([]);
   const { width } = useAppSelector((state) => state.login);
-  const { item } = props;
+  const { item, fetchData } = props;
+
+  const { setNotification } = useNotification();
 
   const router = useRouter();
+
   React.useEffect(() => {
     const initState = [
       {
         key: '1',
+        label: 'Tài khoản',
+        children: item?.username,
+      },
+      {
+        key: '1',
         label: 'Họ tên',
-        children: item.fullname,
+        children: item?.fullname,
       },
       {
         key: '2',
         label: 'email',
-        children: item.email,
+        children: item?.email,
       },
       {
         key: '3',
         label: 'Số điện thoại',
-        children: item.phone,
+        children: item?.phone,
       },
       {
         key: '4',
         label: 'Facebook',
-        children: item.facebook,
+        children: item?.facebook,
       },
       {
-        key: '3',
+        key: '5',
         label: 'Zalo',
-        children: item.zalo,
+        children: item?.zalo,
       },
       {
-        key: '3',
-        label: 'Số điện thoại',
-        children: item.phone,
+        key: '6',
+        label: 'Trạng thái tào khoản',
+        children: item?.active ? 'Đã kích hoạt' : 'Chưa kích hoạt',
+      },
+      {
+        key: '7',
+        label: 'Vai trò',
+        children: item?.role === Role.Admin ? 'Admin' : 'Saler',
       },
     ];
     setItems(initState);
-  }, []);
+  }, [item]);
 
+  const onClick = () => {
+    router.push(`listPost/${item?.id}`);
+  };
+
+  const onClickActive = async () => {
+    const res = item?.active
+      ? await handleAdmin.inactivateUser(item?.id)
+      : await handleAdmin.activateUser(item?.id);
+    const action = async () => {
+      await fetchData(true);
+    };
+    setNotification(res, 'Cập nhật thành công', action);
+  };
   return (
-    <>
+    <div className=" mb-[16px]">
       <Collapse
         collapsible="header"
-        defaultActiveKey={[item.id]}
+        defaultActiveKey={[]}
+        size="large"
         items={[
           {
-            key: item.id,
-            label: 'This panel can only be collapsed by clicking text',
+            key: item?.id,
+            label: item?.username,
             children: (
               <Flex
                 className=" flex-col justify-between"
                 style={{ width: width < 1600 ? '100%' : 'calc(100% - 240px)' }}
               >
-                <Descriptions
-                  title={item.username}
-                  items={items}
-                  column={{ xs: 1, sm: 1, md: 2 }}
-                />
-                <Button>Sửa</Button>
+                <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
+                <Flex gap={20}>
+                  <Button onClick={onClick}>Xem danh sách phòng</Button>
+                  <Button onClick={onClickActive}>
+                    {item?.active ? 'Khóa tài khoản' : 'Mở tài khoản'}
+                  </Button>
+                </Flex>
               </Flex>
             ),
           },
         ]}
       />
-    </>
+    </div>
   );
 };
 

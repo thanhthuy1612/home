@@ -19,7 +19,7 @@ const ListRoom = dynamic(() => import('@/components/listRoom/ListRoom'), {
   loading: () => <></>,
   ssr: false,
 });
-const ListPost = ({ params }: { params: { slug: string } }) => {
+const ListPost = () => {
   const dispatch = useAppDispatch();
   const { fetchDataAdmin } = useListRoom();
 
@@ -27,10 +27,10 @@ const ListPost = ({ params }: { params: { slug: string } }) => {
     const initData = () => {
       dispatch(resetStateListRoom());
       dispatch(updateIsLoadingListFilter(false));
-      fetchDataAdmin(params?.slug, true);
+      fetchDataAdmin(null, true);
     };
-    params?.slug && initData();
-  }, [params?.slug]);
+    initData();
+  }, []);
 
   return (
     <div>
@@ -38,7 +38,7 @@ const ListPost = ({ params }: { params: { slug: string } }) => {
       <ListRoom
         role={Role.Admin}
         title="DANH SÁCH PHÒNG"
-        fetchData={(isFirst?: boolean) => fetchDataAdmin(params?.slug, isFirst)}
+        fetchData={(isFirst?: boolean) => fetchDataAdmin(null, isFirst)}
       />
     </div>
   );

@@ -31,10 +31,10 @@ const ListUserPage: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <FilterListUser />
       <ListUser title="Danh sách người dùng" fetchData={fetchDataUser} />
-    </>
+    </div>
   );
 };
 export default ListUserPage;

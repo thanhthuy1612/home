@@ -12,6 +12,21 @@ class HandAdmin {
   getListUserAdmin = async (body: IListUserAdmin) => {
     return await axiosAuth.post(`${path}/users/list`, { ...body });
   };
+  getPostAdmin = async (id: string) => {
+    return await axiosAuth.get(`${path}/posts/${id}`);
+  };
+  activatePost = async (id: string) => {
+    return await axiosAuth.put(`${path}/posts/activate/${id}`);
+  };
+  inactivatePost = async (id: string) => {
+    return await axiosAuth.put(`${path}/posts/inactivate/${id}`);
+  };
+  activateUser = async (id: string) => {
+    return await axiosAuth.put(`${path}/users/activate/${id}`);
+  };
+  inactivateUser = async (id: string) => {
+    return await axiosAuth.put(`${path}/users/inactivate/${id}`);
+  };
 }
 
 const handleAdmin = new HandAdmin();

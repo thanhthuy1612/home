@@ -4,11 +4,12 @@ import Loading from '@/app/loading';
 import dynamic from 'next/dynamic';
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
+import { Role } from '@/enum/Role';
 
 export interface IListRoom {
   title: string;
-  fetchData: () => Promise<void>;
-  isMyAccount?: boolean;
+  fetchData: (isFirst?: boolean) => Promise<void>;
+  role?: Role;
 }
 
 const ListItem = dynamic(() => import('./ListItem'), {
@@ -17,12 +18,12 @@ const ListItem = dynamic(() => import('./ListItem'), {
 });
 
 const ListRoom: React.FC<IListRoom> = (props) => {
-  const { title, fetchData, isMyAccount } = props;
+  const { title, fetchData, role } = props;
 
   const router = useRouter();
   return (
     <div className="px-[48px] mb-[24px]">
-      {isMyAccount && (
+      {role === Role.Saler && (
         <Button
           icon={<PlusOutlined />}
           className=" mt-[24px]"
@@ -35,7 +36,7 @@ const ListRoom: React.FC<IListRoom> = (props) => {
       <Flex className=" items-center justify-between py-[24px]">
         <div className=" font-[600] text-[20px] w-fit">{title}</div>
       </Flex>
-      <ListItem isMyAccount={isMyAccount} fetchData={fetchData} />
+      <ListItem role={role} fetchData={fetchData} />
     </div>
   );
 };

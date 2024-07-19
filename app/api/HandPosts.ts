@@ -22,7 +22,13 @@ class HandlePost {
     });
   };
   getImg = async (id: string, file: string) => {
-    return await axiosAuth.get(`${path}/${id}/${file}`);
+    const response = await axiosClient.get(`${path}/${id}/${file}`, {
+      responseType: 'blob',
+    });
+    return URL.createObjectURL(response.data);
+  };
+  getPost = async (id: string) => {
+    return await axiosClient.get(`${path}/${id}`);
   };
 }
 

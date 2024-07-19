@@ -5,6 +5,7 @@ import { useListRoom } from '@/utils/useListRoom';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import { useAppDispatch } from '../../lib/hooks';
+import { Role } from '@/enum/Role';
 
 const ListRoom = dynamic(() => import('@/components/listRoom/ListRoom'), {
   loading: () => <></>,
@@ -24,7 +25,7 @@ const MyRoom: React.FC = () => {
   return (
     <div>
       <ListRoom
-        isMyAccount={true}
+        role={Role.Saler}
         title="DANH SÁCH PHÒNG QUẢN LÝ"
         fetchData={fetchDataPostMe}
       />

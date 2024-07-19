@@ -15,6 +15,7 @@ export const listArrayPrice: ISelected[] = [
 ];
 
 export const listRoomType: ISelected[] = [
+  { value: '0', label: 'Tất cả' },
   { value: '1', label: 'Phòng trọ' },
   { value: '2', label: 'Chung cư' },
   { value: '3', label: 'Ký túc xá' },

@@ -8,16 +8,17 @@ import { DataType } from '@/lib/features/listRoom';
 import { listPostStatus, listRoomStatus, listRoomType } from '@/default/list';
 import { dateFormat } from '@/utils/useTime';
 import handlePosts from '@/app/api/HandPosts';
+import { Role } from '@/enum/Role';
 
 export interface IItem {
   item: DataType;
-  isMyAccount?: boolean;
+  role?: Role;
 }
 const Item: React.FC<IItem> = (props) => {
   const [items, setItems] = React.useState<DescriptionsProps['items']>([]);
-  const [img, setImg] = React.useState();
+  const [img, setImg] = React.useState<string>();
   const { width } = useAppSelector((state) => state.login);
-  const { isMyAccount, item } = props;
+  const { role, item } = props;
 
   const router = useRouter();
 
@@ -58,7 +59,7 @@ const Item: React.FC<IItem> = (props) => {
       },
     ];
     setItems(
-      isMyAccount
+      role
         ? [
             ...initState,
             {
@@ -85,8 +86,7 @@ const Item: React.FC<IItem> = (props) => {
   React.useEffect(() => {
     const fetchImg = async () => {
       const image = await handlePosts.getImg(item?.id, item?.previewPicture);
-      console.log(image.data);
-      setImg(image.data);
+      setImg(image);
     };
     item?.id && item?.previewPicture && fetchImg();
   }, [item?.id, item?.previewPicture]);
@@ -97,7 +97,7 @@ const Item: React.FC<IItem> = (props) => {
       wrap
       gap={20}
     >
-      <Image width={200} height={200} src={img} />
+      <Image width={200} height={200} className=" object-cover" src={img} />
       <Flex
         className=" flex-col justify-between"
         style={{ width: width < 1600 ? '100%' : 'calc(100% - 240px)' }}
@@ -114,7 +114,7 @@ const Item: React.FC<IItem> = (props) => {
           items={items}
           column={{ xs: 1, sm: 1, md: 2 }}
         />
-        {!isMyAccount ? (
+        {!role ? (
           <Button
             type="primary"
             className=" w-[250px] hover:!bg-colorSelect"
