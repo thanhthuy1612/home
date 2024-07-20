@@ -32,7 +32,7 @@ const ListUserPage: React.FC = () => {
 
   return (
     <div>
-      <FilterListUser />
+      <FilterListUser fetchData={fetchData} />
       <ListUser title="Danh sách người dùng" fetchData={fetchDataUser} />
     </div>
   );

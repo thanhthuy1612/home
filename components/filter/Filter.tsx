@@ -12,8 +12,10 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { SearchOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Flex, Input, InputNumber, Select } from 'antd';
 import React from 'react';
-
-const Filter: React.FC = () => {
+export interface IFilter {
+  fetchData: (isFirst?: boolean) => Promise<void>;
+}
+const Filter: React.FC<IFilter> = ({ fetchData }) => {
   const { width } = useAppSelector((state) => state.login);
   const { cost, array, type, maxPeople, searchValue } = useAppSelector(
     (state) => state.listRoom,
@@ -42,7 +44,9 @@ const Filter: React.FC = () => {
     dispatch(updateSearchValue(e.target.value));
   };
 
-  const onClickSearch = () => {};
+  const onClickSearch = () => {
+    fetchData(true);
+  };
 
   return (
     <Flex

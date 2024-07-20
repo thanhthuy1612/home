@@ -6,7 +6,11 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Flex, Input } from 'antd';
 import React from 'react';
 
-const FilterListUser: React.FC = () => {
+export interface IFilter {
+  fetchData: (isFirst?: boolean) => Promise<void>;
+}
+
+const FilterListUser: React.FC<IFilter> = ({ fetchData }) => {
   const { width } = useAppSelector((state) => state.login);
   const { searchValue } = useAppSelector((state) => state.listUser);
   const dispatch = useAppDispatch();
@@ -17,7 +21,9 @@ const FilterListUser: React.FC = () => {
     dispatch(updateSearchValue(e.target.value));
   };
 
-  const onClickSearch = () => {};
+  const onClickSearch = () => {
+    fetchData(true);
+  };
 
   return (
     <Flex

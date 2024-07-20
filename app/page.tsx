@@ -39,7 +39,7 @@ const Home: React.FC = () => {
   return (
     <div>
       <CarouselHome />
-      <Filter />
+      <Filter fetchData={fetchData} />
       <ListRoom title="DANH SÁCH PHÒNG" fetchData={fetchData} />
     </div>
   );

@@ -13,7 +13,11 @@ import { SearchOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Flex, Input, InputNumber, Select } from 'antd';
 import React from 'react';
 
-const FilterAdmin: React.FC = () => {
+export interface IFilter {
+  fetchData: (isFirst?: boolean) => Promise<void>;
+}
+
+const FilterAdmin: React.FC<IFilter> = ({ fetchData }) => {
   const { width } = useAppSelector((state) => state.login);
   const { cost, array, type, maxPeople, searchValue } = useAppSelector(
     (state) => state.listRoom,
@@ -42,7 +46,9 @@ const FilterAdmin: React.FC = () => {
     dispatch(updateSearchValue(e.target.value));
   };
 
-  const onClickSearch = () => {};
+  const onClickSearch = () => {
+    fetchData(true);
+  };
 
   return (
     <Flex

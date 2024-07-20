@@ -34,7 +34,7 @@ const ListPost = () => {
 
   return (
     <div>
-      <FilterAdmin />
+      <FilterAdmin fetchData={fetchData} />
       <ListRoom
         role={Role.Admin}
         title="DANH SÁCH PHÒNG"

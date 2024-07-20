@@ -34,7 +34,7 @@ const ListPost = ({ params }: { params: { slug: string } }) => {
 
   return (
     <div>
-      <FilterAdmin />
+      <FilterAdmin fetchData={fetchData} />
       <ListRoom
         role={Role.Admin}
         title="DANH SÁCH PHÒNG"
