@@ -25,8 +25,6 @@ import handlePosts from '../api/HandPosts';
 import { useRouter } from 'next/navigation';
 import { useNotification } from '@/utils/useNotification';
 
-type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
-
 const HeaderSettings = dynamic(
   () => import('../settings/components/HeaderSettings'),
   {
@@ -135,7 +133,10 @@ const CreateForm: React.FC = () => {
       <Form.Item
         name="name"
         label="Tên phòng"
-        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 255, message: 'Vui lòng nhập ít hơn 255 ký tự' },
+        ]}
       >
         <Input disabled={isDisable} placeholder="Tên phòng" size="large" />
       </Form.Item>
@@ -146,7 +147,7 @@ const CreateForm: React.FC = () => {
       >
         <InputNumber<number>
           disabled={isDisable}
-          placeholder="0"
+          placeholder="Giá thuê phòng"
           formatter={(value) =>
             `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
           }
@@ -162,7 +163,10 @@ const CreateForm: React.FC = () => {
       <Form.Item
         name="description"
         label="Mô tả"
-        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 4000, message: 'Vui lòng nhập ít hơn 4000 ký tự' },
+        ]}
       >
         <Input
           className=" w-[100%]"
@@ -174,7 +178,10 @@ const CreateForm: React.FC = () => {
       <Form.Item
         name="address"
         label="Địa chỉ"
-        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 255, message: 'Vui lòng nhập ít hơn 255 ký tự' },
+        ]}
       >
         <Input
           className=" w-[100%]"
@@ -227,8 +234,16 @@ const CreateForm: React.FC = () => {
         label="Giá điện"
         rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
       >
-        <Input
+        <InputNumber<number>
+          formatter={(value) =>
+            `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+          }
+          parser={(value) =>
+            value?.replace(/\$\s?|(,*)/g, '') as unknown as number
+          }
+          addonAfter="VNĐ / kW"
           className=" w-[100%]"
+          min={0}
           disabled={isDisable}
           placeholder="Giá điện"
           size="large"
@@ -239,8 +254,16 @@ const CreateForm: React.FC = () => {
         label="Giá nước"
         rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
       >
-        <Input
+        <InputNumber<number>
+          formatter={(value) =>
+            `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+          }
+          parser={(value) =>
+            value?.replace(/\$\s?|(,*)/g, '') as unknown as number
+          }
+          addonAfter="VNĐ / người"
           className=" w-[100%]"
+          min={0}
           disabled={isDisable}
           placeholder="Giá nước"
           size="large"
@@ -251,9 +274,18 @@ const CreateForm: React.FC = () => {
         label="Dịch vụ vệ sinh"
         rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
       >
-        <Input
+        <InputNumber<number>
+          formatter={(value) =>
+            `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+          }
+          parser={(value) =>
+            value?.replace(/\$\s?|(,*)/g, '') as unknown as number
+          }
+          addonAfter="VNĐ / phòng"
           disabled={isDisable}
           placeholder="Dịch vụ vệ sinh"
+          className=" w-[100%]"
+          min={0}
           size="large"
         />
       </Form.Item>
@@ -262,8 +294,16 @@ const CreateForm: React.FC = () => {
         label="Gửi xe máy"
         rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
       >
-        <Input
+        <InputNumber<number>
+          formatter={(value) =>
+            `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+          }
+          parser={(value) =>
+            value?.replace(/\$\s?|(,*)/g, '') as unknown as number
+          }
+          addonAfter="VNĐ / xe"
           className=" w-[100%]"
+          min={0}
           disabled={isDisable}
           placeholder="Gửi xe máy"
           size="large"
@@ -274,8 +314,16 @@ const CreateForm: React.FC = () => {
         label="Gửi xe ô tô"
         rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
       >
-        <Input
+        <InputNumber<number>
+          formatter={(value) =>
+            `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+          }
+          parser={(value) =>
+            value?.replace(/\$\s?|(,*)/g, '') as unknown as number
+          }
+          addonAfter="VNĐ / xe"
           className=" w-[100%]"
+          min={0}
           disabled={isDisable}
           placeholder="Gửi xe ô tô"
           size="large"
@@ -287,8 +335,16 @@ const CreateForm: React.FC = () => {
         label="Phí rác thải"
         rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
       >
-        <Input
+        <InputNumber<number>
+          formatter={(value) =>
+            `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+          }
+          parser={(value) =>
+            value?.replace(/\$\s?|(,*)/g, '') as unknown as number
+          }
+          addonAfter="VNĐ / người"
           className=" w-[100%]"
+          min={0}
           disabled={isDisable}
           placeholder="Phí rác thải"
           size="large"
@@ -299,8 +355,16 @@ const CreateForm: React.FC = () => {
         label="Máy giặt"
         rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
       >
-        <Input
+        <InputNumber<number>
+          formatter={(value) =>
+            `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+          }
+          parser={(value) =>
+            value?.replace(/\$\s?|(,*)/g, '') as unknown as number
+          }
+          addonAfter="VNĐ / người"
           className=" w-[100%]"
+          min={0}
           disabled={isDisable}
           placeholder="Máy giặt"
           size="large"
@@ -311,8 +375,16 @@ const CreateForm: React.FC = () => {
         label="Wifi"
         rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
       >
-        <Input
+        <InputNumber<number>
+          formatter={(value) =>
+            `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+          }
+          parser={(value) =>
+            value?.replace(/\$\s?|(,*)/g, '') as unknown as number
+          }
+          addonAfter="VNĐ / người"
           className=" w-[100%]"
+          min={0}
           disabled={isDisable}
           placeholder="Wifi"
           size="large"
@@ -322,7 +394,6 @@ const CreateForm: React.FC = () => {
         name="upload"
         label="Ảnh quảng cáo"
         rules={[
-          { required: true, message: 'Vui lòng tải lên ảnh' },
           {
             validator: () => {
               if (!fileList || fileList.length === 0) {
@@ -331,9 +402,16 @@ const CreateForm: React.FC = () => {
 
               const maxSize = 1024 * 1024 * 1;
               const img = fileList[0];
+              const isPNG =
+                img.type !== 'image/png' && img.type !== 'image/jpeg';
+              if (!isPNG) {
+                return Promise.reject(
+                  new Error('Định dạng ảnh .png hoặc .jpg'),
+                );
+              }
               if (Number(img?.size) > maxSize) {
                 return Promise.reject(
-                  new Error('Kích thước ảnh không được vượt quá 1MB'),
+                  new Error('Kích thước ảnh không được vượt quá 250KB'),
                 );
               }
               new Error('');
@@ -356,7 +434,6 @@ const CreateForm: React.FC = () => {
         name="uploadList"
         label="Ảnh phòng"
         rules={[
-          { required: true, message: 'Vui lòng tải lên ảnh' },
           {
             validator: () => {
               if (!fileImg || fileImg.length === 0) {
@@ -366,8 +443,15 @@ const CreateForm: React.FC = () => {
               const maxSize = 1024 * 1024 * 1;
               for (const item of fileImg) {
                 if (Number(item?.size) > maxSize) {
+                  const isPNG =
+                    item.type !== 'image/png' && item.type !== 'image/jpeg';
+                  if (!isPNG) {
+                    return Promise.reject(
+                      new Error('Định dạng ảnh .png hoặc .jpg'),
+                    );
+                  }
                   return Promise.reject(
-                    new Error('Kích thước mỗi ảnh không được vượt quá 1MB'),
+                    new Error('Kích thước mỗi ảnh không được vượt quá 250 KB'),
                   );
                 }
               }

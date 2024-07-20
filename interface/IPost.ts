@@ -1,3 +1,5 @@
+import { IListUser } from './IListUser';
+
 export interface IPost {
   id: string;
   owner: string;
@@ -13,4 +15,5 @@ export interface IPost {
   priceTags: any;
   pictures: string[];
   postsStatus: number;
+  ownerInformation?: IListUser;
 }

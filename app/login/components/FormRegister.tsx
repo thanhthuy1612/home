@@ -67,7 +67,10 @@ const FormRegister: React.FC = () => {
     >
       <Form.Item<UserFieldType>
         name="fullname"
-        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 64, message: 'Vui lòng nhập ít hơn 64 ký tự' },
+        ]}
       >
         <Input
           disabled={isDisable}
@@ -85,6 +88,7 @@ const FormRegister: React.FC = () => {
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { min: 8, message: 'Mật khẩu phải có ít nhất 8 ký tự' },
+          { max: 32, message: 'Vui lòng nhập ít hơn 32 ký tự' },
         ]}
       >
         <Input
@@ -106,6 +110,7 @@ const FormRegister: React.FC = () => {
             message: 'The input is not valid E-mail!',
           },
           { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 128, message: 'Vui lòng nhập ít hơn 128 ký tự' },
         ]}
       >
         <Input
@@ -121,7 +126,10 @@ const FormRegister: React.FC = () => {
 
       <Form.Item<UserFieldType>
         name="phone"
-        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 15, message: 'Vui lòng nhập ít hơn 15 ký tự' },
+        ]}
       >
         <Input
           disabled={isDisable}
@@ -136,7 +144,10 @@ const FormRegister: React.FC = () => {
 
       <Form.Item<UserFieldType>
         name="facebook"
-        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 256, message: 'Vui lòng nhập ít hơn 256 ký tự' },
+        ]}
       >
         <Input
           disabled={isDisable}
@@ -153,7 +164,10 @@ const FormRegister: React.FC = () => {
 
       <Form.Item<UserFieldType>
         name="zalo"
-        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 64, message: 'Vui lòng nhập ít hơn 64 ký tự' },
+        ]}
       >
         <Input
           disabled={isDisable}

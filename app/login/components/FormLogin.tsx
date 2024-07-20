@@ -58,6 +58,7 @@ const FormLogin: React.FC = () => {
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { min: 8, message: 'Tài khoản phải có ít nhất 8 ký tự' },
+          { max: 32, message: 'Vui lòng nhập ít hơn 32 ký tự' },
         ]}
       >
         <Input
@@ -76,6 +77,7 @@ const FormLogin: React.FC = () => {
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { min: 8, message: 'Mật khẩu phải có ít nhất 8 ký tự' },
+          { max: 32, message: 'Vui lòng nhập ít hơn 32 ký tự' },
         ]}
       >
         <Input.Password
@@ -88,16 +90,6 @@ const FormLogin: React.FC = () => {
           }
         />
       </Form.Item>
-
-      {/* <div className="flex justify-end">
-        <Button
-          disabled={isDisable}
-          type="link"
-          className="!text-colorPrimary hover:!text-colorHover active:!text-colorPrimary"
-        >
-          Quên mật khẩu?
-        </Button>
-      </div> */}
 
       <Form.Item
         style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}

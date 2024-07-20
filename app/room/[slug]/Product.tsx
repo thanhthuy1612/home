@@ -10,6 +10,8 @@ import { listPostStatus, listRoomStatus, listRoomType } from '@/default/list';
 import handlePosts from '@/app/api/HandPosts';
 import Image from 'next/image';
 import Loading from './loading';
+import Info from './Info';
+import { Role } from '@/enum/Role';
 
 export interface IProduct {
   item?: IPost;
@@ -22,6 +24,7 @@ const Product: React.FC<IProduct> = ({ item }) => {
   const [listIntroduce, setListIntroduce] = React.useState<List[]>([]);
 
   const { width } = useAppSelector((state) => state.login);
+  const { role } = useAppSelector((state) => state.user);
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -235,9 +238,12 @@ const Product: React.FC<IProduct> = ({ item }) => {
         >
           <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
           <PriceProduct price={item?.price} priceTag={item?.priceTags} />
-          <ItemProduct list={listIntroduce} />
         </Flex>
       </Flex>
+      <div className=" w-[100%] mt-[24px]">
+        {role === Role.Admin && <Info item={item?.ownerInformation} />}
+        <ItemProduct list={listIntroduce} />
+      </div>
     </Flex>
   );
 };

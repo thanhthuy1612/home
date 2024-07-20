@@ -59,6 +59,7 @@ const PasswordForm: React.FC = () => {
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { min: 8, message: 'Mật khẩu phải có ít nhất 8 ký tự' },
+          { max: 32, message: 'Mật khẩu phải có ít hơn 32 ký tự' },
         ]}
       >
         <Input.Password
@@ -74,6 +75,7 @@ const PasswordForm: React.FC = () => {
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { min: 8, message: 'Mật khẩu phải có ít nhất 8 ký tự' },
+          { max: 32, message: 'Mật khẩu phải có ít hơn 32 ký tự' },
         ]}
       >
         <Input.Password

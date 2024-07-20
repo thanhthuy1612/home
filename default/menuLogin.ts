@@ -46,9 +46,19 @@ export const menuUserActive: MenuLogin[] = [
 
 export const menuAdmin: MenuLogin[] = [
   {
+    key: '/settings/profile',
+    label: 'Thông tin cá nhân',
+    Icon: UserOutlined,
+  },
+  {
     key: '/settings/password',
     label: 'Thay đổi mật khẩu',
     Icon: KeyOutlined,
+  },
+  {
+    key: '/create',
+    label: 'Thêm phòng',
+    Icon: FileAddOutlined,
   },
   {
     key: '/listPost',

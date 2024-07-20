@@ -65,7 +65,10 @@ const ProfileForm: React.FC = () => {
       <Form.Item<UserFieldType>
         name="fullname"
         label="Họ và Tên"
-        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 64, message: 'Vui lòng nhập ít hơn 64 ký tự' },
+        ]}
       >
         <Input disabled={isDisable} placeholder="Họ và tên" size="large" />
       </Form.Item>
@@ -78,6 +81,7 @@ const ProfileForm: React.FC = () => {
             message: 'The input is not valid E-mail!',
           },
           { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 128, message: 'Vui lòng nhập ít hơn 128 ký tự' },
         ]}
       >
         <Input disabled={isDisable} placeholder="Email" size="large" />
@@ -86,7 +90,10 @@ const ProfileForm: React.FC = () => {
       <Form.Item<UserFieldType>
         name="phone"
         label="Số điện thoại"
-        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 15, message: 'Vui lòng nhập ít hơn 15 ký tự' },
+        ]}
       >
         <Input disabled={isDisable} placeholder="Số điện thoại" size="large" />
       </Form.Item>
@@ -94,7 +101,10 @@ const ProfileForm: React.FC = () => {
       <Form.Item<UserFieldType>
         name="facebook"
         label="Link facebook"
-        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 256, message: 'Vui lòng nhập ít hơn 256 ký tự' },
+        ]}
       >
         <Input disabled={isDisable} placeholder="Link facebook" size="large" />
       </Form.Item>
@@ -102,7 +112,10 @@ const ProfileForm: React.FC = () => {
       <Form.Item<UserFieldType>
         name="zalo"
         label="Link zalo"
-        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 64, message: 'Vui lòng nhập ít hơn 64 ký tự' },
+        ]}
       >
         <Input disabled={isDisable} placeholder="Link zalo" size="large" />
       </Form.Item>
