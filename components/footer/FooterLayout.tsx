@@ -15,12 +15,17 @@ const FooterLayout: React.FC = () => {
         <div>Chuyên kênh thông tin phòng trọ cho thuê.</div>
       </div>
       <div className=" min-w-[300px]">
-        <div className=" underline text-[16px] mb-[8px]">Cộng đồng:</div>
+        <div className=" underline text-[16px] mb-[8px]">
+          Nền tảng cộng đồng:
+        </div>
         <div>
           {iconFooter.map((item) => (
             <div
               key={item.title}
               className=" flex cursor-pointer hover:text-colorSelect"
+              onClick={() => {
+                window.location.href = item.href;
+              }}
             >
               <item.Icon className=" mr-[10px]" />
               {item.title}

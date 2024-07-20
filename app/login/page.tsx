@@ -93,6 +93,7 @@ const LoginPage: React.FC = () => {
         borderRadius: borderRadiusLG,
         width: width < 1600 ? '100%' : '800px',
       }}
+      className=' shadow-2xl'
     >
       <Menu
         defaultSelectedKeys={[LoginMenu.LOGIN.toString()]}
@@ -102,6 +103,7 @@ const LoginPage: React.FC = () => {
           backgroundColor: 'transparent',
           borderTopLeftRadius: '0.75rem',
           borderTopRightRadius: '0.75rem',
+          width: '100%',
         }}
         selectedKeys={[auth.toString()]}
         mode="horizontal"

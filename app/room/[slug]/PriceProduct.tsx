@@ -3,34 +3,51 @@
 import { Descriptions, DescriptionsProps } from 'antd';
 import React from 'react';
 export interface IPriceProduct {
-  electric: string;
-  water: string;
-  control: string;
-  bike: string;
-  cost: number;
+  price?: number;
+  priceTag: any;
 }
 const PriceProduct: React.FC<IPriceProduct> = (props) => {
-  const { electric, water, control, bike, cost } = props;
+  const { priceTag, price } = props;
   const items: DescriptionsProps['items'] = [
     {
       key: '1',
       label: 'Giá điện',
-      children: electric,
+      children: `${priceTag['Dien'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / kW`,
     },
     {
       key: '2',
       label: 'Giá nước',
-      children: water,
+      children: `${priceTag['Nuoc'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ/ khối`,
     },
     {
       key: '3',
-      label: 'Phụ phí quản lý',
-      children: control,
+      label: 'Dịch vụ vệ sinh',
+      children: `${priceTag['DichVuVeSinh'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / phòng`,
     },
     {
       key: '4',
-      label: 'Gửi xe',
-      children: bike,
+      label: 'Gửi xe máy',
+      children: `${priceTag['GiuXeMay'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / xe`,
+    },
+    {
+      key: '5',
+      label: 'Gửi ô tô',
+      children: `${priceTag['GiuOto'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / xe`,
+    },
+    {
+      key: '6',
+      label: 'Máy giặt',
+      children: `${priceTag['MayGiat'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / người`,
+    },
+    {
+      key: '7',
+      label: 'Rác thải',
+      children: `${priceTag['RacThai'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / người`,
+    },
+    {
+      key: '8',
+      label: 'Wifi',
+      children: `${priceTag['Wifi'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / người`,
     },
   ];
   return (
@@ -43,7 +60,7 @@ const PriceProduct: React.FC<IPriceProduct> = (props) => {
         GIÁ THUÊ PHÒNG
       </div>
       <div className=" font-[600] text-colorError text-[24px]">
-        {cost / 1000000} triệu / tháng
+        {`${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / tháng
       </div>
     </div>
   );

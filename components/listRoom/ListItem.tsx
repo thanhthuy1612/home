@@ -62,7 +62,9 @@ const ListItem: React.FC<IListItem> = (props) => {
           />
         ),
       }}
-      renderItem={(item) => <Item item={item} role={role} />}
+      renderItem={(item) => (
+        <Item item={item} role={role} fetchData={fetchData} />
+      )}
     />
   );
 };

@@ -16,10 +16,10 @@ class HandAdmin {
     return await axiosAuth.get(`${path}/posts/${id}`);
   };
   activatePost = async (id: string) => {
-    return await axiosAuth.put(`${path}/posts/activate/${id}`);
+    return await axiosAuth.put(`${path}/posts/approve/${id}`);
   };
   inactivatePost = async (id: string) => {
-    return await axiosAuth.put(`${path}/posts/inactivate/${id}`);
+    return await axiosAuth.put(`${path}/posts/hide/${id}`);
   };
   activateUser = async (id: string) => {
     return await axiosAuth.put(`${path}/users/activate/${id}`);

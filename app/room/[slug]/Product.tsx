@@ -1,66 +1,129 @@
 'use client';
 
-import { Descriptions, Flex, Image, DescriptionsProps } from 'antd';
+import { Descriptions, Flex, DescriptionsProps, Modal } from 'antd';
 import React from 'react';
 import ItemProduct, { List } from './ItemProduct';
 import PriceProduct from './PriceProduct';
 import { useAppSelector } from '@/lib/hooks';
+import { IPost } from '@/interface/IPost';
+import { listPostStatus, listRoomStatus, listRoomType } from '@/default/list';
+import handlePosts from '@/app/api/HandPosts';
+import Image from 'next/image';
+import Loading from './loading';
 
-const Product = () => {
+export interface IProduct {
+  item?: IPost;
+}
+
+const Product: React.FC<IProduct> = ({ item }) => {
+  const [img, setImg] = React.useState<string>();
+  const [imgList, setImgList] = React.useState<string[]>([]);
+  const [items, setItems] = React.useState<DescriptionsProps['items']>([]);
+  const [listIntroduce, setListIntroduce] = React.useState<List[]>([]);
+
   const { width } = useAppSelector((state) => state.login);
 
-  const items: DescriptionsProps['items'] = [
-    {
-      key: '1',
-      label: 'Mô tả',
-      children: '1111111111111111111111111111111111111111111111111111111111',
-    },
-    {
-      key: '2',
-      label: 'Địa chỉ',
-      children: '12345',
-    },
-    {
-      key: '3',
-      label: 'Số người',
-      children: 2,
-    },
-  ];
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
-  const listIntroduce: List[] = [
-    {
-      title: 'TIỆN ÍCH PHÒNG',
-      contents: ['Cửa sổ giếng trời', 'WC riêng', 'Wifi'],
-    },
-    {
-      title: 'TIỆN NGHI PHÒNG',
-      contents: ['Bàn ăn', 'Giường', 'Máy lạnh', 'Nệm', 'Tủ đồ', 'Tủ lạnh'],
-    },
-    {
-      title: 'TIỆN NGHI TRONG NHÀ',
-      contents: [
-        'Camera',
-        'Để xe trong nhà',
-        'Khóa vân tay',
-        'Máy giặt chung',
-        'Thang bộ',
-      ],
-    },
-    {
-      title: 'TIỆN ÍCH XUNG QUANH',
-      contents: [
-        'Chợ',
-        'Hàng quán ăn',
-        'Siêu Thị tiện lợi',
-        'Trung Tâm Thương Mại',
-      ],
-    },
-  ];
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  React.useEffect(() => {
+    const getListImg = async () => {
+      let list = [];
+
+      for (var i of item?.pictures ?? []) {
+        const res = await handlePosts.getImg(item?.id ?? '', i ?? '');
+        list.push(res);
+      }
+      return list;
+    };
+    const fetchImg = async () => {
+      setIsLoading(true);
+      const image = await handlePosts.getImg(
+        item?.id ?? '',
+        item?.previewPicture ?? '',
+      );
+      setImg(image);
+      const list = await getListImg();
+      setImgList(list);
+      setIsLoading(false);
+    };
+    fetchImg();
+  }, []);
+
+  React.useEffect(() => {
+    const initState = [
+      {
+        key: '1',
+        label: 'Mô tả',
+        children: item?.description,
+      },
+      {
+        key: '2',
+        label: 'Địa chỉ',
+        children: item?.address,
+      },
+      {
+        key: '3',
+        label: 'Số người tối đa',
+        children: item?.maxPeople,
+      },
+      {
+        key: '5',
+        label: 'Kiểu phòng',
+        children: listRoomType.find((e) => Number(e.value) === item?.roomType)
+          ?.label,
+      },
+      {
+        key: '6',
+        label: 'Trạng thái phòng',
+        children: listRoomStatus.find(
+          (e) => Number(e.value) === item?.roomStatus,
+        )?.label,
+      },
+      {
+        key: '11',
+        label: 'Trạng thái bài đăng',
+        children: listPostStatus.find(
+          (e) => Number(e.value) === item?.postsStatus,
+        )?.label,
+      },
+      {
+        key: '12',
+        label: 'Chủ sở hữu',
+        children: item?.owner,
+      },
+    ];
+    const init: List[] = [
+      {
+        title: 'TIỆN ÍCH PHÒNG',
+        contents: item?.serviceTags['TienIchPhong'],
+      },
+      {
+        title: 'TIỆN NGHI PHÒNG',
+        contents: item?.serviceTags['TienNghiPhong'],
+      },
+      {
+        title: 'TIỆN NGHI TRONG NHÀ',
+        contents: item?.serviceTags['TienIchTrongNha'],
+      },
+      {
+        title: 'TIỆN ÍCH XUNG QUANH',
+        contents: item?.serviceTags['TienIchXungQuanh'],
+      },
+    ];
+    setItems(initState);
+    setListIntroduce(init);
+  }, [item]);
+
   return (
     <Flex className=" flex-col items-center py-[24px] px-[48px]">
       <Flex justify="center">
         <div className=" mb-[24px] font-[600] text-[25px] border-b-[2px] border-colorSelect">
-          Phòng 123
+          {item?.title}
         </div>
       </Flex>
       <Flex
@@ -68,24 +131,111 @@ const Product = () => {
         wrap
         style={{ flexDirection: width < 1600 ? 'column' : 'row' }}
       >
-        <Image
-          height={width < 1600 ? 300 : 500}
-          width={width < 1600 ? 300 : 500}
-          src={'https://randomuser.me/api/portraits/men/18.jpg'}
-        />
         <Flex
-          className=" flex-col justify-between"
+          style={{
+            flexDirection: 'column',
+            width: width < 1600 ? '300px' : '500px',
+          }}
+          gap={20}
+        >
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <>
+              <Image
+                style={{
+                  width: width < 1600 ? `300px` : `500px`,
+                  height: width < 1600 ? `300px` : `500px`,
+                }}
+                height={width < 1600 ? 300 : 500}
+                width={width < 1600 ? 300 : 500}
+                src={img ?? ''}
+                alt="pre"
+                className=" object-cover"
+              />
+              <Flex gap={10} wrap>
+                {(imgList.length <= 2 ? imgList : imgList.slice(2)).map(
+                  (imgItem, index) => (
+                    <Image
+                      key={index}
+                      style={{
+                        width:
+                          width < 1600
+                            ? `${(300 - 20) / 3}px`
+                            : `${(500 - 20) / 3}px`,
+                        height:
+                          width < 1600
+                            ? `${(300 - 20) / 3}px`
+                            : `${(500 - 20) / 3}px`,
+                      }}
+                      height={width < 1600 ? (300 - 20) / 3 : (500 - 20) / 3}
+                      width={width < 1600 ? (300 - 20) / 3 : (500 - 20) / 3}
+                      src={imgItem ?? ''}
+                      alt={index.toString()}
+                      className=" object-cover"
+                    />
+                  ),
+                )}
+                {imgList.length > 2 && (
+                  <div
+                    onClick={showModal}
+                    style={{
+                      width:
+                        width < 1600
+                          ? `${(300 - 20) / 3}px`
+                          : `${(500 - 20) / 3}px`,
+                      height:
+                        width < 1600
+                          ? `${(300 - 20) / 3}px`
+                          : `${(500 - 20) / 3}px`,
+                    }}
+                    className=" bg-borderHeader flex justify-center items-center"
+                  >
+                    Xem thêm
+                  </div>
+                )}
+                <Modal
+                  title="Hình ảnh"
+                  open={isModalOpen}
+                  onCancel={() => {
+                    setIsModalOpen(false);
+                  }}
+                  footer={null}
+                >
+                  <Flex wrap gap={10}>
+                    {[img, ...imgList].map((imgItem, index) => (
+                      <Image
+                        key={index}
+                        style={{
+                          width:
+                            width < 1600
+                              ? `${(300 - 20) / 3}px`
+                              : `${(500 - 20) / 3}px`,
+                          height:
+                            width < 1600
+                              ? `${(300 - 20) / 3}px`
+                              : `${(500 - 20) / 3}px`,
+                        }}
+                        height={width < 1600 ? (300 - 20) / 3 : (500 - 20) / 3}
+                        width={width < 1600 ? (300 - 20) / 3 : (500 - 20) / 3}
+                        src={imgItem ?? ''}
+                        alt={index.toString()}
+                        className=" object-cover"
+                      />
+                    ))}
+                  </Flex>
+                </Modal>
+              </Flex>
+            </>
+          )}
+        </Flex>
+        <Flex
+          className=" flex-col"
           style={{ width: width < 1600 ? '100%' : 'calc(100% - 520px)' }}
         >
           <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
+          <PriceProduct price={item?.price} priceTag={item?.priceTags} />
           <ItemProduct list={listIntroduce} />
-          <PriceProduct
-            cost={4000000}
-            electric=" 4k / kwh"
-            water="150k"
-            control="150k"
-            bike="150k"
-          />
         </Flex>
       </Flex>
     </Flex>

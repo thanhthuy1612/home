@@ -24,6 +24,10 @@ export const iconFooter = [
 
 export const infoFooter = [
   {
+    title: 'Địa chỉ',
+    content: 'abc@gmail.com',
+  },
+  {
     title: 'Số điện thoại',
     content: '+84 123 123 123',
   },

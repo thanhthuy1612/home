@@ -7,7 +7,6 @@ const FormLayout = dynamic(() => import('@/components/layout/FormLayout'), {
   loading: () => <></>,
   ssr: false,
 });
-
 export interface ILayout {
   children: React.ReactNode;
 }

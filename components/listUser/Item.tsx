@@ -97,12 +97,14 @@ const Item: React.FC<IItem> = (props) => {
                 style={{ width: width < 1600 ? '100%' : 'calc(100% - 240px)' }}
               >
                 <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
-                <Flex gap={20}>
-                  <Button onClick={onClick}>Xem danh sách phòng</Button>
-                  <Button onClick={onClickActive}>
-                    {item?.active ? 'Khóa tài khoản' : 'Mở tài khoản'}
-                  </Button>
-                </Flex>
+                {item.role === Role.Saler && (
+                  <Flex gap={20}>
+                    <Button onClick={onClick}>Xem danh sách phòng</Button>
+                    <Button onClick={onClickActive}>
+                      {item?.active ? 'Khóa tài khoản' : 'Mở tài khoản'}
+                    </Button>
+                  </Flex>
+                )}
               </Flex>
             ),
           },

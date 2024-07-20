@@ -9,18 +9,23 @@ import { listPostStatus, listRoomStatus, listRoomType } from '@/default/list';
 import { dateFormat } from '@/utils/useTime';
 import handlePosts from '@/app/api/HandPosts';
 import { Role } from '@/enum/Role';
+import { PostsStatus } from '@/enum/PostStatus';
+import handleAdmin from '@/app/api/HandAdmin';
+import { useNotification } from '@/utils/useNotification';
 
 export interface IItem {
   item: DataType;
   role?: Role;
+  fetchData: (isFirst?: boolean) => Promise<void>;
 }
 const Item: React.FC<IItem> = (props) => {
   const [items, setItems] = React.useState<DescriptionsProps['items']>([]);
   const [img, setImg] = React.useState<string>();
   const { width } = useAppSelector((state) => state.login);
-  const { role, item } = props;
+  const { role, item, fetchData } = props;
 
   const router = useRouter();
+  const { setNotification } = useNotification();
 
   React.useEffect(() => {
     const initState = [
@@ -83,6 +88,54 @@ const Item: React.FC<IItem> = (props) => {
     router.push(`/room/${item?.id}`);
   };
 
+  const activatePost = async () => {
+    const res = await handleAdmin.activatePost(item?.id);
+    const action = async () => {
+      await fetchData(true);
+    };
+    setNotification(res, 'Duyệt bài thành công', action);
+  };
+
+  const inactivatePost = async () => {
+    const res = await handleAdmin.inactivatePost(item?.id);
+    const action = async () => {
+      await fetchData(true);
+    };
+    setNotification(res, 'Ẩn bài thành công', action);
+  };
+
+  const renderBottom = () => {
+    if (!role) {
+      return (
+        <Button
+          type="primary"
+          className=" w-[250px] hover:!bg-colorSelect"
+          onClick={bookRoom}
+        >
+          {`${item?.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / tháng
+        </Button>
+      );
+    }
+    switch (role) {
+      case Role.Saler:
+        return (
+          <Flex gap={20}>
+            <Button>Sửa</Button>
+            <Button>Xóa</Button>
+          </Flex>
+        );
+      case Role.Admin:
+        return (
+          <Flex gap={20}>
+            {item?.postsStatus === PostsStatus.ChoDuyet && (
+              <Button onClick={activatePost}>Duyệt bài</Button>
+            )}
+            <Button onClick={inactivatePost}>Ẩn</Button>
+          </Flex>
+        );
+    }
+  };
+
   React.useEffect(() => {
     const fetchImg = async () => {
       const image = await handlePosts.getImg(item?.id, item?.previewPicture);
@@ -114,20 +167,7 @@ const Item: React.FC<IItem> = (props) => {
           items={items}
           column={{ xs: 1, sm: 1, md: 2 }}
         />
-        {!role ? (
-          <Button
-            type="primary"
-            className=" w-[250px] hover:!bg-colorSelect"
-            onClick={bookRoom}
-          >
-            {`${item?.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / tháng
-          </Button>
-        ) : (
-          <Flex gap={20}>
-            <Button>Sửa</Button>
-            <Button>Xóa</Button>
-          </Flex>
-        )}
+        {renderBottom()}
       </Flex>
     </Flex>
   );
