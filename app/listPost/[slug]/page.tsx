@@ -34,7 +34,7 @@ const ListPost = ({ params }: { params: { slug: string } }) => {
 
   return (
     <div>
-      <FilterAdmin fetchData={fetchData} />
+      <FilterAdmin fetchData={(isFirst?: boolean) => fetchDataAdmin(params?.slug, isFirst)} />
       <ListRoom
         role={Role.Admin}
         title="DANH SÁCH PHÒNG"
