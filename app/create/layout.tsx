@@ -1,5 +1,6 @@
 'use client';
 
+import AuthLayout from '@/components/layout/AuthLayout';
 import dynamic from 'next/dynamic';
 import React from 'react';
 
@@ -13,7 +14,11 @@ export interface ICreateLayout {
 }
 
 const CreateLayout: React.FC<ICreateLayout> = ({ children }) => {
-  return <FormLayout>{children}</FormLayout>;
+  return (
+    <AuthLayout>
+      <FormLayout>{children}</FormLayout>
+    </AuthLayout>
+  );
 };
 
 export default CreateLayout;

@@ -4,6 +4,7 @@ import { theme } from 'antd';
 import React from 'react';
 import Breadcrumb, { ItemType } from 'antd/es/breadcrumb/Breadcrumb';
 import { usePathname } from 'next/navigation';
+import AuthLayout from '@/components/layout/AuthLayout';
 
 export interface ISettingLayout {
   children: React.ReactNode;
@@ -54,18 +55,20 @@ const SettingLayout: React.FC<ISettingLayout> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
   return (
-    <div className=" bg-borderHeader h-[100%] px-[48px] pb-[24px]">
-      <Breadcrumb className="py-[16px]" items={breadcrumb}></Breadcrumb>
-      <div
-        style={{
-          margin: 0,
-          background: colorBgContainer,
-          borderRadius: borderRadiusLG,
-        }}
-      >
-        {children}
+    <AuthLayout>
+      <div className=" bg-borderHeader h-[100%] px-[48px] pb-[24px]">
+        <Breadcrumb className="py-[16px]" items={breadcrumb}></Breadcrumb>
+        <div
+          style={{
+            margin: 0,
+            background: colorBgContainer,
+            borderRadius: borderRadiusLG,
+          }}
+        >
+          {children}
+        </div>
       </div>
-    </div>
+    </AuthLayout>
   );
 };
 

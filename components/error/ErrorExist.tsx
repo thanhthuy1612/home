@@ -15,7 +15,7 @@ const ErrorExist: React.FC = () => {
           className="hover:!bg-colorSelect"
           onClick={() => router.push('/')}
         >
-          Back Home
+          Về trang chủ
         </Button>
       }
     />

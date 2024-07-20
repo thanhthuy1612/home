@@ -36,7 +36,7 @@ const Contact: React.FC = () => {
       ),
     };
     setItem([...listInfo, info]);
-  });
+  }, []);
   return (
     <>
       <div>
