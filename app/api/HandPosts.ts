@@ -21,14 +21,24 @@ class HandlePost {
       },
     });
   };
+  updatePost = async (id: string, formData: FormData) => {
+    return await axiosAuth.post(`${path}/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  };
   getImg = async (id: string, file: string) => {
     const response = await axiosClient.get(`${path}/${id}/${file}`, {
       responseType: 'blob',
     });
-    return URL.createObjectURL(response.data);
+    return URL.createObjectURL(response?.data);
   };
   getPost = async (id: string) => {
     return await axiosClient.get(`${path}/${id}`);
+  };
+  deletePost = async (id: string) => {
+    return await axiosClient.delete(`${path}/${id}`);
   };
 }
 

@@ -1,7 +1,14 @@
 'use client';
 
 import { useAppSelector } from '@/lib/hooks';
-import { Button, Descriptions, DescriptionsProps, Flex, Image } from 'antd';
+import {
+  Button,
+  Descriptions,
+  DescriptionsProps,
+  Flex,
+  Image,
+  Modal,
+} from 'antd';
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { DataType } from '@/lib/features/listRoom';
@@ -12,6 +19,12 @@ import { Role } from '@/enum/Role';
 import { PostsStatus } from '@/enum/PostStatus';
 import handleAdmin from '@/app/api/HandAdmin';
 import { useNotification } from '@/utils/useNotification';
+import dynamic from 'next/dynamic';
+
+const EditPage = dynamic(() => import('./EditPage'), {
+  loading: () => <></>,
+  ssr: false,
+});
 
 export interface IItem {
   item: DataType;
@@ -21,8 +34,21 @@ export interface IItem {
 const Item: React.FC<IItem> = (props) => {
   const [items, setItems] = React.useState<DescriptionsProps['items']>([]);
   const [img, setImg] = React.useState<string>();
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const [open, setOpen] = React.useState(false);
+
   const { width } = useAppSelector((state) => state.login);
   const { role, item, fetchData } = props;
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
 
   const router = useRouter();
   const { setNotification } = useNotification();
@@ -89,25 +115,41 @@ const Item: React.FC<IItem> = (props) => {
   };
 
   const activatePost = async () => {
+    setIsLoading(true);
     const res = await handleAdmin.activatePost(item?.id);
     const action = async () => {
       await fetchData(true);
+      setIsLoading(false);
     };
     setNotification(res, 'Duyệt bài thành công', action);
   };
 
   const inactivatePost = async () => {
+    setIsLoading(true);
     const res = await handleAdmin.inactivatePost(item?.id);
     const action = async () => {
       await fetchData(true);
+      setIsLoading(false);
     };
     setNotification(res, 'Ẩn bài thành công', action);
+  };
+
+  const handleDelete = async () => {
+    setIsLoading(true);
+    const res = await handlePosts.deletePost(item?.id);
+    const action = async () => {
+      await fetchData(true);
+      setIsLoading(false);
+      setIsModalOpen(false);
+    };
+    setNotification(res, 'Xóa bài thành công', action);
   };
 
   const renderBottom = () => {
     if (!role) {
       return (
         <Button
+          disabled={isLoading}
           type="primary"
           className=" w-[250px] hover:!bg-colorSelect"
           onClick={bookRoom}
@@ -120,17 +162,29 @@ const Item: React.FC<IItem> = (props) => {
       case Role.Saler:
         return (
           <Flex gap={20}>
-            <Button>Sửa</Button>
-            <Button>Xóa</Button>
+            <Button onClick={showDrawer}>Sửa</Button>
+            <Button disabled={isLoading} onClick={() => setIsModalOpen(true)}>
+              Xóa
+            </Button>
           </Flex>
         );
       case Role.Admin:
         return (
           <Flex gap={20}>
-            {item?.postsStatus === PostsStatus.ChoDuyet && (
-              <Button onClick={activatePost}>Duyệt bài</Button>
+            {item?.postsStatus !== PostsStatus.DaDuyet && (
+              <Button disabled={isLoading} onClick={activatePost}>
+                {item?.postsStatus !== PostsStatus.DaAn ? 'Duyệt bài' : 'Hiện'}
+              </Button>
             )}
-            <Button onClick={inactivatePost}>Ẩn</Button>
+            {item?.postsStatus !== PostsStatus.DaAn && (
+              <Button disabled={isLoading} onClick={inactivatePost}>
+                Ẩn
+              </Button>
+            )}
+            <Button onClick={showDrawer}>Sửa</Button>
+            <Button disabled={isLoading} onClick={() => setIsModalOpen(true)}>
+              Xóa
+            </Button>
           </Flex>
         );
     }
@@ -169,6 +223,21 @@ const Item: React.FC<IItem> = (props) => {
         />
         {renderBottom()}
       </Flex>
+      {open && <EditPage id={item?.id} open onClose={onClose} />}
+      <Modal
+        title="Hình ảnh"
+        open={isModalOpen}
+        onCancel={() => {
+          setIsModalOpen(false);
+        }}
+        onOk={handleDelete}
+        footer={null}
+      >
+        Bạn muốn xóa bài?
+        <Flex className=" mt-[20px] justify-end w-[100%]">
+          <Button disabled={isLoading}>Xác nhận</Button>
+        </Flex>
+      </Modal>
     </Flex>
   );
 };

@@ -10,11 +10,10 @@ export interface IInfo {
 }
 const Info: React.FC<IInfo> = ({ item }) => {
   const [items, setItems] = React.useState<DescriptionsProps['items']>([]);
-
   React.useEffect(() => {
     const initState = [
       {
-        key: '1',
+        key: '0',
         label: 'Tài khoản',
         children: item?.username,
       },

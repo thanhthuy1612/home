@@ -15,27 +15,29 @@ import {
   Select,
 } from 'antd';
 import React from 'react';
-import dynamic from 'next/dynamic';
 import { listRoomStatus, listRoomType } from '@/default/list';
 import { ServiceType } from '@/enum/ServiceType';
 import { PriceType } from '@/enum/PriceType';
 import { RcFile } from 'antd/es/upload';
-import handlePosts from '../api/HandPosts';
 import { useRouter } from 'next/navigation';
 import { useNotification } from '@/utils/useNotification';
+import handlePosts from '@/app/api/HandPosts';
 
-const HeaderSettings = dynamic(
-  () => import('../settings/components/HeaderSettings'),
-  {
-    loading: () => <></>,
-    ssr: false,
-  },
-);
-
-const CreateForm: React.FC = () => {
+export interface IEditForm {
+  id: string;
+  initData: any;
+  initListImg: UploadFile[];
+  initImg: UploadFile[];
+}
+const EditForm: React.FC<IEditForm> = ({
+  id,
+  initData,
+  initListImg,
+  initImg,
+}) => {
   const [isDisable, setIsDisable] = React.useState<boolean>(false);
-  const [fileList, setFileList] = React.useState<UploadFile[]>([]);
-  const [fileImg, setFileImg] = React.useState<UploadFile[]>([]);
+  const [fileList, setFileList] = React.useState<UploadFile[]>(initImg);
+  const [fileImg, setFileImg] = React.useState<UploadFile[]>(initListImg);
   const [previewImage, setPreviewImage] = React.useState('');
   const [previewOpen, setPreviewOpen] = React.useState(false);
 
@@ -85,7 +87,7 @@ const CreateForm: React.FC = () => {
       formData.append('PriceTags', JSON.stringify(price));
       formData.append('Pictures', JSON.stringify(fileListImg));
 
-      const res = await handlePosts.getCreatePost(formData);
+      const res = await handlePosts.updatePost(id, formData);
       const onSuccess = () => {
         router.push('/');
       };
@@ -117,8 +119,7 @@ const CreateForm: React.FC = () => {
     setPreviewImage(file.url || (file.preview as string));
     setPreviewOpen(true);
   };
-
-  return (
+  const renderForm = () => (
     <Form
       form={form}
       scrollToFirstError
@@ -127,8 +128,8 @@ const CreateForm: React.FC = () => {
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 14 }}
       className=" mx-[16px]"
+      initialValues={initData}
     >
-      <HeaderSettings title="Thêm phòng mới" />
       <Form.Item
         name="name"
         label="Tên phòng"
@@ -538,6 +539,8 @@ const CreateForm: React.FC = () => {
       </Form.Item>
     </Form>
   );
+
+  return renderForm();
 };
 
-export default CreateForm;
+export default EditForm;
