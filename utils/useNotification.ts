@@ -11,7 +11,10 @@ export const useNotification = () => {
     action: () => void,
     error?: string,
   ) => {
-    if (result?.status === IStatusCode.SUCCESS) {
+    if (
+      result?.status === IStatusCode.SUCCESS ||
+      result?.status === IStatusCode.SUCCESS_PUT
+    ) {
       action();
       dispatch(
         updateNotification({

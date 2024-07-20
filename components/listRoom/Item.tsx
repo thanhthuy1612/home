@@ -230,12 +230,11 @@ const Item: React.FC<IItem> = (props) => {
         onCancel={() => {
           setIsModalOpen(false);
         }}
-        onOk={handleDelete}
         footer={null}
       >
         Bạn muốn xóa bài?
         <Flex className=" mt-[20px] justify-end w-[100%]">
-          <Button disabled={isLoading}>Xác nhận</Button>
+          <Button disabled={isLoading} onClick={handleDelete}>Xác nhận</Button>
         </Flex>
       </Modal>
     </Flex>

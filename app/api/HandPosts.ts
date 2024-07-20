@@ -38,7 +38,7 @@ class HandlePost {
     return await axiosClient.get(`${path}/${id}`);
   };
   deletePost = async (id: string) => {
-    return await axiosClient.delete(`${path}/${id}`);
+    return await axiosAuth.delete(`${path}/${id}`);
   };
 }
 
