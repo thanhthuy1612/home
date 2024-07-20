@@ -2,7 +2,7 @@
 
 import { Role } from '@/enum/Role';
 import { IListUser } from '@/interface/IListUser';
-import { Collapse, Descriptions, DescriptionsProps, Flex } from 'antd';
+import { Collapse, Descriptions, DescriptionsProps } from 'antd';
 import React from 'react';
 
 export interface IInfo {

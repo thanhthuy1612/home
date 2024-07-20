@@ -1,6 +1,6 @@
 'use client';
 
-import { Descriptions, DescriptionsProps, Flex } from 'antd';
+import { Descriptions, DescriptionsProps } from 'antd';
 import React from 'react';
 import HeaderSettings from '../settings/components/HeaderSettings';
 import { iconFooter, infoFooter } from '@/default/contactFooter';

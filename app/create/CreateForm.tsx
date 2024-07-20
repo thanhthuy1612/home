@@ -260,7 +260,7 @@ const CreateForm: React.FC = () => {
           parser={(value) =>
             value?.replace(/\$\s?|(,*)/g, '') as unknown as number
           }
-          addonAfter="VNĐ / người"
+          addonAfter="VNĐ / khối"
           className=" w-[100%]"
           min={0}
           disabled={isDisable}

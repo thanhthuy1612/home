@@ -2,8 +2,7 @@
 
 import { Descriptions, Flex, DescriptionsProps, Modal } from 'antd';
 import React from 'react';
-import ItemProduct, { List } from './ItemProduct';
-import PriceProduct from './PriceProduct';
+import { List } from './ItemProduct';
 import { useAppSelector } from '@/lib/hooks';
 import { IPost } from '@/interface/IPost';
 import { listPostStatus, listRoomStatus, listRoomType } from '@/default/list';
@@ -12,11 +11,23 @@ import Image from 'next/image';
 import Loading from './loading';
 import Info from './Info';
 import { Role } from '@/enum/Role';
+import dynamic from 'next/dynamic';
 
 export interface IProduct {
   item?: IPost;
 }
-
+const Contact = dynamic(() => import('./Contact'), {
+  loading: () => <></>,
+  ssr: false,
+});
+const ItemProduct = dynamic(() => import('./ItemProduct'), {
+  loading: () => <></>,
+  ssr: false,
+});
+const PriceProduct = dynamic(() => import('./PriceProduct'), {
+  loading: () => <></>,
+  ssr: false,
+});
 const Product: React.FC<IProduct> = ({ item }) => {
   const [img, setImg] = React.useState<string>();
   const [imgList, setImgList] = React.useState<string[]>([]);
@@ -238,6 +249,7 @@ const Product: React.FC<IProduct> = ({ item }) => {
         >
           <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
           <PriceProduct price={item?.price} priceTag={item?.priceTags} />
+          <Contact />
         </Flex>
       </Flex>
       <div className=" w-[100%] mt-[24px]">
