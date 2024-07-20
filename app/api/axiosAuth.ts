@@ -5,10 +5,7 @@ const axiosAuth = axios.create({ baseURL: baseURL });
 
 axiosAuth.interceptors.request.use(async (config: any) => {
   const accessToken = localStorage.getItem('token');
-  const content = JSON.stringify(config?.data);
-  const contentLength = content.length;
   (config.headers = {
-    'Content-Length': contentLength,
     'Content-Type': 'application/json',
     Authorization: `Bearer ${accessToken}`,
     ...config.headers,
