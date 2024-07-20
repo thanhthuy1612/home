@@ -4,7 +4,11 @@ import { baseURL } from './url';
 const axiosClient = axios.create({ baseURL: baseURL });
 
 axiosClient.interceptors.request.use(async (config: any) => {
+  const content = JSON.stringify(config?.data);
+  const contentLength = content.length;
   (config.headers = {
+    'Content-Length': contentLength,
+    'Content-Type': 'application/json',
     ...config.headers,
   }),
     config?.data;
