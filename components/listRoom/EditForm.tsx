@@ -590,7 +590,7 @@ const EditForm: React.FC<IEditForm> = ({
             <Checkbox value="Hàng quán ăn">Hàng quán ăn</Checkbox>
             <Checkbox value="Siêu Thị tiện lợi">Siêu Thị tiện lợi</Checkbox>
             <Checkbox value="'Trung Tâm Thương Mại">
-              'Trung Tâm Thương Mại
+              Trung Tâm Thương Mại
             </Checkbox>
           </Flex>
         </Checkbox.Group>
