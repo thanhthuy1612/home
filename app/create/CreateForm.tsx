@@ -13,13 +13,10 @@ import {
   UploadProps,
   Image,
   Select,
-  Cascader,
 } from 'antd';
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { listRoomStatus, listRoomTypeCreate } from '@/default/list';
-import { ServiceType } from '@/enum/ServiceType';
-import { PriceType } from '@/enum/PriceType';
 import { RcFile } from 'antd/es/upload';
 import handlePosts from '../api/HandPosts';
 import { useRouter } from 'next/navigation';
@@ -239,7 +236,7 @@ const CreateForm: React.FC = () => {
         <Input
           className=" w-[100%]"
           disabled={isDisable}
-          placeholder="Địa chỉ"
+          placeholder="Số nhà"
           size="large"
         />
       </Form.Item>
