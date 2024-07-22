@@ -7,7 +7,10 @@ export interface IAuthLayoutProps {
 
 const AuthLayout: React.FC<IAuthLayoutProps> = ({ children }) => {
   // Perform localStorage action
-  const accessToken = localStorage?.getItem('token');
+  let accessToken;
+  if (typeof window !== 'undefined') {
+    accessToken = localStorage?.getItem('token');
+  }
   return !accessToken ? <ErrorAuthorized /> : children;
 };
 
