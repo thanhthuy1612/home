@@ -24,6 +24,15 @@ export const listRoomType: ISelected[] = [
   { value: '6', label: 'Căn hộ' },
 ];
 
+export const listRoomTypeCreate: ISelected[] = [
+  { value: '1', label: 'Phòng trọ' },
+  { value: '2', label: 'Chung cư' },
+  { value: '3', label: 'Ký túc xá' },
+  { value: '4', label: 'Nhà nguyên căn' },
+  { value: '5', label: 'Văn phòng' },
+  { value: '6', label: 'Căn hộ' },
+];
+
 export const listRoomStatus: ISelected[] = [
   { value: '1', label: 'Còn phòng trống' },
   { value: '10', label: 'Sắp có phòng trống' },

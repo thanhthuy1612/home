@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { baseURL } from './url';
 
-const axiosClient = axios.create({ baseURL: baseURL });
+const axiosClient = axios.create({ baseURL: process.env.BASE_URL });
 
 axiosClient.interceptors.request.use(async (config: any) => {
   (config.headers = {

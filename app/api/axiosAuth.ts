@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { baseURL } from './url';
 
-const axiosAuth = axios.create({ baseURL: baseURL });
+const axiosAuth = axios.create({ baseURL: process.env.BASE_URL });
 
 axiosAuth.interceptors.request.use(async (config: any) => {
   const accessToken = localStorage.getItem('token');

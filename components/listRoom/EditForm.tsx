@@ -15,13 +15,14 @@ import {
   Select,
 } from 'antd';
 import React from 'react';
-import { listRoomStatus, listRoomType } from '@/default/list';
-import { ServiceType } from '@/enum/ServiceType';
-import { PriceType } from '@/enum/PriceType';
+import { listRoomStatus, listRoomTypeCreate } from '@/default/list';
 import { RcFile } from 'antd/es/upload';
 import { useRouter } from 'next/navigation';
 import { useNotification } from '@/utils/useNotification';
 import handlePosts from '@/app/api/HandPosts';
+import { defaultCity, hcm, hn } from '@/default/city';
+import { ISelected } from '@/interface/ISelected';
+import HeaderSettings from '@/app/settings/components/HeaderSettings';
 
 export interface IEditForm {
   id: string;
@@ -40,32 +41,50 @@ const EditForm: React.FC<IEditForm> = ({
   const [fileImg, setFileImg] = React.useState<UploadFile[]>(initListImg);
   const [previewImage, setPreviewImage] = React.useState('');
   const [previewOpen, setPreviewOpen] = React.useState(false);
+  const [listQuan, setListQuan] = React.useState<ISelected[]>([]);
+  const [city, setCity] = React.useState(undefined);
 
   const [form] = Form.useForm();
   const router = useRouter();
   const { setNotification } = useNotification();
+
+  React.useEffect(() => {
+    switch (form.getFieldsValue().city) {
+      case 'Hà Nội':
+        setListQuan(hn);
+        break;
+      case 'Hồ Chí Minh':
+        setListQuan(hcm);
+        break;
+      default:
+        setListQuan([]);
+        break;
+    }
+  }, [city]);
 
   const onFinish: FormProps['onFinish'] = async (values) => {
     if (fileList.length > 0 && fileImg.length > 0) {
       setIsDisable(true);
       const formData = new FormData();
       const service = {
-        [ServiceType.TienIchPhong]: values.tienIchPhong ?? [],
-        [ServiceType.TienNghiPhong]: values.tienNghiPhong ?? [],
-        [ServiceType.TienIchTrongNha]: values.tienIchTrongNha ?? [],
-        [ServiceType.TienIchXungQuanh]: values.tienIchXungQuanh ?? [],
+        TienIchPhong: values.tienIchPhong ?? [],
+        TienNghiPhong: values.tienNghiPhong ?? [],
+        TienIchTrongNha: values.tienIchTrongNha ?? [],
+        TienIchXungQuanh: values.tienIchXungQuanh ?? [],
       };
 
       const price = {
-        [PriceType.Dien]: values.electric,
-        [PriceType.Nuoc]: values.water,
-        [PriceType.DichVuVeSinh]: values.control,
-        [PriceType.RacThai]: values.rash,
-        [PriceType.GiuXeMay]: values.bike,
-        [PriceType.GiuOto]: values.oto,
-        [PriceType.MayGiat]: values.wash,
-        [PriceType.Wifi]: values.wifi,
+        Dien: values.electric,
+        Nuoc: values.water,
+        DichVuVeSinh: values.control,
+        RacThai: values.rash,
+        GiuXeMay: values.bike,
+        GiuOto: values.oto,
+        MayGiat: values.wash,
+        Wifi: values.wifi,
       };
+
+      const address = `${values.address}, ${values.quan}, ${values.city}`;
 
       const fileListImg = fileImg.reduce((res: File[], item) => {
         const file = (item as UploadFile).originFileObj as File;
@@ -78,7 +97,7 @@ const EditForm: React.FC<IEditForm> = ({
         'PreviewPicture',
         (fileList[0] as UploadFile).originFileObj as File,
       );
-      formData.append('Address', values.address);
+      formData.append('Address', address);
       formData.append('MaxPeople', values.people);
       formData.append('Price', values.price);
       formData.append('RoomType', values.roomType);
@@ -130,9 +149,11 @@ const EditForm: React.FC<IEditForm> = ({
       className=" mx-[16px]"
       initialValues={initData}
     >
+      <HeaderSettings title="Thêm phòng mới" />
       <Form.Item
         name="name"
         label="Tên phòng"
+        tooltip="Yêu cầu nhập ít hơn 255 ký tự"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { max: 255, message: 'Vui lòng nhập ít hơn 255 ký tự' },
@@ -163,6 +184,7 @@ const EditForm: React.FC<IEditForm> = ({
       <Form.Item
         name="description"
         label="Mô tả"
+        tooltip="Yêu cầu nhập ít hơn 4000 ký tự"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { max: 4000, message: 'Vui lòng nhập ít hơn 4000 ký tự' },
@@ -176,17 +198,48 @@ const EditForm: React.FC<IEditForm> = ({
         />
       </Form.Item>
       <Form.Item
+        name="city"
+        label="Thành phố/Tỉnh"
+        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+      >
+        <Select
+          className=" w-[100%]"
+          disabled={isDisable}
+          placeholder="Thành phố/Tỉnh"
+          options={defaultCity}
+          value={city}
+          onChange={(value) => {
+            setListQuan([]);
+            form.setFieldValue('quan', undefined);
+            setCity(value);
+          }}
+        />
+      </Form.Item>
+      <Form.Item
+        name="quan"
+        label="Quận/Huyện"
+        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+      >
+        <Select
+          className=" w-[100%]"
+          disabled={isDisable || listQuan.length === 0}
+          placeholder="Quận/Huyện"
+          options={listQuan}
+        />
+      </Form.Item>
+      <Form.Item
         name="address"
-        label="Địa chỉ"
+        label="Số nhà"
+        tooltip="Yêu cầu nhập ít hơn 124 ký tự"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
-          { max: 255, message: 'Vui lòng nhập ít hơn 255 ký tự' },
+          { max: 124, message: 'Vui lòng nhập ít hơn 124 ký tự' },
         ]}
       >
         <Input
           className=" w-[100%]"
           disabled={isDisable}
-          placeholder="Địa chỉ"
+          placeholder="Số nhà"
           size="large"
         />
       </Form.Item>
@@ -198,7 +251,7 @@ const EditForm: React.FC<IEditForm> = ({
         <InputNumber
           className=" w-[100%]"
           disabled={isDisable}
-          placeholder="0"
+          placeholder="Số người tối đa"
           addonAfter="Người"
           min={1}
           max={10}
@@ -214,7 +267,7 @@ const EditForm: React.FC<IEditForm> = ({
           className=" w-[100%]"
           disabled={isDisable}
           placeholder="Phân loại"
-          options={listRoomType}
+          options={listRoomTypeCreate}
         />
       </Form.Item>
       <Form.Item
@@ -393,14 +446,19 @@ const EditForm: React.FC<IEditForm> = ({
       <Form.Item
         name="upload"
         label="Ảnh quảng cáo"
+        tooltip="Yêu cầu tải ảnh kích thước nhỏ hơn 250KB, định dạng .png hoặc .jpg"
         rules={[
+          { required: true, message: 'Vui lòng tải lên ảnh' },
           {
             validator: () => {
-              if (!fileList || fileList.length === 0) {
+              if (!fileList) {
+                return Promise.resolve();
+              }
+              if (fileList.length === 0) {
                 return Promise.reject(new Error('Vui lòng tải lên ảnh'));
               }
 
-              const maxSize = 1024 * 1024 * 1;
+              const maxSize = 1024 * 250;
               const img = fileList[0];
               const isPNG =
                 img.type === 'image/png' || img.type === 'image/jpeg';
@@ -433,14 +491,19 @@ const EditForm: React.FC<IEditForm> = ({
       <Form.Item
         name="uploadList"
         label="Ảnh phòng"
+        tooltip="Yêu cầu tải nhiều nhất 5 ảnh, kích thuớc mối ảnh nhỏ hơn 250KB, định dạng .png hoặc .jpg"
         rules={[
+          { required: true, message: 'Vui lòng tải lên ảnh' },
           {
             validator: () => {
-              if (!fileImg || fileImg.length === 0) {
+              if (!fileImg) {
+                return Promise.resolve();
+              }
+              if (fileImg.length === 0) {
                 return Promise.reject(new Error('Vui lòng tải lên ảnh'));
               }
 
-              const maxSize = 1024 * 1024 * 1;
+              const maxSize = 1024 * 250;
               for (const item of fileImg) {
                 if (Number(item?.size) > maxSize) {
                   const isPNG =

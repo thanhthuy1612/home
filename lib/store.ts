@@ -5,6 +5,7 @@ import loginSlice from './features/login';
 import userSlice from './features/user';
 import listRoomSlice from './features/listRoom';
 import listUserSlice from './features/listUser';
+import contactSlice from './features/contact';
 
 export const makeStore = () => {
   return configureStore({
@@ -15,6 +16,7 @@ export const makeStore = () => {
       user: userSlice,
       listRoom: listRoomSlice,
       listUser: listUserSlice,
+      contact: contactSlice,
     },
   });
 };

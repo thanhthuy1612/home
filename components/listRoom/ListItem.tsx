@@ -41,9 +41,15 @@ const ListItem: React.FC<IListItem> = (props) => {
         <Button
           disabled={isLoadingListRoom}
           className=" w-[200px]"
-          onClick={onLoadMore}
+          onClick={
+            isLoadingListRoom && listRoom.length !== 0 ? () => {} : onLoadMore
+          }
         >
-          {isLoadingListRoom ? <LoadingSpin /> : 'Xem thêm'}
+          {isLoadingListRoom && listRoom.length !== 0 ? (
+            <LoadingSpin />
+          ) : (
+            'Xem thêm'
+          )}
         </Button>
       </div>
     ) : null;

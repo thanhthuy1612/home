@@ -1,10 +1,59 @@
 'use client';
 
 import React from 'react';
-import { iconFooter, infoFooter } from '@/default/contactFooter';
-import { HomeOutlined } from '@ant-design/icons';
+import {
+  FacebookOutlined,
+  HomeOutlined,
+  LinkOutlined,
+  MailOutlined,
+  PhoneOutlined,
+} from '@ant-design/icons';
+import handlePosts from '@/app/api/HandPosts';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { IContactData, updateContact } from '@/lib/features/contact';
+import { Flex } from 'antd';
 
 const FooterLayout: React.FC = () => {
+  const { data } = useAppSelector((state) => state.contact);
+  const dispatch = useAppDispatch();
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const res = await handlePosts.getContact();
+      const initData: IContactData[] = [
+        {
+          title: 'Email',
+          Icon: MailOutlined,
+          content: res?.data?.email,
+          onClick: () => {
+            window.location.href = `mailto:${res?.data?.email}`;
+          },
+        },
+        {
+          title: 'Phone',
+          Icon: PhoneOutlined,
+          content: res?.data?.phone,
+        },
+        {
+          title: 'Facebook',
+          Icon: FacebookOutlined,
+          content: res?.data?.facebook,
+          onClick: () => {
+            if (res?.data?.facebook) {
+              window.location.href = res?.data?.facebook;
+            }
+          },
+        },
+        {
+          title: 'Zalo',
+          Icon: LinkOutlined,
+          content: res?.data?.zalo,
+        },
+      ];
+      dispatch(updateContact(initData));
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className=" border-[1px] text-bgColor border-borderHeader bg-colorPrimary flex flex-wrap gap-[30px] justify-between px-[48px] py-[24px]">
       <div className=" min-w-[300px]">
@@ -16,34 +65,21 @@ const FooterLayout: React.FC = () => {
       </div>
       <div className=" min-w-[300px]">
         <div className=" underline text-[16px] mb-[8px]">
-          Nền tảng cộng đồng:
-        </div>
-        <div>
-          {iconFooter.map((item) => (
-            <div
-              key={item.title}
-              className=" flex cursor-pointer hover:text-colorSelect"
-              onClick={() => {
-                window.location.href = item.href;
-              }}
-            >
-              <item.Icon className=" mr-[10px]" />
-              {item.title}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className=" min-w-[300px]">
-        <div className=" underline text-[16px] mb-[8px]">
           Thông tin liên lạc:
         </div>
-        <div>
-          {infoFooter.map((item) => (
-            <div key={item.title}>
-              {item.title}: {item.content}
+        {data.map((item: IContactData) => (
+          <Flex key={item.title} gap={5}>
+            <Flex gap={10}>
+              <item.Icon /> <span>{item.title}:</span>
+            </Flex>
+            <div
+              className={` ml-10px ${item?.onClick && 'cursor-pointer hover:text-colorSelect'}`}
+              onClick={item?.onClick}
+            >
+              {item.content}
             </div>
-          ))}
-        </div>
+          </Flex>
+        ))}
       </div>
     </div>
   );

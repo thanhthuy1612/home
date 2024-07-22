@@ -62,11 +62,22 @@ const EditPage: React.FC<IEditPage> = ({ id, open, onClose }) => {
         setInitImg(img);
         const list = await getListImg(res?.data);
         setInitListImg(list);
-        console.log(res?.data?.priceTags, res.data);
+        const arrayAddress = res?.data?.address?.toString().split(', ');
+        let address = res?.data?.address;
+        let city = undefined;
+        let quan = undefined;
+        if (arrayAddress.length > 2) {
+          city = arrayAddress[arrayAddress.length - 1];
+          quan = arrayAddress[arrayAddress.length - 2];
+
+          address = arrayAddress.slice(0, arrayAddress.length - 2).join(', ');
+        }
         const init = {
           name: res?.data?.title,
           description: res?.data?.description,
-          address: res?.data?.address,
+          address,
+          city,
+          quan,
           people: res?.data?.maxPeople,
           price: res?.data?.price,
           roomType: res?.data?.roomType.toString(),

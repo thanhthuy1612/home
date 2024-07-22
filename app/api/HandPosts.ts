@@ -32,13 +32,16 @@ class HandlePost {
     const response = await axiosClient.get(`${path}/${id}/${file}`, {
       responseType: 'blob',
     });
-    return URL.createObjectURL(response?.data);
+    return URL?.createObjectURL(response?.data);
   };
   getPost = async (id: string) => {
     return await axiosClient.get(`${path}/${id}`);
   };
   deletePost = async (id: string) => {
     return await axiosAuth.delete(`${path}/${id}`);
+  };
+  getContact = async () => {
+    return await axiosClient.get(`${path}/contact`);
   };
 }
 

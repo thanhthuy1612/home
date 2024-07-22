@@ -56,7 +56,7 @@ const SettingLayout: React.FC<ISettingLayout> = ({ children }) => {
   }, [pathname]);
   return (
     <AuthLayout>
-      <div className=" bg-borderHeader h-[100%] px-[48px] pb-[24px]">
+      <div className=" bg-bg-color px-[48px] pb-[24px]">
         <Breadcrumb className="py-[16px]" items={breadcrumb}></Breadcrumb>
         <div
           style={{
@@ -64,6 +64,7 @@ const SettingLayout: React.FC<ISettingLayout> = ({ children }) => {
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
           }}
+          className=" shadow-2xl"
         >
           {children}
         </div>
