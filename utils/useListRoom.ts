@@ -44,6 +44,12 @@ export const useListRoom = () => {
   };
   const fetchData = async (isFirst?: boolean) => {
     dispatch(updateIsLoadingListRoom(true));
+    if (isFirst) {
+      dispatch(updateIsInitLoadingListRoom(true));
+      updateListRoom([]);
+      dispatch(updateTotalListRoom(0));
+      dispatch(updatePageNumberListRoom(0));
+    }
     const res = await handlePosts.getListPosts({
       index: isFirst ? 1 : pageNumberListRoom,
       size: defaultPageSize,
@@ -68,6 +74,12 @@ export const useListRoom = () => {
 
   const fetchDataPostMe = async (isFirst?: boolean) => {
     dispatch(updateIsLoadingListRoom(true));
+    if (isFirst) {
+      dispatch(updateIsInitLoadingListRoom(true));
+      updateListRoom([]);
+      dispatch(updateTotalListRoom(0));
+      dispatch(updatePageNumberListRoom(0));
+    }
     const res = await handlePosts.getMePosts({
       index: isFirst ? 1 : pageNumberListRoom,
       size: defaultPageSize,
@@ -87,6 +99,12 @@ export const useListRoom = () => {
 
   const fetchDataAdmin = async (ownerId: string | null, isFirst?: boolean) => {
     dispatch(updateIsLoadingListRoom(true));
+    if (isFirst) {
+      dispatch(updateIsInitLoadingListRoom(true));
+      updateListRoom([]);
+      dispatch(updateTotalListRoom(0));
+      dispatch(updatePageNumberListRoom(0));
+    }
     const res = await handleAdmin.getListPostAdmin({
       index: isFirst ? 1 : pageNumberListRoom,
       size: defaultPageSize,

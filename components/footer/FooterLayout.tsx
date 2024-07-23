@@ -60,7 +60,7 @@ const FooterLayout: React.FC = () => {
       <div className=" min-w-[300px]">
         <div className=" text-[25px] font-[600] flex items-center mb-[8px]">
           <HomeOutlined className=" text-bgColor mr-[10px]" />
-          HOME.VM
+          TROSINHVIEN.VM
         </div>
         <div>Chuyên kênh thông tin phòng trọ cho thuê.</div>
       </div>

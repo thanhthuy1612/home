@@ -1,13 +1,12 @@
 'use client';
 
-import { Descriptions, Flex, DescriptionsProps, Modal } from 'antd';
+import { Descriptions, Flex, DescriptionsProps, Modal, Image } from 'antd';
 import React from 'react';
 import { List } from './ItemProduct';
 import { useAppSelector } from '@/lib/hooks';
 import { IPost } from '@/interface/IPost';
 import { listPostStatus, listRoomStatus, listRoomType } from '@/default/list';
 import handlePosts from '@/app/api/HandPosts';
-import Image from 'next/image';
 import Loading from './loading';
 import Info from './Info';
 import { Role } from '@/enum/Role';
@@ -66,7 +65,7 @@ const Product: React.FC<IProduct> = ({ item }) => {
       setIsLoading(false);
     };
     fetchImg();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {

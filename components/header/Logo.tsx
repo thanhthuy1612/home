@@ -4,8 +4,10 @@ import React from 'react';
 const Logo: React.FC = () => {
   return (
     <Flex className=" items-center w-fit">
-      <div className=" text-colorPrimary text-[30px] font-[600]">HOME</div>
-      <div className=" text-colorSelect text-[30px] font-[600]">.VN</div>
+      <div className=" text-colorPrimary text-[25px] font-[600]">
+        TROSINHVIEN
+      </div>
+      <div className=" text-colorSelect text-[25px] font-[600]">.VN</div>
     </Flex>
   );
 };

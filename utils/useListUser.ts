@@ -18,6 +18,12 @@ export const useListUser = () => {
 
   const fetchDataUser = async (isFirst?: boolean) => {
     dispatch(updateIsLoadingListUser(true));
+    if (isFirst) {
+      dispatch(updateIsInitLoadingListUser(true));
+      dispatch(updateTotalListUser(0));
+      dispatch(updatePageNumberListUser(0));
+      updateListUser([]);
+    }
     const res = await handleAdmin.getListUserAdmin({
       index: isFirst ? 1 : pageNumberListUser,
       size: defaultPageSize,

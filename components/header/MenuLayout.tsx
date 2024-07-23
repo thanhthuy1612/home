@@ -45,7 +45,10 @@ const MenuHeader: React.FC = () => {
     return {
       key: item.url,
       label: <Label title={item.title} />,
-      onClick: () => router.push(item.url),
+      onClick: () => {
+        router.push(item.url);
+        setCollapsed(!collapsed);
+      },
       style: { display: 'flex', alignItems: 'center' },
     };
   });
@@ -63,7 +66,7 @@ const MenuHeader: React.FC = () => {
           </Button>
           <Drawer
             placement="left"
-            title="HOME.VN"
+            title="TROSINHVIEN.VN"
             onClose={() => setCollapsed(false)}
             open={collapsed}
           >

@@ -446,7 +446,7 @@ const EditForm: React.FC<IEditForm> = ({
       </Form.Item>
       <Form.Item
         name="upload"
-        label="Ảnh quảng cáo"
+        label="Ảnh bìa"
         tooltip="Yêu cầu tải ảnh kích thước nhỏ hơn 250KB, định dạng .png hoặc .jpg"
         rules={[
           { required: true, message: 'Vui lòng tải lên ảnh' },

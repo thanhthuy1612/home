@@ -65,7 +65,7 @@ const Info: React.FC<IInfo> = ({ item }) => {
         items={[
           {
             key: item?.id,
-            label: 'Thông tin liên lạc',
+            label: 'Thông tin liên lạc người đăng bài',
             children: (
               <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
             ),

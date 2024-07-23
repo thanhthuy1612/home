@@ -228,7 +228,7 @@ const Item: React.FC<IItem> = (props) => {
           items={items}
           column={{ xs: 1, sm: 1, md: 2 }}
         />
-        {renderBottom()}
+        <div className='mt-[10px]'>{renderBottom()}</div>
       </Flex>
       {open && <EditPage id={item?.id} open onClose={onClose} />}
       <Modal
