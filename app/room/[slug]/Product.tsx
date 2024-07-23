@@ -66,6 +66,7 @@ const Product: React.FC<IProduct> = ({ item }) => {
       setIsLoading(false);
     };
     fetchImg();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {

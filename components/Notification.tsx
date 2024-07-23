@@ -57,6 +57,7 @@ export default function Notification({
       };
       openNotification();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notificationInfo]);
 
   const contextValue = React.useMemo(() => ({ name: 'notification' }), []);

@@ -34,6 +34,7 @@ const Home: React.FC = () => {
       fetchData(true);
     };
     initData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

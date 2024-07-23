@@ -108,6 +108,7 @@ const Item: React.FC<IItem> = (props) => {
           ]
         : initState,
     );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item]);
 
   const bookRoom = () => {
@@ -204,7 +205,13 @@ const Item: React.FC<IItem> = (props) => {
       wrap
       gap={20}
     >
-      <Image width={200} height={200} className=" object-cover" src={img} />
+      <Image
+        width={200}
+        height={200}
+        className=" object-cover"
+        src={img}
+        alt="img"
+      />
       <Flex
         className=" flex-col justify-between"
         style={{ width: width < 1600 ? '100%' : 'calc(100% - 240px)' }}
@@ -234,7 +241,9 @@ const Item: React.FC<IItem> = (props) => {
       >
         Bạn muốn xóa bài?
         <Flex className=" mt-[20px] justify-end w-[100%]">
-          <Button disabled={isLoading} onClick={handleDelete}>Xác nhận</Button>
+          <Button disabled={isLoading} onClick={handleDelete}>
+            Xác nhận
+          </Button>
         </Flex>
       </Modal>
     </Flex>

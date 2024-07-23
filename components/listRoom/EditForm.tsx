@@ -60,6 +60,7 @@ const EditForm: React.FC<IEditForm> = ({
         setListQuan([]);
         break;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [city]);
 
   const onFinish: FormProps['onFinish'] = async (values) => {
@@ -543,6 +544,7 @@ const EditForm: React.FC<IEditForm> = ({
             afterOpenChange: (visible) => !visible && setPreviewImage(''),
           }}
           src={previewImage}
+          alt='pre'
         />
       )}
       <Form.Item name="tienIchPhong" label="Tiện ích phòng">

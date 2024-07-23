@@ -30,6 +30,7 @@ const ListPost = () => {
       fetchDataAdmin(null, true);
     };
     initData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

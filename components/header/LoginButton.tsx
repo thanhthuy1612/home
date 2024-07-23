@@ -47,6 +47,9 @@ const LoginButton: React.FC = () => {
       localStorage.clear();
     }
     dispatch(updateIsLoadingPage(false));
+    1;
+    dispatch(updateIsLoadingPage(false));
+    1;
   }
 
   React.useEffect(() => {
@@ -65,10 +68,18 @@ const LoginButton: React.FC = () => {
       );
     };
     id && checkMenu();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   React.useEffect(() => {
-    isConnected();
+    let accessToken;
+    if (typeof window !== 'undefined') {
+      accessToken = localStorage?.getItem('token');
+    }
+    if (accessToken) {
+      isConnected();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleMenuClick: MenuProps['onClick'] = (e) => {

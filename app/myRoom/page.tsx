@@ -20,6 +20,7 @@ const MyRoom: React.FC = () => {
       fetchDataPostMe(true);
     };
     initData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

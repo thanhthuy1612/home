@@ -30,6 +30,7 @@ const ListPost = ({ params }: { params: { slug: string } }) => {
       fetchDataAdmin(params?.slug, true);
     };
     params?.slug && initData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params?.slug]);
 
   return (

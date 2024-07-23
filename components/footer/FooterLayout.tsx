@@ -52,6 +52,7 @@ const FooterLayout: React.FC = () => {
       dispatch(updateContact(initData));
     };
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

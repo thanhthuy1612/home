@@ -28,6 +28,7 @@ const ListUserPage: React.FC = () => {
       fetchDataUser(true);
     };
     initData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

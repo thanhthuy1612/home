@@ -57,6 +57,7 @@ const CreateForm: React.FC = () => {
         setListQuan([]);
         break;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [city]);
 
   const onFinish: FormProps['onFinish'] = async (values) => {
@@ -540,6 +541,7 @@ const CreateForm: React.FC = () => {
             afterOpenChange: (visible) => !visible && setPreviewImage(''),
           }}
           src={previewImage}
+          alt='previewImage'
         />
       )}
       <Form.Item name="tienIchPhong" label="Tiện ích phòng">
