@@ -9,7 +9,7 @@ export const introduce = [
     title: 'Đối Với Chủ Cho Thuê',
     contents: [
       'Cung cấp nền tảng quản lý kinh doanh và vận hành hiệu quả',
-      'Cung cấp gói marketing và giải pháp bán hàng. ( Phù hợp với các chủ hệ thống )',
+      'Cung cấp gói marketing và giải pháp bán hàng. (Phù hợp với các chủ hệ thống)',
       'Tư vấn đầu tư xây dựng nhà trọ, căn hộ dịch vụ',
     ],
   },
