@@ -65,6 +65,7 @@ const ProfileForm: React.FC = () => {
       <Form.Item<UserFieldType>
         name="fullname"
         label="Họ và Tên"
+        tooltip="Yêu cầu nhập ký tự ít hơn 64"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { max: 64, message: 'Vui lòng nhập ít hơn 64 ký tự' },
@@ -75,6 +76,7 @@ const ProfileForm: React.FC = () => {
       <Form.Item<UserFieldType>
         name="email"
         label="Email"
+        tooltip="Yêu cầu nhập ký tự ít hơn 128"
         rules={[
           {
             type: 'email',
@@ -88,6 +90,7 @@ const ProfileForm: React.FC = () => {
       </Form.Item>
 
       <Form.Item<UserFieldType>
+        tooltip="Yêu cầu nhập ký tự ít hơn 15"
         name="phone"
         label="Số điện thoại"
         rules={[
@@ -99,6 +102,7 @@ const ProfileForm: React.FC = () => {
       </Form.Item>
 
       <Form.Item<UserFieldType>
+        tooltip="Yêu cầu nhập ký tự ít hơn 256"
         name="facebook"
         label="Link facebook"
         rules={[
@@ -110,6 +114,7 @@ const ProfileForm: React.FC = () => {
       </Form.Item>
 
       <Form.Item<UserFieldType>
+        tooltip="Yêu cầu nhập ký tự ít hơn 64"
         name="zalo"
         label="Link zalo"
         rules={[

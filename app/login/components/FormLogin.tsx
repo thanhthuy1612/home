@@ -55,6 +55,7 @@ const FormLogin: React.FC = () => {
     >
       <Form.Item<FieldType>
         name="username"
+        tooltip="Yêu cầu nhập ký tự trong khoảng 8-32"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { min: 8, message: 'Tài khoản phải có ít nhất 8 ký tự' },
@@ -74,6 +75,7 @@ const FormLogin: React.FC = () => {
 
       <Form.Item<FieldType>
         name="password"
+        tooltip="Yêu cầu nhập ký tự trong khoảng 8-32"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { min: 8, message: 'Mật khẩu phải có ít nhất 8 ký tự' },

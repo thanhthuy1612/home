@@ -54,6 +54,7 @@ const PasswordForm: React.FC = () => {
     >
       <HeaderSettings title="Cập nhật mật khẩu" />
       <Form.Item<ChangePasswordType>
+        tooltip="Yêu cầu nhập ký tự trong khoảng 8-32"
         label="Mật khẩu hiện tại"
         name="current"
         rules={[
@@ -70,6 +71,7 @@ const PasswordForm: React.FC = () => {
       </Form.Item>
 
       <Form.Item<ChangePasswordType>
+        tooltip="Yêu cầu nhập ký tự trong khoảng 8-32"
         label="Mật khẩu mới"
         name="password"
         rules={[
@@ -86,6 +88,7 @@ const PasswordForm: React.FC = () => {
       </Form.Item>
 
       <Form.Item<ChangePasswordType>
+        tooltip="Yêu cầu nhập ký tự trong khoảng 8-32"
         name="rePassword"
         label="Nhập lại mật khẩu"
         rules={[

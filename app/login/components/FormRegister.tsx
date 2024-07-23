@@ -67,6 +67,7 @@ const FormRegister: React.FC = () => {
     >
       <Form.Item<UserFieldType>
         name="fullname"
+        tooltip="Yêu cầu nhập ký tự ít hơn 64"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { max: 64, message: 'Vui lòng nhập ít hơn 64 ký tự' },
@@ -85,6 +86,7 @@ const FormRegister: React.FC = () => {
 
       <Form.Item<UserFieldType>
         name="username"
+        tooltip="Yêu cầu nhập ký tự trong khoảng 8-32"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { min: 8, message: 'Mật khẩu phải có ít nhất 8 ký tự' },
@@ -104,6 +106,7 @@ const FormRegister: React.FC = () => {
 
       <Form.Item<UserFieldType>
         name="email"
+        tooltip="Yêu cầu nhập ký tự ít hơn 128"
         rules={[
           {
             type: 'email',
@@ -126,6 +129,7 @@ const FormRegister: React.FC = () => {
 
       <Form.Item<UserFieldType>
         name="phone"
+        tooltip="Yêu cầu nhập ký tự ít hơn 15"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { max: 15, message: 'Vui lòng nhập ít hơn 15 ký tự' },
@@ -144,6 +148,7 @@ const FormRegister: React.FC = () => {
 
       <Form.Item<UserFieldType>
         name="facebook"
+        tooltip="Yêu cầu nhập ký tự ít hơn 256"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { max: 256, message: 'Vui lòng nhập ít hơn 256 ký tự' },
@@ -164,6 +169,7 @@ const FormRegister: React.FC = () => {
 
       <Form.Item<UserFieldType>
         name="zalo"
+        tooltip="Yêu cầu nhập ký tự ít hơn 64"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { max: 64, message: 'Vui lòng nhập ít hơn 64 ký tự' },
@@ -182,9 +188,11 @@ const FormRegister: React.FC = () => {
 
       <Form.Item<UserFieldType>
         name="password"
+        tooltip="Yêu cầu nhập ký tự trong khoảng 8-32"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { min: 8, message: 'Mật khẩu phải có ít nhất 8 ký tự' },
+          { max: 32, message: 'Vui lòng nhập ít hơn 32 ký tự' },
         ]}
       >
         <Input.Password
