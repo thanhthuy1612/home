@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Flex, Menu, theme, type MenuProps } from 'antd';
+import { Tabs, theme } from 'antd';
 import { LoginOutlined, UserAddOutlined } from '@ant-design/icons';
 import dynamic from 'next/dynamic';
 import { resetStateLogin } from '@/lib/features/login';
@@ -17,18 +17,12 @@ const FormRegister = dynamic(() => import('./components/FormRegister'), {
   ssr: false,
 });
 
-const Label = dynamic(() => import('@/components/label/Label'), {
-  loading: () => <></>,
-  ssr: false,
-});
-
 enum LoginMenu {
-  LOGIN = 0,
-  REGISTER = 1,
+  LOGIN = 'Login',
+  REGISTER = 'Register',
 }
 
 const LoginPage: React.FC = () => {
-  const [auth, setAuth] = React.useState<LoginMenu>(LoginMenu.LOGIN);
   const { width } = useAppSelector((state) => state.login);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -41,49 +35,28 @@ const LoginPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const items: MenuProps['items'] = [
+  const itemsTab = [
     {
-      label: (
-        <Label
-          icon={<LoginOutlined />}
-          className=" pl-[15px]"
-          title="Đăng nhập"
-        />
-      ),
+      label: 'Đăng nhập',
+      icon: <LoginOutlined />,
       key: LoginMenu.LOGIN,
-      style: {
-        flexBasis: '50%',
-        borderTopLeftRadius: '0.75rem',
-      },
+      children: (
+        <div className=" p-[48px]">
+          <FormLogin />
+        </div>
+      ),
     },
     {
-      label: (
-        <Label
-          icon={<UserAddOutlined />}
-          className=" pl-[15px]"
-          title="Đăng ký"
-        />
-      ),
+      label: 'Đăng ký',
+      icon: <UserAddOutlined />,
       key: LoginMenu.REGISTER,
-      style: {
-        flexBasis: '50%',
-        borderTopRightRadius: '0.75rem',
-      },
+      children: (
+        <div className=" p-[48px]">
+          <FormRegister />
+        </div>
+      ),
     },
   ];
-
-  const onClickMenu: MenuProps['onClick'] = (e) => {
-    setAuth(Number(e.key));
-  };
-
-  const renderBody = () => {
-    switch (auth) {
-      case LoginMenu.LOGIN:
-        return <FormLogin />;
-      case LoginMenu.REGISTER:
-        return <FormRegister />;
-    }
-  };
 
   return (
     <div
@@ -93,25 +66,14 @@ const LoginPage: React.FC = () => {
         borderRadius: borderRadiusLG,
         width: width < 1600 ? '100%' : '800px',
       }}
-      className=' shadow-2xl'
+      className=" shadow-2xl"
     >
-      <Menu
-        defaultSelectedKeys={[LoginMenu.LOGIN.toString()]}
-        onClick={onClickMenu}
-        style={{
-          display: 'flex',
-          backgroundColor: 'transparent',
-          borderTopLeftRadius: '0.75rem',
-          borderTopRightRadius: '0.75rem',
-          width: '100%',
-        }}
-        selectedKeys={[auth.toString()]}
-        mode="horizontal"
-        items={items}
+      <Tabs
+        size="large"
+        defaultActiveKey={LoginMenu.LOGIN}
+        items={itemsTab}
+        tabBarStyle={{ padding: '0 24px' }}
       />
-      <Flex className="flex-col m-[48px] items-center justify-center">
-        {renderBody()}
-      </Flex>
     </div>
   );
 };

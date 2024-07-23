@@ -44,3 +44,39 @@ export const listPostStatus: ISelected[] = [
   { value: '2', label: 'Đã duyệt' },
   { value: '3', label: 'Đã ẩn' },
 ];
+
+export const tienIchPhong = [
+  'Cửa sổ giếng trời',
+  'WC riêng',
+  'Wifi',
+  'Ban côn',
+];
+
+export const tienNghiPhong = [
+  'Bàn ăn',
+  'Giường',
+  'Máy lạnh',
+  'Nệm',
+  'Tủ đồ',
+  'Tủ lạnh',
+  'Máy giặt',
+  'Bình nóng lạnh',
+];
+
+export const tienIchTrongNha = [
+  'Camera',
+  'Để xe trong nhà',
+  'Khóa vân tay',
+  'Máy giặt chung',
+  'Thang bộ',
+  'Hệ thống phòng cháy',
+  'Thang máy',
+  'Sân thượng',
+];
+
+export const tienIchXungQuanh = [
+  'Chợ',
+  'Hàng quán ăn',
+  'Siêu Thị tiện lợi',
+  'Trung Tâm Thương Mại',
+];

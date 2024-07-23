@@ -15,7 +15,14 @@ import {
   Select,
 } from 'antd';
 import React from 'react';
-import { listRoomStatus, listRoomTypeCreate } from '@/default/list';
+import {
+  listRoomStatus,
+  listRoomTypeCreate,
+  tienIchPhong,
+  tienIchTrongNha,
+  tienIchXungQuanh,
+  tienNghiPhong,
+} from '@/default/list';
 import { RcFile } from 'antd/es/upload';
 import { useRouter } from 'next/navigation';
 import { useNotification } from '@/utils/useNotification';
@@ -60,7 +67,7 @@ const EditForm: React.FC<IEditForm> = ({
         setListQuan([]);
         break;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [city]);
 
   const onFinish: FormProps['onFinish'] = async (values) => {
@@ -544,56 +551,50 @@ const EditForm: React.FC<IEditForm> = ({
             afterOpenChange: (visible) => !visible && setPreviewImage(''),
           }}
           src={previewImage}
-          alt='pre'
+          alt="pre"
         />
       )}
       <Form.Item name="tienIchPhong" label="Tiện ích phòng">
         <Checkbox.Group>
           <Flex gap={20} wrap>
-            <Checkbox value="Cửa sổ giếng trời">Cửa sổ</Checkbox>
-            <Checkbox value="WC riêng">WC riêng</Checkbox>
-            <Checkbox value="Wifi">Wifi</Checkbox>
-            <Checkbox value="Ban công">Ban công</Checkbox>
+            {tienIchPhong.map((item) => (
+              <Checkbox value={item} key={item}>
+                {item}
+              </Checkbox>
+            ))}
           </Flex>
         </Checkbox.Group>
       </Form.Item>
       <Form.Item name="tienNghiPhong" label="Tiện nghi phòng">
         <Checkbox.Group>
           <Flex gap={20} wrap>
-            <Checkbox value="Bàn ăn">Bàn ăn</Checkbox>
-            <Checkbox value="Giường">Giường</Checkbox>
-            <Checkbox value="Máy lạnh">Máy lạnh</Checkbox>
-            <Checkbox value="Nệm">Nệm</Checkbox>
-            <Checkbox value="Tủ đồ">Tủ đồ</Checkbox>
-            <Checkbox value="Tủ lạnh">Tủ lạnh</Checkbox>
-            <Checkbox value="Máy giặt">Máy giặt</Checkbox>
-            <Checkbox value="Bình nóng lạnh">Bình nóng lạnh</Checkbox>
+            {tienNghiPhong.map((item) => (
+              <Checkbox value={item} key={item}>
+                {item}
+              </Checkbox>
+            ))}
           </Flex>
         </Checkbox.Group>
       </Form.Item>
       <Form.Item name="tienIchTrongNha" label="Tiện nghi trong nhà">
         <Checkbox.Group>
           <Flex gap={20} wrap>
-            <Checkbox value="Camera">Camera</Checkbox>
-            <Checkbox value="Để xe trong nhà">Để xe trong nhà</Checkbox>
-            <Checkbox value="Khóa vân tay">Khóa vân tay</Checkbox>
-            <Checkbox value="Máy giặt chung">Máy giặt chung</Checkbox>
-            <Checkbox value="Thang bộ">Thang bộ</Checkbox>
-            <Checkbox value="Hệ thống phòng cháy">Hệ thống phòng cháy</Checkbox>
-            <Checkbox value="Thang máy">Thang máy</Checkbox>
-            <Checkbox value="Sân thượng">Sân thượng</Checkbox>
+            {tienIchTrongNha.map((item) => (
+              <Checkbox value={item} key={item}>
+                {item}
+              </Checkbox>
+            ))}
           </Flex>
         </Checkbox.Group>
       </Form.Item>
       <Form.Item name="tienIchXungQuanh" label="Tiện nghi xung quanh">
         <Checkbox.Group>
           <Flex gap={20} wrap>
-            <Checkbox value="Chợ">Chợ</Checkbox>
-            <Checkbox value="Hàng quán ăn">Hàng quán ăn</Checkbox>
-            <Checkbox value="Siêu Thị tiện lợi">Siêu Thị tiện lợi</Checkbox>
-            <Checkbox value="'Trung Tâm Thương Mại">
-              Trung Tâm Thương Mại
-            </Checkbox>
+            {tienIchXungQuanh.map((item) => (
+              <Checkbox value={item} key={item}>
+                {item}
+              </Checkbox>
+            ))}
           </Flex>
         </Checkbox.Group>
       </Form.Item>

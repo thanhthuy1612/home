@@ -16,7 +16,7 @@ export interface DataType {
 
 export interface ListRoomState {
   cost?: string;
-  array?: string;
+  array: boolean;
   type?: string;
   searchValue: string;
   maxPeople: number | undefined | null;
@@ -30,7 +30,7 @@ export interface ListRoomState {
 
 const initialState: ListRoomState = {
   cost: undefined,
-  array: '0',
+  array: true,
   type: undefined,
   isLoadingListFilter: false,
   searchValue: '',
@@ -49,7 +49,7 @@ export const listRoomSlice = createSlice({
     updateCost: (state, action: PayloadAction<string | undefined>) => {
       state.cost = action.payload;
     },
-    updateArray: (state, action: PayloadAction<string | undefined>) => {
+    updateArray: (state, action: PayloadAction<boolean>) => {
       state.array = action.payload;
     },
     updateType: (state, action: PayloadAction<string | undefined>) => {

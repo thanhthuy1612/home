@@ -9,8 +9,13 @@ import {
   updateType,
 } from '@/lib/features/listRoom';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { SearchOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Flex, Input, InputNumber, Select } from 'antd';
+import {
+  DownCircleOutlined,
+  SearchOutlined,
+  UpCircleOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+import { Button, Flex, Input, InputNumber, Select, Tooltip } from 'antd';
 import React from 'react';
 export interface IFilter {
   fetchData: (isFirst?: boolean) => Promise<void>;
@@ -30,8 +35,9 @@ const Filter: React.FC<IFilter> = ({ fetchData }) => {
     dispatch(updateMaxPeople(value));
   };
 
-  const handleChangeLocation = (value: string) => {
-    dispatch(updateArray(value));
+  const handleChangeArray = () => {
+    dispatch(updateArray(!array));
+    fetchData(true);
   };
 
   const handleChangeType = (value: string) => {
@@ -55,48 +61,52 @@ const Filter: React.FC<IFilter> = ({ fetchData }) => {
       className=" px-[48px] py-[16px] border-borderHeader border-b-[1px] justify-between items-center"
     >
       <Input
-        style={{ width: width < 1600 ? '100%' : 'calc((100% - 250px) / 5' }}
+        style={{ width: width < 1600 ? '100%' : 'calc((100% - 240px) / 4' }}
         onChange={handleChangeSearchValue}
         prefix={<SearchOutlined />}
         placeholder="Địa chỉ"
         value={searchValue}
       />
       <InputNumber
-        style={{ width: width < 1600 ? '100%' : 'calc((100% - 250px) / 5' }}
+        style={{ width: width < 1600 ? '100%' : 'calc((100% - 240px) / 4' }}
         onChange={handleChangePeopleMax}
         prefix={<UserOutlined />}
         placeholder="Số lượng người tối đa"
         value={maxPeople}
       />
       <Select
-        style={{ width: width < 1600 ? '100%' : 'calc((100% - 250px) / 5' }}
+        style={{ width: width < 1600 ? '100%' : 'calc((100% - 240px) / 4' }}
         placeholder="Mức giá"
         onChange={handleChangeCost}
         value={cost}
         options={listPrice}
       />
       <Select
-        style={{ width: width < 1600 ? '100%' : 'calc((100% - 250px) / 5' }}
+        style={{ width: width < 1600 ? '100%' : 'calc((100% - 240px) / 4' }}
         onChange={handleChangeType}
         placeholder="Phân loại"
         value={type}
         options={listRoomType}
       />
-      <Select
-        style={{ width: width < 1600 ? '100%' : 'calc((100% - 250px) / 5' }}
-        onChange={handleChangeLocation}
-        placeholder="Sắp xếp"
-        value={array}
-        options={listArrayPrice}
-      />
-      <Button
-        onClick={onClickSearch}
-        type="primary"
-        className=" w-[200px] hover:!bg-colorSelect"
-        icon={<SearchOutlined />}
-      >
-        Tìm kiếm
-      </Button>
+      <Flex className={width < 1600 ? '' : ' w-[200px] justify-end'} gap={10}>
+        <Tooltip title={!array ? 'Giá tăng dần' : 'Giá giảm dần'}>
+          <Button
+            onClick={handleChangeArray}
+            type="primary"
+            className=" hover:!bg-colorSelect"
+          >
+            {array ? <DownCircleOutlined /> : <UpCircleOutlined />}
+          </Button>
+        </Tooltip>
+        <Button
+          onClick={onClickSearch}
+          type="primary"
+          className=" hover:!bg-colorSelect"
+          icon={<SearchOutlined />}
+        >
+          Tìm kiếm
+        </Button>
+      </Flex>
     </Flex>
   );
 };

@@ -60,7 +60,6 @@ const Info: React.FC<IInfo> = ({ item }) => {
       <Collapse
         collapsible="header"
         defaultActiveKey={[item?.id ?? '']}
-        activeKey={[item?.id ?? '']}
         size="large"
         items={[
           {

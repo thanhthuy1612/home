@@ -4,8 +4,12 @@ import { theme } from 'antd';
 import React from 'react';
 import Breadcrumb, { ItemType } from 'antd/es/breadcrumb/Breadcrumb';
 import { usePathname } from 'next/navigation';
-import AuthLayout from '@/components/layout/AuthLayout';
+import dynamic from 'next/dynamic';
 
+const AuthLayout = dynamic(() => import('@/components/layout/AuthLayout'), {
+  loading: () => <></>,
+  ssr: false,
+});
 export interface ISettingLayout {
   children: React.ReactNode;
 }

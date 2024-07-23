@@ -81,6 +81,19 @@ const Item: React.FC<IItem> = (props) => {
     };
     setNotification(res, 'Cập nhật thành công', action);
   };
+
+  const genExtra = () => {
+    return (
+      item.role === Role.Saler && (
+        <Flex gap={20}>
+          <Button onClick={onClick}>Xem danh sách phòng</Button>
+          <Button onClick={onClickActive}>
+            {item?.active ? 'Khóa tài khoản' : 'Mở tài khoản'}
+          </Button>
+        </Flex>
+      )
+    );
+  };
   return (
     <div className=" mb-[16px]">
       <Collapse
@@ -92,21 +105,9 @@ const Item: React.FC<IItem> = (props) => {
             key: item?.id,
             label: item?.username,
             children: (
-              <Flex
-                className=" flex-col justify-between"
-                style={{ width: width < 1600 ? '100%' : 'calc(100% - 240px)' }}
-              >
-                <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
-                {item.role === Role.Saler && (
-                  <Flex gap={20}>
-                    <Button onClick={onClick}>Xem danh sách phòng</Button>
-                    <Button onClick={onClickActive}>
-                      {item?.active ? 'Khóa tài khoản' : 'Mở tài khoản'}
-                    </Button>
-                  </Flex>
-                )}
-              </Flex>
+              <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
             ),
+            extra: genExtra(),
           },
         ]}
       />

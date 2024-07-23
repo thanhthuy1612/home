@@ -1,10 +1,14 @@
 'use client';
 
-import AuthLayout from '@/components/layout/AuthLayout';
 import dynamic from 'next/dynamic';
 import React from 'react';
 
 const FormLayout = dynamic(() => import('@/components/layout/FormLayout'), {
+  loading: () => <></>,
+  ssr: false,
+});
+
+const AuthLayout = dynamic(() => import('@/components/layout/AuthLayout'), {
   loading: () => <></>,
   ssr: false,
 });

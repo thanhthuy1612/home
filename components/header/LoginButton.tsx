@@ -47,9 +47,6 @@ const LoginButton: React.FC = () => {
       localStorage.clear();
     }
     dispatch(updateIsLoadingPage(false));
-    1;
-    dispatch(updateIsLoadingPage(false));
-    1;
   }
 
   React.useEffect(() => {
@@ -88,6 +85,7 @@ const LoginButton: React.FC = () => {
     }
     if (e.key === 'out') {
       onClickLogout();
+      router.push('/');
     } else {
       router.push(e.key);
     }

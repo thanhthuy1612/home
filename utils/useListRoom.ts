@@ -57,7 +57,7 @@ export const useListRoom = () => {
       ...checkCost(),
       maxPeople: maxPeople ?? null,
       roomType: type !== '0' ? Number(type) : null,
-      priceDescending: Boolean(array === '0'),
+      priceDescending: array,
     });
     if (res?.status === IStatusCode.SUCCESS) {
       dispatch(

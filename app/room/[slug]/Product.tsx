@@ -136,7 +136,7 @@ const Product: React.FC<IProduct> = ({ item }) => {
   return (
     <Flex className=" flex-col items-center py-[24px] px-[48px]">
       <Flex justify="center">
-        <div className=" mb-[24px] font-[600] text-[25px] border-b-[2px] border-colorSelect">
+        <div className=" mb-[24px] font-[600] text-[25px]">
           {item?.title}
         </div>
       </Flex>

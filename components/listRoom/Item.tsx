@@ -58,7 +58,11 @@ const Item: React.FC<IItem> = (props) => {
       {
         key: '1',
         label: 'Mô tả',
-        children: item?.description,
+        children: (
+          <div className=" w-[300px] overflow-hidden text-ellipsis whitespace-nowrap">
+            {item?.description}
+          </div>
+        ),
       },
       {
         key: '2',
@@ -94,11 +98,6 @@ const Item: React.FC<IItem> = (props) => {
         ? [
             ...initState,
             {
-              key: '10',
-              label: 'Giá',
-              children: `${item?.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / tháng`,
-            },
-            {
               key: '11',
               label: 'Trạng thái bài đăng',
               children: listPostStatus.find(
@@ -108,7 +107,7 @@ const Item: React.FC<IItem> = (props) => {
           ]
         : initState,
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item]);
 
   const bookRoom = () => {
@@ -150,12 +149,12 @@ const Item: React.FC<IItem> = (props) => {
     if (!role) {
       return (
         <Button
-          disabled={isLoading}
           type="primary"
-          className=" w-[250px] hover:!bg-colorSelect"
+          className=" hover:!bg-colorSelect"
+          disabled={isLoading}
           onClick={bookRoom}
         >
-          {`${item?.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / tháng
+          Xem thêm
         </Button>
       );
     }
@@ -163,6 +162,9 @@ const Item: React.FC<IItem> = (props) => {
       case Role.Saler:
         return (
           <Flex gap={20}>
+            <Button disabled={isLoading} onClick={bookRoom}>
+              Xem thêm
+            </Button>
             <Button onClick={showDrawer}>Sửa</Button>
             <Button disabled={isLoading} onClick={() => setIsModalOpen(true)}>
               Xóa
@@ -172,6 +174,9 @@ const Item: React.FC<IItem> = (props) => {
       case Role.Admin:
         return (
           <Flex gap={20}>
+            <Button disabled={isLoading} onClick={bookRoom}>
+              Xem thêm
+            </Button>
             {item?.postsStatus !== PostsStatus.DaDuyet && (
               <Button disabled={isLoading} onClick={activatePost}>
                 {item?.postsStatus !== PostsStatus.DaAn ? 'Duyệt bài' : 'Hiện'}
@@ -206,20 +211,20 @@ const Item: React.FC<IItem> = (props) => {
       gap={20}
     >
       <Image
-        width={200}
-        height={200}
+        width={width < 1600 ? 200 : 300}
+        height={width < 1600 ? 200 : 300}
         className=" object-cover"
         src={img}
         alt="img"
       />
       <Flex
         className=" flex-col justify-between"
-        style={{ width: width < 1600 ? '100%' : 'calc(100% - 240px)' }}
+        style={{ width: width < 1600 ? '100%' : 'calc(100% - 320px)' }}
       >
         <Descriptions
           title={
             <div
-              className=" cursor-pointer w-fit text-[20px] font-[600] underline hover:text-colorSelect"
+              className=" cursor-pointer w-fit hover:text-colorSelect"
               onClick={bookRoom}
             >
               {item?.title}
@@ -228,7 +233,12 @@ const Item: React.FC<IItem> = (props) => {
           items={items}
           column={{ xs: 1, sm: 1, md: 2 }}
         />
-        <div className='mt-[10px]'>{renderBottom()}</div>
+        <Flex gap={10} className=" mt-[10px] flex-col">
+          <div className=" font-[600] text-colorError text-[20px]">
+            {`${item?.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / tháng
+          </div>
+          <div>{renderBottom()}</div>
+        </Flex>
       </Flex>
       {open && <EditPage id={item?.id} open onClose={onClose} />}
       <Modal
