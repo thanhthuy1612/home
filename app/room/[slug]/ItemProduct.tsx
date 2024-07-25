@@ -1,7 +1,6 @@
 'use client';
 
-import { CheckOutlined } from '@ant-design/icons';
-import { Flex, DescriptionsProps, Descriptions } from 'antd';
+import { Descriptions, DescriptionsProps, Flex } from 'antd';
 import React from 'react';
 
 export interface List {
@@ -18,12 +17,9 @@ const ItemProduct: React.FC<IItemProduct> = ({ list, className }) => {
       key: item.title,
       label: item.title,
       children: (
-        <Flex wrap gap={16}>
+        <Flex wrap gap={8}>
           {item.contents.map((content) => (
-            <Flex key={content} gap={5} justify="center" align="center">
-              <CheckOutlined className=" text-[10px] text-bgColor rounded-[50%] p-[2px] bg-colorSelect" />
-              {content}
-            </Flex>
+            <div>{content},</div>
           ))}
         </Flex>
       ),
