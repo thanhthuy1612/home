@@ -19,7 +19,7 @@ const ItemProduct: React.FC<IItemProduct> = ({ list, className }) => {
       children: (
         <Flex wrap gap={8}>
           {item.contents.map((content) => (
-            <div>{content},</div>
+            <div key={content}>{content},</div>
           ))}
         </Flex>
       ),
