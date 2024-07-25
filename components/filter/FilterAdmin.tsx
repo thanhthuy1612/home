@@ -32,10 +32,6 @@ const FilterAdmin: React.FC<IFilter> = ({ fetchData }) => {
     dispatch(updateMaxPeople(value));
   };
 
-  const handleChangeLocation = (value: string) => {
-    dispatch(updateArray(value));
-  };
-
   const handleChangeType = (value: string) => {
     dispatch(updateType(value));
   };
