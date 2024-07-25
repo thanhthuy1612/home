@@ -3,10 +3,17 @@
 import { Layout, theme } from 'antd';
 import React from 'react';
 import dynamic from 'next/dynamic';
+import { Roboto } from '@next/font/google';
 
 export interface IDefaultLayout {
   children: React.ReactNode;
 }
+
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  style: ['italic', 'normal'],
+});
 
 const HeaderLayout = dynamic(() => import('../header/HeaderLayout'), {
   loading: () => <></>,
@@ -25,7 +32,7 @@ const DefaultLayout: React.FC<IDefaultLayout> = ({ children }) => {
     token: { colorBgContainer },
   } = theme.useToken();
   return (
-    <Layout>
+    <Layout className={roboto.className}>
       <HeaderLayout />
       <Content
         style={{

@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^5.3.7",
+    "@next/font": "^14.2.5",
     "@reduxjs/toolkit": "^2.2.6",
     "@types/node": "^20",
     "@types/react": "^18",
