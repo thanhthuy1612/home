@@ -6,6 +6,7 @@ import { LoginOutlined, UserAddOutlined } from '@ant-design/icons';
 import dynamic from 'next/dynamic';
 import { resetStateLogin } from '@/lib/features/login';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import HeaderLogin from './components/HeaderLogin';
 
 const FormLogin = dynamic(() => import('./components/FormLogin'), {
   loading: () => <></>,
@@ -42,6 +43,7 @@ const LoginPage: React.FC = () => {
       key: LoginMenu.LOGIN,
       children: (
         <div className=" p-[16px]">
+          <HeaderLogin title="Đăng nhập" Component={LoginOutlined} />
           <FormLogin />
         </div>
       ),
@@ -52,6 +54,7 @@ const LoginPage: React.FC = () => {
       key: LoginMenu.REGISTER,
       children: (
         <div className=" p-[16px]">
+          <HeaderLogin title="Đăng ký" Component={UserAddOutlined} />
           <FormRegister />
         </div>
       ),
