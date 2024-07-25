@@ -6,7 +6,7 @@ import HeaderSettings from '../settings/components/HeaderSettings';
 
 const Introduce: React.FC = () => {
   return (
-    <div className="mx-[48px] mb-[24px] py-[24px]">
+    <div className="mx-[16px] mb-[24px] py-[24px]">
       <HeaderSettings title="Giới thiệu về chúng tôi" />
       {introduce.map((item) => (
         <div key={item.title}>

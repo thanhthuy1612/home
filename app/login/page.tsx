@@ -41,7 +41,7 @@ const LoginPage: React.FC = () => {
       icon: <LoginOutlined />,
       key: LoginMenu.LOGIN,
       children: (
-        <div className=" p-[48px]">
+        <div className=" p-[16px]">
           <FormLogin />
         </div>
       ),
@@ -51,7 +51,7 @@ const LoginPage: React.FC = () => {
       icon: <UserAddOutlined />,
       key: LoginMenu.REGISTER,
       children: (
-        <div className=" p-[48px]">
+        <div className=" p-[16px]">
           <FormRegister />
         </div>
       ),
@@ -72,7 +72,7 @@ const LoginPage: React.FC = () => {
         size="large"
         defaultActiveKey={LoginMenu.LOGIN}
         items={itemsTab}
-        tabBarStyle={{ padding: '0 24px' }}
+        tabBarStyle={{ padding: '0 16px' }}
       />
     </div>
   );

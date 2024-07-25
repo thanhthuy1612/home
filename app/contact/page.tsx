@@ -27,7 +27,7 @@ const Contact: React.FC = () => {
   }, [data]);
 
   return (
-    <div className="mx-[48px] mb-[24px] py-[24px]">
+    <div className="mx-[16px] mb-[24px] py-[24px]">
       <HeaderSettings title="Liên hệ" />
       <Descriptions
         title={
