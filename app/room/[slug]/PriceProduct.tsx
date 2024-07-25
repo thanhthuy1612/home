@@ -5,9 +5,10 @@ import React from 'react';
 export interface IPriceProduct {
   price?: number;
   priceTag: any;
+  className: string;
 }
 const PriceProduct: React.FC<IPriceProduct> = (props) => {
-  const { priceTag, price } = props;
+  const { priceTag, price, className } = props;
   const items: DescriptionsProps['items'] = [
     {
       key: '1',
@@ -51,8 +52,8 @@ const PriceProduct: React.FC<IPriceProduct> = (props) => {
     },
   ];
   return (
-    <div>
-      <div className=" font-[600] mb-[8px] mt-[24px] border-b-[1px] w-fit border-colorSelect">
+    <div className={className}>
+      <div className=" font-[600] mb-[8px] border-b-[1px] w-fit border-colorSelect">
         GIÁ DỊCH VỤ
       </div>
       <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />

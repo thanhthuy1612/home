@@ -4,7 +4,10 @@ import { useAppSelector } from '@/lib/hooks';
 import { Descriptions, DescriptionsProps, Flex } from 'antd';
 import React from 'react';
 
-const Contact: React.FC = () => {
+export interface IContact {
+  className: string;
+}
+const Contact: React.FC<IContact> = ({ className }) => {
   const { data } = useAppSelector((state) => state.contact);
   const [items, setItems] = React.useState<DescriptionsProps['items']>([]);
   React.useEffect(() => {
@@ -26,11 +29,14 @@ const Contact: React.FC = () => {
   }, [data]);
 
   return (
-    <div>
-      <div className=" font-[600] mb-[8px] mt-[24px] border-b-[1px] w-fit border-colorSelect">
+    <div className={className}>
+      <div className=" font-[600] mb-[8px] border-b-[1px] w-fit border-colorSelect">
         LIÊN HỆ ĐỂ ĐƯỢC HỖ TRỢ TRỰC TIẾP
       </div>
-      <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
+      <Descriptions
+        items={items}
+        column={{ xs: 1, sm: 1, md: 2, lg: 2, xl: 4, xxl: 4 }}
+      />
     </div>
   );
 };

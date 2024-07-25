@@ -71,11 +71,6 @@ const Product: React.FC<IProduct> = ({ item }) => {
   React.useEffect(() => {
     const initState = [
       {
-        key: '1',
-        label: 'Mô tả',
-        children: item?.description,
-      },
-      {
         key: '2',
         label: 'Địa chỉ',
         children: item?.address,
@@ -113,19 +108,19 @@ const Product: React.FC<IProduct> = ({ item }) => {
     ];
     const init: List[] = [
       {
-        title: 'TIỆN ÍCH PHÒNG',
+        title: 'Tiện ích phòng',
         contents: item?.serviceTags['TienIchPhong'],
       },
       {
-        title: 'TIỆN NGHI PHÒNG',
+        title: 'Tiện nghi phòng',
         contents: item?.serviceTags['TienNghiPhong'],
       },
       {
-        title: 'TIỆN NGHI TRONG NHÀ',
+        title: 'Tiện nghi trong nhà',
         contents: item?.serviceTags['TienIchTrongNha'],
       },
       {
-        title: 'TIỆN ÍCH XUNG QUANH',
+        title: 'Tiện ích xung quanh',
         contents: item?.serviceTags['TienIchXungQuanh'],
       },
     ];
@@ -137,7 +132,7 @@ const Product: React.FC<IProduct> = ({ item }) => {
     <Flex className=" flex-col items-center py-[24px] px-[48px]">
       <Flex justify="center">
         <div className=" mb-[24px] font-[600] text-[25px]">
-          {item?.title}
+          {item?.title?.toLocaleUpperCase()}
         </div>
       </Flex>
       <Flex
@@ -203,7 +198,7 @@ const Product: React.FC<IProduct> = ({ item }) => {
                           ? `${(300 - 20) / 3}px`
                           : `${(500 - 20) / 3}px`,
                     }}
-                    className=" bg-borderHeader flex justify-center items-center"
+                    className=" bg-coborder-colorPrimary flex justify-center items-center"
                   >
                     Xem thêm
                   </div>
@@ -247,14 +242,29 @@ const Product: React.FC<IProduct> = ({ item }) => {
           className=" flex-col"
           style={{ width: width < 1600 ? '100%' : 'calc(100% - 520px)' }}
         >
-          <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
-          <PriceProduct price={item?.price} priceTag={item?.priceTags} />
-          <Contact />
+          <div className=" border-[1px] rounded-[15px] p-[16px]">
+            <div className=" font-[600] mb-[8px] border-b-[1px] w-fit border-colorSelect">
+              THÔNG TIN MÔ TẢ
+            </div>
+            <div>{item?.description}</div>
+          </div>
+          <div className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]">
+            <div className=" font-[600] mb-[8px] border-b-[1px] w-fit border-colorSelect">
+              ĐẶC ĐIỂM TIN ĐĂNG
+            </div>
+            <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
+          </div>
+          <PriceProduct
+            className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]"
+            price={item?.price}
+            priceTag={item?.priceTags}
+          />
         </Flex>
       </Flex>
-      <div className=" w-[100%] mt-[24px]">
+      <div className=" w-[100%] mt-[16px]">
         {role === Role.Admin && <Info item={item?.ownerInformation} />}
-        <ItemProduct list={listIntroduce} />
+        <Contact className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]" />
+        <ItemProduct className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]" list={listIntroduce} />
       </div>
     </Flex>
   );
