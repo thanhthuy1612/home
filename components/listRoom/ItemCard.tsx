@@ -197,11 +197,11 @@ const ItemCard: React.FC<IItemCard> = (props) => {
       hoverable
       loading={isLoading}
       cover={
-        <div className=" relative">
+        <div className=" relative rounded-t-[8px]">
           <Image
             width="100%"
             height={width < 1600 ? 200 : 300}
-            className=" object-cover"
+            className=" object-cover rounded-t-[8px]"
             src={img}
             alt="img"
           />
