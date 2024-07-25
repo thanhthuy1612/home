@@ -1,13 +1,13 @@
 'use client';
 
-import React from 'react';
-import { Button, Empty, List } from 'antd';
-import LoadingSpin from '../loading/LoadingSpin';
-import { useAppSelector } from '@/lib/hooks';
-import dynamic from 'next/dynamic';
 import { Role } from '@/enum/Role';
+import { useAppSelector } from '@/lib/hooks';
+import { Button, Empty, List } from 'antd';
+import dynamic from 'next/dynamic';
+import React from 'react';
+import LoadingSpin from '../loading/LoadingSpin';
 
-const Item = dynamic(() => import('./Item'), {
+const ItemCard = dynamic(() => import('./ItemCard'), {
   loading: () => <></>,
   ssr: false,
 });
@@ -56,6 +56,15 @@ const ListItem: React.FC<IListItem> = (props) => {
 
   return (
     <List
+      grid={{
+        gutter: 16,
+        xs: 1,
+        sm: 1,
+        md: 2,
+        lg: 3,
+        xl: 4,
+        xxl: 5,
+      }}
       loading={isInitLoadingListRoom}
       itemLayout="horizontal"
       loadMore={loadMore}
@@ -69,7 +78,9 @@ const ListItem: React.FC<IListItem> = (props) => {
         ),
       }}
       renderItem={(item) => (
-        <Item item={item} role={role} fetchData={fetchData} />
+        <List.Item>
+          <ItemCard item={item} role={role} fetchData={fetchData} />
+        </List.Item>
       )}
     />
   );

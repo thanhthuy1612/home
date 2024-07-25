@@ -23,28 +23,28 @@ export default function RootLayout({
             theme={{
               components: {
                 Menu: {
-                  itemSelectedBg: '#80e823',
+                  itemSelectedBg: '#ffb703',
                   itemSelectedColor: '#ffffff',
-                  colorPrimary: '#80e823',
+                  colorPrimary: '#ffb703',
                 },
                 Button: {
-                  colorPrimaryActive: '#80e823',
+                  colorPrimaryActive: '#ffb703',
                 },
                 Select: {
-                  colorPrimary: '#80e823',
-                  optionSelectedBg: '#004aad',
+                  colorPrimary: '#ffb703',
+                  optionSelectedBg: '#003049',
                   optionSelectedColor: '#ffffff',
                 },
                 Input: {
-                  colorPrimary: '#80e823',
+                  colorPrimary: '#ffb703',
                 },
               },
               token: {
                 // Seed Token
-                colorPrimary: '#004aad',
-                colorBorderBg: '#004aad',
-                colorIcon: '#004aad',
-                colorTextBase: '#004aad',
+                colorPrimary: '#003049',
+                colorBorderBg: '#003049',
+                colorIcon: '#003049',
+                colorTextBase: '#003049',
                 colorError: '#FF6961',
               },
             }}

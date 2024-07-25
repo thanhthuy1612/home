@@ -150,7 +150,7 @@ const Product: React.FC<IProduct> = ({ item }) => {
             flexDirection: 'column',
             width: width < 1600 ? '300px' : '500px',
           }}
-          gap={20}
+          gap={10}
         >
           {isLoading ? (
             <Loading />
