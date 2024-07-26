@@ -12,12 +12,11 @@ import { dateFormat } from '@/utils/useTime';
 import {
   ClearOutlined,
   ClockCircleOutlined,
-  CompassOutlined,
   EditOutlined,
   EyeInvisibleOutlined,
   EyeOutlined,
-  FileImageOutlined,
   HomeOutlined,
+  NotificationOutlined,
   TeamOutlined,
 } from '@ant-design/icons';
 import {
@@ -83,7 +82,7 @@ const ItemCard: React.FC<IItemCard> = (props) => {
       {
         key: '7',
         label: <ClockCircleOutlined />,
-        children: dateFormat(item?.updatedTime),
+        children: <div className=" w-fit">{dateFormat(item?.updatedTime)}</div>,
       },
     ];
     setItems(
@@ -92,7 +91,7 @@ const ItemCard: React.FC<IItemCard> = (props) => {
             ...initState,
             {
               key: '11',
-              label: <FileImageOutlined />,
+              label: <NotificationOutlined />,
               children: listPostStatus.find(
                 (e) => Number(e.value) === item?.postsStatus,
               )?.label,
