@@ -13,7 +13,7 @@ const FormLayout: React.FC<IFormLayout> = ({ children }) => {
   } = theme.useToken();
 
   return (
-    <div className=" bg-bgColor p-[48px]">
+    <div className=" bg-bgColor p-[24px]">
       <div
         style={{
           margin: 0,

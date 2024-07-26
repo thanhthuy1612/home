@@ -50,7 +50,7 @@ const FilterAdmin: React.FC<IFilter> = ({ fetchData }) => {
     <Flex
       gap={10}
       wrap
-      className=" px-[48px] py-[16px] border-borderHeader border-b-[1px] justify-between items-center"
+      className=" px-[24px] py-[16px] border-borderHeader border-b-[1px] justify-between items-center"
     >
       <Input
         style={{ width: width < 1600 ? '100%' : 'calc((100% - 240px) / 4' }}

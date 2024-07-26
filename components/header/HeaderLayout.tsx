@@ -13,7 +13,7 @@ const LoginButton = dynamic(() => import('./LoginButton'), {
 
 const HeaderLayout: React.FC = () => {
   return (
-    <div className=" px-[48px] h-[64px] border-b-[1px] border-colorPrimary border-solid bg-bgColor flex items-center justify-between">
+    <div className=" px-[24px] h-[64px] border-b-[1px] border-colorPrimary border-solid bg-bgColor flex items-center justify-between">
       <MenuLayout />
       <LoginButton />
     </div>

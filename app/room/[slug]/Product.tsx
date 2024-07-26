@@ -129,7 +129,7 @@ const Product: React.FC<IProduct> = ({ item }) => {
   }, [item]);
 
   return (
-    <Flex className=" flex-col items-center py-[24px] px-[48px]">
+    <Flex className=" flex-col items-center py-[24px] px-[24px]">
       <Flex justify="center">
         <div className=" mb-[24px] font-[600] text-[25px]">
           {item?.title?.toLocaleUpperCase()}

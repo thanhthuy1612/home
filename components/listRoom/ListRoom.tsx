@@ -22,7 +22,7 @@ const ListRoom: React.FC<IListRoom> = (props) => {
 
   const router = useRouter();
   return (
-    <div className="px-[48px] mb-[24px]">
+    <div className="px-[24px] mb-[24px]">
       {role === Role.Saler && (
         <Button
           icon={<PlusOutlined />}

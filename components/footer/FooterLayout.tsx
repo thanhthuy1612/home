@@ -56,7 +56,7 @@ const FooterLayout: React.FC = () => {
   }, []);
 
   return (
-    <div className=" border-[1px] text-bgColor border-borderHeader bg-colorPrimary flex flex-wrap gap-[30px] justify-between px-[48px] py-[24px]">
+    <div className=" border-[1px] text-bgColor border-borderHeader bg-colorPrimary flex flex-wrap gap-[30px] justify-between px-[24px] py-[24px]">
       <div className=" min-w-[300px]">
         <div className=" text-[25px] font-[600] flex items-center mb-[8px]">
           <HomeOutlined className=" text-bgColor mr-[10px]" />

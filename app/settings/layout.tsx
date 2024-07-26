@@ -60,7 +60,7 @@ const SettingLayout: React.FC<ISettingLayout> = ({ children }) => {
   }, [pathname]);
   return (
     <AuthLayout>
-      <div className=" bg-bg-color px-[48px] pb-[24px]">
+      <div className=" bg-bg-color px-[24px] pb-[24px]">
         <Breadcrumb className="py-[16px]" items={breadcrumb}></Breadcrumb>
         <div
           style={{

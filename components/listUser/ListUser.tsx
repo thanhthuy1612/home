@@ -17,7 +17,7 @@ const ListUser: React.FC<IListUser> = (props) => {
   const { title, fetchData } = props;
 
   return (
-    <div className="px-[48px] mb-[24px]">
+    <div className="px-[24px] mb-[24px]">
       <Flex className=" items-center justify-between py-[24px]">
         <div className=" font-[600] text-[20px] w-fit">{title}</div>
       </Flex>
