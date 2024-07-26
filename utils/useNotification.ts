@@ -26,7 +26,7 @@ export const useNotification = () => {
       dispatch(
         updateNotification({
           type: 'fail',
-          description: error ?? '',
+          description: error ?? 'Lỗi',
         }),
       );
     }

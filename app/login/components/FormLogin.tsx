@@ -42,7 +42,12 @@ const FormLogin: React.FC = () => {
         localStorage.setItem('token', fetchLogin.data.accessToken);
         router.push('/');
       };
-      setNotification(fetchLogin, 'Đăng nhập thành công', onSuccess);
+      setNotification(
+        fetchLogin,
+        'Đăng nhập thành công',
+        onSuccess,
+        'Nhập sai tài khoản hoặc mật khẩu',
+      );
       dispatch(updateIsLoadingForm(false));
     }
   };
