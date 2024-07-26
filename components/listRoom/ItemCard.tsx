@@ -10,8 +10,8 @@ import { useAppSelector } from '@/lib/hooks';
 import { useNotification } from '@/utils/useNotification';
 import { dateFormat } from '@/utils/useTime';
 import {
-  ClearOutlined,
   ClockCircleOutlined,
+  DeleteOutlined,
   EditOutlined,
   EyeInvisibleOutlined,
   EyeOutlined,
@@ -146,7 +146,7 @@ const ItemCard: React.FC<IItemCard> = (props) => {
         <EditOutlined disabled={isLoading} onClick={showDrawer} />
       </Tooltip>,
       <Tooltip key={'Xoa'} title="Sửa">
-        <ClearOutlined
+        <DeleteOutlined
           disabled={isLoading}
           onClick={() => setIsModalOpen(true)}
         />
