@@ -1,13 +1,21 @@
 'use client';
 
 import { useAppSelector } from '@/lib/hooks';
-import { Button, Collapse, Descriptions, DescriptionsProps, Flex } from 'antd';
+import {
+  Button,
+  Collapse,
+  Descriptions,
+  DescriptionsProps,
+  Flex,
+  Tooltip,
+} from 'antd';
 import React from 'react';
 import { IListUser } from '@/interface/IListUser';
 import { Role } from '@/enum/Role';
 import { useRouter } from 'next/navigation';
 import handleAdmin from '@/app/api/HandAdmin';
 import { useNotification } from '@/utils/useNotification';
+import { EyeOutlined, LockOutlined, UnlockOutlined } from '@ant-design/icons';
 
 export interface IItem {
   item: IListUser;
@@ -15,7 +23,6 @@ export interface IItem {
 }
 const Item: React.FC<IItem> = (props) => {
   const [items, setItems] = React.useState<DescriptionsProps['items']>([]);
-  const { width } = useAppSelector((state) => state.login);
   const { item, fetchData } = props;
 
   const { setNotification } = useNotification();
@@ -86,10 +93,16 @@ const Item: React.FC<IItem> = (props) => {
     return (
       item.role === Role.Saler && (
         <Flex gap={20}>
-          <Button onClick={onClick}>Xem danh sách phòng</Button>
-          <Button onClick={onClickActive}>
-            {item?.active ? 'Khóa tài khoản' : 'Mở tài khoản'}
-          </Button>
+          <Tooltip title="Xem danh sách phòng">
+            <Button onClick={onClick}>
+              <EyeOutlined />
+            </Button>
+          </Tooltip>
+          <Tooltip title={item?.active ? 'Khóa tài khoản' : 'Mở tài khoản'}>
+            <Button onClick={onClickActive}>
+              {item?.active ? <LockOutlined /> : <UnlockOutlined />}
+            </Button>
+          </Tooltip>
         </Flex>
       )
     );

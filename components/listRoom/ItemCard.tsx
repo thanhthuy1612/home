@@ -214,27 +214,28 @@ const ItemCard: React.FC<IItemCard> = (props) => {
         </div>
       }
       actions={renderBottom()}
-      onClick={bookRoom}
     >
-      <Meta
-        title={
-          <Tooltip title={item?.title}>
-            <div className=" w-[100%] overflow-hidden text-ellipsis whitespace-nowrap">
-              {item?.title}
-            </div>
-          </Tooltip>
-        }
-        description={
-          <Tooltip title={item?.address}>
-            <div className=" w-[100%] overflow-hidden text-ellipsis whitespace-nowrap">
-              {item?.address}
-            </div>
-          </Tooltip>
-        }
-      />
-      <Descriptions className=" mt-[15px]" items={items} column={2} />
-      <div className=" font-[600] text-colorError text-[20px]">
-        {`${item?.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / tháng
+      <div onClick={bookRoom}>
+        <Meta
+          title={
+            <Tooltip title={item?.title}>
+              <div className=" w-[100%] overflow-hidden text-ellipsis whitespace-nowrap">
+                {item?.title}
+              </div>
+            </Tooltip>
+          }
+          description={
+            <Tooltip title={item?.address}>
+              <div className=" w-[100%] overflow-hidden text-ellipsis whitespace-nowrap">
+                {item?.address}
+              </div>
+            </Tooltip>
+          }
+        />
+        <Descriptions className=" mt-[15px]" items={items} column={2} />
+        <div className=" font-[600] text-colorError text-[20px]">
+          {`${item?.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / tháng
+        </div>
       </div>
       {open && <EditPage id={item?.id} open onClose={onClose} />}
       <Modal
