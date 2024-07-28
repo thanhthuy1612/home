@@ -86,6 +86,9 @@ const Product: React.FC<IProduct> = ({ item }) => {
         children: listRoomType.find((e) => Number(e.value) === item?.roomType)
           ?.label,
       },
+    ];
+
+    const adminList = [
       {
         key: '6',
         label: 'Trạng thái phòng',
@@ -124,9 +127,9 @@ const Product: React.FC<IProduct> = ({ item }) => {
         contents: item?.serviceTags['TienIchXungQuanh'],
       },
     ];
-    setItems(initState);
+    setItems(!role ? initState : [...initState, ...adminList]);
     setListIntroduce(init);
-  }, [item]);
+  }, [item, role]);
 
   return (
     <Flex className=" flex-col items-center py-[24px] px-[24px]">
@@ -262,9 +265,17 @@ const Product: React.FC<IProduct> = ({ item }) => {
         </Flex>
       </Flex>
       <div className=" w-[100%] mt-[16px]">
-        {role === Role.Admin && <Info item={item?.ownerInformation} />}
-        <Contact className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]" />
-        <ItemProduct className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]" list={listIntroduce} />
+        {role === Role.Admin && (
+          <Info
+            className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]"
+            item={item?.ownerInformation}
+          />
+        )}
+        {/* <Contact className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]" /> */}
+        <ItemProduct
+          className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]"
+          list={listIntroduce}
+        />
       </div>
     </Flex>
   );

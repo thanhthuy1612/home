@@ -2,13 +2,14 @@
 
 import { Role } from '@/enum/Role';
 import { IListUser } from '@/interface/IListUser';
-import { Collapse, Descriptions, DescriptionsProps } from 'antd';
+import { Descriptions, DescriptionsProps } from 'antd';
 import React from 'react';
 
 export interface IInfo {
   item?: IListUser;
+  className: string;
 }
-const Info: React.FC<IInfo> = ({ item }) => {
+const Info: React.FC<IInfo> = ({ item, className }) => {
   const [items, setItems] = React.useState<DescriptionsProps['items']>([]);
   React.useEffect(() => {
     const initState = [
@@ -56,21 +57,11 @@ const Info: React.FC<IInfo> = ({ item }) => {
     setItems(initState);
   }, [item]);
   return (
-    <div>
-      <Collapse
-        collapsible="header"
-        defaultActiveKey={[item?.id ?? '']}
-        size="large"
-        items={[
-          {
-            key: item?.id,
-            label: 'Thông tin liên lạc người đăng bài',
-            children: (
-              <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
-            ),
-          },
-        ]}
-      />
+    <div className={className}>
+      <div className=" font-[600] mb-[8px] border-b-[1px] w-fit border-colorSelect">
+        THÔNG TIN LIÊN LẠC NGƯỜI ĐĂNG BÀI
+      </div>
+      <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
     </div>
   );
 };
