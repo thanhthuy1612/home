@@ -32,7 +32,7 @@ export default function RootLayout({
                 },
                 Select: {
                   colorPrimary: '#ffb703',
-                  optionSelectedBg: '#003049',
+                  optionSelectedBg: '#03346E',
                   optionSelectedColor: '#ffffff',
                 },
                 Input: {
@@ -41,10 +41,10 @@ export default function RootLayout({
               },
               token: {
                 // Seed Token
-                colorPrimary: '#003049',
-                colorBorderBg: '#003049',
-                colorIcon: '#003049',
-                colorTextBase: '#003049',
+                colorPrimary: '#03346E',
+                colorBorderBg: '#03346E',
+                colorIcon: '#03346E',
+                colorTextBase: '#03346E',
                 colorError: '#FF6961',
               },
             }}
