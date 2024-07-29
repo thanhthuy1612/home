@@ -3,6 +3,7 @@ import {
   KeyOutlined,
   LogoutOutlined,
   MenuOutlined,
+  UserAddOutlined,
   UserOutlined,
   UserSwitchOutlined,
 } from '@ant-design/icons';
@@ -31,11 +32,6 @@ export const menuUserActive: MenuLogin[] = [
     key: '/myRoom',
     label: 'Danh sách quản lý',
     Icon: MenuOutlined,
-  },
-  {
-    key: '/create',
-    label: 'Thêm phòng',
-    Icon: FileAddOutlined,
   },
   {
     key: 'out',
@@ -69,6 +65,11 @@ export const menuAdmin: MenuLogin[] = [
     key: '/listUser',
     label: 'Danh sách người dùng',
     Icon: UserSwitchOutlined,
+  },
+  {
+    key: '/register',
+    label: 'Thêm công tác viên',
+    Icon: UserAddOutlined,
   },
   {
     key: 'out',

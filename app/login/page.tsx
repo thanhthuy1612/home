@@ -13,14 +13,8 @@ const FormLogin = dynamic(() => import('./components/FormLogin'), {
   ssr: false,
 });
 
-const FormRegister = dynamic(() => import('./components/FormRegister'), {
-  loading: () => <></>,
-  ssr: false,
-});
-
 enum LoginMenu {
   LOGIN = 'Login',
-  REGISTER = 'Register',
 }
 
 const LoginPage: React.FC = () => {
@@ -48,17 +42,6 @@ const LoginPage: React.FC = () => {
         </div>
       ),
     },
-    {
-      label: 'Đăng ký',
-      icon: <UserAddOutlined />,
-      key: LoginMenu.REGISTER,
-      children: (
-        <div className=" p-[16px]">
-          <HeaderLogin title="Đăng ký" Component={UserAddOutlined} />
-          <FormRegister />
-        </div>
-      ),
-    },
   ];
 
   return (
@@ -75,6 +58,7 @@ const LoginPage: React.FC = () => {
         size="large"
         defaultActiveKey={LoginMenu.LOGIN}
         items={itemsTab}
+        activeKey={LoginMenu.LOGIN}
         tabBarStyle={{ padding: '0 16px' }}
       />
     </div>

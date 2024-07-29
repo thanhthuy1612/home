@@ -2,7 +2,6 @@
 
 import { Descriptions, Flex, DescriptionsProps, Modal, Image } from 'antd';
 import React from 'react';
-import { List } from './ItemProduct';
 import { useAppSelector } from '@/lib/hooks';
 import { IPost } from '@/interface/IPost';
 import { listPostStatus, listRoomStatus, listRoomType } from '@/default/list';
@@ -12,17 +11,15 @@ import Info from './Info';
 import { Role } from '@/enum/Role';
 import dynamic from 'next/dynamic';
 
+export interface List {
+  title: string;
+  contents: string[];
+}
+
 export interface IProduct {
   item?: IPost;
 }
-const Contact = dynamic(() => import('./Contact'), {
-  loading: () => <></>,
-  ssr: false,
-});
-const ItemProduct = dynamic(() => import('./ItemProduct'), {
-  loading: () => <></>,
-  ssr: false,
-});
+
 const PriceProduct = dynamic(() => import('./PriceProduct'), {
   loading: () => <></>,
   ssr: false,
@@ -31,7 +28,6 @@ const Product: React.FC<IProduct> = ({ item }) => {
   const [img, setImg] = React.useState<string>();
   const [imgList, setImgList] = React.useState<string[]>([]);
   const [items, setItems] = React.useState<DescriptionsProps['items']>([]);
-  const [listIntroduce, setListIntroduce] = React.useState<List[]>([]);
 
   const { width } = useAppSelector((state) => state.login);
   const { role } = useAppSelector((state) => state.user);
@@ -103,11 +99,6 @@ const Product: React.FC<IProduct> = ({ item }) => {
           (e) => Number(e.value) === item?.postsStatus,
         )?.label,
       },
-      {
-        key: '12',
-        label: 'Chủ sở hữu',
-        children: item?.owner,
-      },
     ];
     const init: List[] = [
       {
@@ -127,8 +118,25 @@ const Product: React.FC<IProduct> = ({ item }) => {
         contents: item?.serviceTags['TienIchXungQuanh'],
       },
     ];
-    setItems(!role ? initState : [...initState, ...adminList]);
-    setListIntroduce(init);
+
+    const items: DescriptionsProps['items'] = init.map((item) => {
+      return {
+        key: item.title,
+        label: item.title,
+        children: (
+          <Flex wrap gap={8}>
+            {item.contents.map((content) => (
+              <div key={content}>{content},</div>
+            ))}
+          </Flex>
+        ),
+      };
+    });
+    setItems(
+      role !== Role.Admin
+        ? [...initState, ...items]
+        : [...initState, ...adminList],
+    );
   }, [item, role]);
 
   return (
@@ -271,11 +279,6 @@ const Product: React.FC<IProduct> = ({ item }) => {
             item={item?.ownerInformation}
           />
         )}
-        {/* <Contact className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]" /> */}
-        <ItemProduct
-          className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]"
-          list={listIntroduce}
-        />
       </div>
     </Flex>
   );
