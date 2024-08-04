@@ -188,8 +188,8 @@ const Booking: React.FC = () => {
   };
 
   return (
-    <>
-      <Flex className=" items-center justify-between py-[24px]">
+    <div className=" mx-[24px]">
+      <Flex className="py-[24px]">
         <div className=" font-[600] text-[20px] w-fit">DANH SÁCH ĐẶT PHÒNG</div>
       </Flex>
       <Table
@@ -198,8 +198,9 @@ const Booking: React.FC = () => {
         dataSource={data}
         pagination={pagination}
         onChange={handleTableChange}
+        style={{ minWidth: '1000px' }}
       />
-    </>
+    </div>
   );
 };
 
