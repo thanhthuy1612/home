@@ -32,6 +32,9 @@ const FooterLayout: React.FC = () => {
           title: 'Phone',
           Icon: PhoneOutlined,
           content: res?.data?.phone,
+          onClick: async () => {
+            await navigator.clipboard.writeText(res?.data?.phone);
+          },
         },
         {
           title: 'Facebook',
@@ -47,12 +50,15 @@ const FooterLayout: React.FC = () => {
           title: 'Zalo',
           Icon: LinkOutlined,
           content: res?.data?.zalo,
+          onClick: async () => {
+            await navigator.clipboard.writeText(res?.data?.zalo);
+          },
         },
       ];
       dispatch(updateContact(initData));
     };
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

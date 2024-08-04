@@ -27,22 +27,64 @@ const Info: React.FC<IInfo> = ({ item, className, title }) => {
       {
         key: '2',
         label: 'email',
-        children: item?.email,
+        children: (
+          <div
+            className="ml-10px  cursor-pointer hover:text-colorSelect"
+            onClick={() => {
+              window.location.href = `mailto:${item?.email}`;
+            }}
+          >
+            {item?.email}
+          </div>
+        ),
       },
       {
         key: '3',
         label: 'Số điện thoại',
-        children: item?.phone,
+        children: (
+          <div
+            className="ml-10px  cursor-pointer hover:text-colorSelect"
+            onClick={async () => {
+              if (item?.phone) {
+                await navigator.clipboard.writeText(item?.phone);
+              }
+            }}
+          >
+            {item?.phone}
+          </div>
+        ),
       },
       {
         key: '4',
         label: 'Facebook',
-        children: item?.facebook,
+        children: (
+          <div
+            className="ml-10px  cursor-pointer hover:text-colorSelect"
+            onClick={async () => {
+              if (item?.facebook) {
+                window.location.href = item?.facebook;
+              }
+            }}
+          >
+            {item?.facebook}
+          </div>
+        ),
       },
       {
         key: '5',
         label: 'Zalo',
-        children: item?.zalo,
+        children: (
+          <div
+            className="ml-10px  cursor-pointer hover:text-colorSelect"
+            onClick={() => {
+              if (item?.zalo) {
+                window.location.href = item?.zalo;
+              }
+            }}
+          >
+            {item?.zalo}
+          </div>
+        ),
       },
       {
         key: '6',

@@ -1,15 +1,16 @@
 'use client';
 
+import ItemCard from '@/components/listRoom/ItemCard';
+import { BookingStatus } from '@/enum/BookStatus';
+import { IStatusCode } from '@/interface/IStatusCode';
 import { DataType } from '@/lib/features/listRoom';
 import { dateFormat } from '@/utils/useTime';
 import { defaultPageSize } from '@/utils/utils';
-import { Button, Space, Table, Tooltip } from 'antd';
 import type { TableColumnsType, TablePaginationConfig, TableProps } from 'antd';
+import { Button, Space, Table, Tooltip } from 'antd';
 import React from 'react';
 import handleAdmin from '../api/HandAdmin';
-import { BookingStatus } from '@/enum/BookStatus';
-import { IStatusCode } from '@/interface/IStatusCode';
-import ItemCard from '@/components/listRoom/ItemCard';
+import { useRouter } from 'next/navigation';
 
 interface TableType {
   id: string;
@@ -32,6 +33,9 @@ const Booking: React.FC = () => {
   });
   const [loading, setLoading] = React.useState(false);
   const [data, setData] = React.useState<TableType[]>([]);
+
+  const router = useRouter();
+
   const columns: TableColumnsType<TableType> = [
     {
       title: 'Họ và tên',
@@ -42,21 +46,61 @@ const Booking: React.FC = () => {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
+      render: (data) => (
+        <div
+          className="ml-10px  cursor-pointer hover:text-colorSelect"
+          onClick={() => {
+            window.location.href = `mailto:${data}`;
+          }}
+        >
+          {data}
+        </div>
+      ),
     },
     {
       title: 'Số điện thoại',
       dataIndex: 'phone',
       key: 'phone',
+      render: (data) => (
+        <div
+          className="ml-10px  cursor-pointer hover:text-colorSelect"
+          onClick={async () => {
+            await navigator.clipboard.writeText(data);
+          }}
+        >
+          {data}
+        </div>
+      ),
     },
     {
       title: 'Link facebook',
       dataIndex: 'facebook',
       key: 'facebook',
+      render: (data) => (
+        <div
+          className="ml-10px  cursor-pointer hover:text-colorSelect"
+          onClick={() => {
+            window.location.href = data;
+          }}
+        >
+          {data}
+        </div>
+      ),
     },
     {
       title: 'Link zalo',
       dataIndex: 'zalo',
       key: 'zalo',
+      render: (data) => (
+        <div
+          className="ml-10px  cursor-pointer hover:text-colorSelect"
+          onClick={() => {
+            window.location.href = data;
+          }}
+        >
+          {data}
+        </div>
+      ),
     },
     {
       title: 'Thời gian xem phòng',
@@ -71,12 +115,16 @@ const Booking: React.FC = () => {
       render: (posts: DataType) => (
         <Tooltip
           title={
-            <div className=" w-[300px]">
-              <ItemCard item={posts} fetchData={async () => {}} disableAction />
-            </div>
+            <ItemCard item={posts} fetchData={async () => {}} disableAction />
           }
+          overlayInnerStyle={{ width: '300px' }}
         >
-          <div className=' cursor-pointer'>{posts?.title}</div>
+          <div
+            onClick={() => router.push(`/room/${posts?.id}`)}
+            className=" cursor-pointer"
+          >
+            {posts?.title}
+          </div>
         </Tooltip>
       ),
     },
