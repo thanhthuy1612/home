@@ -7,7 +7,7 @@ import { DataType } from '@/lib/features/listRoom';
 import { dateFormat } from '@/utils/useTime';
 import { defaultPageSize } from '@/utils/utils';
 import type { TableColumnsType, TablePaginationConfig, TableProps } from 'antd';
-import { Button, Space, Table, Tooltip } from 'antd';
+import { Button, Flex, Space, Table, Tooltip } from 'antd';
 import React from 'react';
 import handleAdmin from '../api/HandAdmin';
 import { useRouter } from 'next/navigation';
@@ -189,6 +189,9 @@ const Booking: React.FC = () => {
 
   return (
     <>
+      <Flex className=" items-center justify-between py-[24px]">
+        <div className=" font-[600] text-[20px] w-fit">DANH SÁCH ĐẶT PHÒNG</div>
+      </Flex>
       <Table
         loading={loading}
         columns={columns}
