@@ -269,15 +269,24 @@ const Product: React.FC<IProduct> = ({ item }) => {
             className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]"
             price={item?.price}
             priceTag={item?.priceTags}
+            item={item}
           />
         </Flex>
       </Flex>
-      <div className=" w-[100%] mt-[16px]">
+      <div className=" w-[100%]">
         {role === Role.Admin && (
-          <Info
-            className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]"
-            item={item?.ownerInformation}
-          />
+          <>
+            <Info
+              className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]"
+              item={item?.holder}
+              title="THÔNG TIN NGƯỜI GIỮ BÀI"
+            />
+            <Info
+              className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]"
+              item={item?.ownerInformation}
+              title="THÔNG TIN LIÊN LẠC NGƯỜI ĐĂNG BÀI"
+            />
+          </>
         )}
       </div>
     </Flex>

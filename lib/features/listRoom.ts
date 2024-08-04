@@ -12,6 +12,7 @@ export interface DataType {
   roomStatus: number;
   postsStatus: number;
   updatedTime: Date;
+  holderId: string;
 }
 
 export interface ListRoomState {

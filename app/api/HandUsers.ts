@@ -14,7 +14,7 @@ class HandUsers {
     return await axiosClient.post(`${path}/login`, { ...body });
   };
   register = async (body: IRegister) => {
-    return await axiosClient.post(`${path}/saler/register`, { ...body });
+    return await axiosAuth.post(`${path}/register/ctv`, { ...body });
   };
   changePassword = async (body: IChangePassword) => {
     return await axiosAuth.post(`${path}/changepwd`, { ...body });

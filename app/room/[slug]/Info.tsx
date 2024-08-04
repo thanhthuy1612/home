@@ -8,8 +8,9 @@ import React from 'react';
 export interface IInfo {
   item?: IListUser;
   className: string;
+  title: string;
 }
-const Info: React.FC<IInfo> = ({ item, className }) => {
+const Info: React.FC<IInfo> = ({ item, className, title }) => {
   const [items, setItems] = React.useState<DescriptionsProps['items']>([]);
   React.useEffect(() => {
     const initState = [
@@ -59,7 +60,7 @@ const Info: React.FC<IInfo> = ({ item, className }) => {
   return (
     <div className={className}>
       <div className=" font-[600] mb-[8px] border-b-[1px] w-fit border-colorSelect">
-        THÔNG TIN LIÊN LẠC NGƯỜI ĐĂNG BÀI
+        {title}
       </div>
       <Descriptions items={items} column={{ xs: 1, sm: 1, md: 2 }} />
     </div>

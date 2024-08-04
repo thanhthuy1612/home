@@ -2,7 +2,7 @@
 
 import handleAdmin from '@/app/api/HandAdmin';
 import handlePosts from '@/app/api/HandPosts';
-import { listPostStatus, listRoomStatus, listRoomType } from '@/default/list';
+import { listRoomStatus, listRoomType } from '@/default/list';
 import { PostsStatus } from '@/enum/PostStatus';
 import { Role } from '@/enum/Role';
 import { DataType } from '@/lib/features/listRoom';
@@ -16,8 +16,10 @@ import {
   EyeInvisibleOutlined,
   EyeOutlined,
   HomeOutlined,
-  NotificationOutlined,
+  LockOutlined,
+  PlusOutlined,
   TeamOutlined,
+  UnlockOutlined,
 } from '@ant-design/icons';
 import {
   Button,
@@ -33,6 +35,7 @@ import Meta from 'antd/es/card/Meta';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import CreateBook from '../formBook/CreateBook';
 
 const EditPage = dynamic(() => import('./EditPage'), {
   loading: () => <></>,
@@ -43,17 +46,21 @@ export interface IItemCard {
   item: DataType;
   role?: Role;
   fetchData: (isFirst?: boolean) => Promise<void>;
+  disableAction?: boolean;
 }
 const ItemCard: React.FC<IItemCard> = (props) => {
   const [items, setItems] = React.useState<DescriptionsProps['items']>([]);
   const [img, setImg] = React.useState<string>();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isModalOpenHold, setIsModalOpenHold] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-
   const [open, setOpen] = React.useState(false);
+  const [openBook, setOpenBook] = React.useState(false);
 
   const { width } = useAppSelector((state) => state.login);
-  const { role, item, fetchData } = props;
+  const { id } = useAppSelector((state) => state.user);
+
+  const { role, item, fetchData, disableAction } = props;
 
   const showDrawer = () => {
     setOpen(true);
@@ -85,21 +92,7 @@ const ItemCard: React.FC<IItemCard> = (props) => {
         children: <div className=" w-fit">{dateFormat(item?.updatedTime)}</div>,
       },
     ];
-    setItems(
-      role
-        ? [
-            ...initState,
-            {
-              key: '11',
-              label: <NotificationOutlined />,
-              children: listPostStatus.find(
-                (e) => Number(e.value) === item?.postsStatus,
-              )?.label,
-            },
-          ]
-        : initState,
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setItems(initState);
   }, [item]);
 
   const bookRoom = () => {
@@ -137,9 +130,39 @@ const ItemCard: React.FC<IItemCard> = (props) => {
     setNotification(res, 'Xóa bài thành công', action);
   };
 
+  const handleHold = async () => {
+    setIsLoading(true);
+    const res = await handlePosts.holdRoom(item?.id);
+    const action = async () => {
+      await fetchData(true);
+      setIsLoading(false);
+      setIsModalOpenHold(false);
+    };
+    setNotification(res, 'Giữ phòng thành công', action);
+  };
+  const handleUnhold = async () => {
+    setIsLoading(true);
+    const res = await handlePosts.unholdRoom(item?.id);
+    const action = async () => {
+      await fetchData(true);
+      setIsLoading(false);
+      setIsModalOpenHold(false);
+    };
+    setNotification(res, 'Bỏ giữ phòng thành công', action);
+  };
   const renderBottom: () => Array<React.ReactNode> = () => {
     if (!role) {
-      return [];
+      return [
+        <Tooltip key={'Xem'} title="Xem chi tiết">
+          <EyeOutlined disabled={isLoading} onClick={bookRoom} />
+        </Tooltip>,
+        <Tooltip key={'Dat'} title="Đặt lịch xem phòng">
+          <PlusOutlined
+            disabled={isLoading}
+            onClick={() => setOpenBook(true)}
+          />
+        </Tooltip>,
+      ];
     }
     let base = [
       <Tooltip key={'Sua'} title="Sửa">
@@ -154,7 +177,27 @@ const ItemCard: React.FC<IItemCard> = (props) => {
     ];
     switch (role) {
       case Role.Saler:
-        return base;
+        return [
+          <Tooltip key={'Xem'} title="Xem chi tiết">
+            <EyeOutlined disabled={isLoading} onClick={bookRoom} />
+          </Tooltip>,
+          <Tooltip
+            key={'Giu'}
+            title={item?.holderId === id ? 'Bỏ giữ phòng' : 'Giữ phòng'}
+          >
+            {item?.holderId === id ? (
+              <LockOutlined
+                disabled={isLoading}
+                onClick={() => setIsModalOpenHold(true)}
+              />
+            ) : (
+              <UnlockOutlined
+                disabled={isLoading}
+                onClick={() => setIsModalOpenHold(true)}
+              />
+            )}
+          </Tooltip>,
+        ];
       case Role.Admin:
         if (item?.postsStatus !== PostsStatus.DaDuyet) {
           base = [
@@ -180,6 +223,17 @@ const ItemCard: React.FC<IItemCard> = (props) => {
             ...base,
           ];
         }
+        if (item?.holderId !== id) {
+          base = [
+            <Tooltip key={'Giu'} title="Bỏ giữ phòng">
+              <LockOutlined
+                disabled={isLoading}
+                onClick={() => setIsModalOpenHold(true)}
+              />
+            </Tooltip>,
+            ...base,
+          ];
+        }
         return base;
     }
   };
@@ -191,6 +245,7 @@ const ItemCard: React.FC<IItemCard> = (props) => {
     };
     item?.id && item?.previewPicture && fetchImg();
   }, [item?.id, item?.previewPicture]);
+
   return (
     <Card
       hoverable
@@ -212,19 +267,19 @@ const ItemCard: React.FC<IItemCard> = (props) => {
           </div>
         </div>
       }
-      actions={renderBottom()}
+      actions={!disableAction ? renderBottom() : undefined}
     >
       <div onClick={bookRoom}>
         <Meta
           title={
-            <Tooltip title={item?.title}>
+            <Tooltip placement="topLeft" title={item?.title}>
               <div className=" w-[100%] overflow-hidden text-ellipsis whitespace-nowrap">
                 {item?.title}
               </div>
             </Tooltip>
           }
           description={
-            <Tooltip title={item?.address}>
+            <Tooltip placement="topLeft" title={item?.address}>
               <div className=" w-[100%] overflow-hidden text-ellipsis whitespace-nowrap">
                 {item?.address}
               </div>
@@ -237,8 +292,15 @@ const ItemCard: React.FC<IItemCard> = (props) => {
         </div>
       </div>
       {open && <EditPage id={item?.id} open onClose={onClose} />}
+      {openBook && (
+        <CreateBook
+          title={item?.title}
+          isOpen={openBook}
+          onDismiss={() => setOpenBook(false)}
+          id={item?.id}
+        />
+      )}
       <Modal
-        title="Hình ảnh"
         open={isModalOpen}
         onCancel={() => {
           setIsModalOpen(false);
@@ -248,6 +310,28 @@ const ItemCard: React.FC<IItemCard> = (props) => {
         Bạn muốn xóa bài?
         <Flex className=" mt-[20px] justify-end w-[100%]">
           <Button disabled={isLoading} onClick={handleDelete}>
+            Xác nhận
+          </Button>
+        </Flex>
+      </Modal>
+      <Modal
+        open={isModalOpenHold}
+        onCancel={() => {
+          setIsModalOpenHold(false);
+        }}
+        footer={null}
+      >
+        {item?.holderId === id ? 'Bạn muốn bỏ giữ phòng' : 'Bạn muốn giữ phòng'}{' '}
+        {item?.title}?
+        <Flex className=" mt-[20px] justify-end w-[100%]">
+          <Button
+            disabled={isLoading}
+            onClick={
+              item?.holderId !== id && role !== Role.Admin
+                ? handleHold
+                : handleUnhold
+            }
+          >
             Xác nhận
           </Button>
         </Flex>

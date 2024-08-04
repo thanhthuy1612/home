@@ -3,6 +3,7 @@ import {
   KeyOutlined,
   LogoutOutlined,
   MenuOutlined,
+  ReadOutlined,
   UserAddOutlined,
   UserOutlined,
   UserSwitchOutlined,
@@ -29,8 +30,8 @@ export const menuUserActive: MenuLogin[] = [
     Icon: KeyOutlined,
   },
   {
-    key: '/myRoom',
-    label: 'Danh sách quản lý',
+    key: '/myHold',
+    label: 'Danh sách phòng đang giữ',
     Icon: MenuOutlined,
   },
   {
@@ -56,10 +57,20 @@ export const menuAdmin: MenuLogin[] = [
     label: 'Thêm phòng',
     Icon: FileAddOutlined,
   },
+  // {
+  //   key: '/listPost',
+  //   label: 'Danh sách phòng',
+  //   Icon: MenuOutlined,
+  // },
   {
-    key: '/listPost',
-    label: 'Danh sách phòng',
+    key: '/hold',
+    label: 'Danh sách giữ phòng',
     Icon: MenuOutlined,
+  },
+  {
+    key: '/booking',
+    label: 'Danh sách đặt phòng',
+    Icon: ReadOutlined,
   },
   {
     key: '/listUser',
@@ -83,11 +94,6 @@ export const menuUser: MenuLogin[] = [
     key: '/settings/profile',
     label: 'Thông tin cá nhân',
     Icon: UserOutlined,
-  },
-  {
-    key: '/settings/password',
-    label: 'Thay đổi mật khẩu',
-    Icon: KeyOutlined,
   },
   {
     key: 'out',

@@ -1,14 +1,21 @@
 'use client';
 
-import { Descriptions, DescriptionsProps } from 'antd';
+import { useAppSelector } from '@/lib/hooks';
+import { Button, Descriptions, DescriptionsProps } from 'antd';
+import { IPost } from '@/interface/IPost';
 import React from 'react';
+import CreateBook from '@/components/formBook/CreateBook';
 export interface IPriceProduct {
   price?: number;
   priceTag: any;
   className: string;
+  item?: IPost;
 }
 const PriceProduct: React.FC<IPriceProduct> = (props) => {
-  const { priceTag, price, className } = props;
+  const [openBook, setOpenBook] = React.useState(false);
+  const { priceTag, price, className, item } = props;
+  const { role } = useAppSelector((state) => state.user);
+
   const items: DescriptionsProps['items'] = [
     {
       key: '1',
@@ -60,9 +67,27 @@ const PriceProduct: React.FC<IPriceProduct> = (props) => {
       <div className=" font-[600] mb-[8px] mt-[24px] border-b-[1px] w-fit border-colorSelect">
         GIÁ THUÊ PHÒNG
       </div>
-      <div className=" font-[600] text-colorError text-[24px]">
+      <div className=" font-[600] text-colorError text-[24px] mb-[8px]">
         {`${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / tháng
       </div>
+      {!role && (
+        <Button
+          type="primary"
+          className="hover:!bg-colorSelect my-[16px]"
+          size="large"
+          onClick={() => setOpenBook(true)}
+        >
+          Đặt lịch xem phòng
+        </Button>
+      )}
+      {openBook && (
+        <CreateBook
+          title={item?.title}
+          isOpen={openBook}
+          onDismiss={() => setOpenBook(false)}
+          id={item?.id}
+        />
+      )}
     </div>
   );
 };

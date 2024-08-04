@@ -2,14 +2,6 @@
 
 import React from 'react';
 import { Button, Form, type FormProps, Input } from 'antd';
-import {
-  FacebookOutlined,
-  KeyOutlined,
-  LinkOutlined,
-  MailOutlined,
-  PhoneOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
 import { UserFieldType } from '@/enum/UserFieldType';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { useRouter } from 'next/navigation';
@@ -17,6 +9,7 @@ import { updateIsLoadingForm } from '@/lib/features/login';
 import { updateUser } from '@/lib/features/user';
 import handleUsers from '@/app/api/HandUsers';
 import { useNotification } from '@/utils/useNotification';
+import HeaderSettings from '@/app/settings/components/HeaderSettings';
 
 const FormRegister: React.FC = () => {
   const [isDisable, setIsDisable] = React.useState<boolean>(true);
@@ -44,8 +37,6 @@ const FormRegister: React.FC = () => {
       zalo: values.zalo,
     });
     const onSuccess = () => {
-      dispatch(updateUser(fetchRegister?.data));
-      localStorage.setItem('token', fetchRegister.data.accessToken);
       router.push('/');
     };
     setNotification(
@@ -60,32 +51,28 @@ const FormRegister: React.FC = () => {
   return (
     <Form
       scrollToFirstError
-      name="register"
-      style={{ width: '100%' }}
       onFinish={onFinish}
-      autoComplete="off"
+      style={{ paddingBlock: 32 }}
+      labelCol={{ span: 6 }}
+      wrapperCol={{ span: 14 }}
+      className=" mx-[16px]"
     >
+      <HeaderSettings title="Thêm tài khoản cộng tác viên" />
       <Form.Item<UserFieldType>
         name="fullname"
+        label="Họ và tên"
         tooltip="Yêu cầu nhập ký tự ít hơn 64"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { max: 64, message: 'Vui lòng nhập ít hơn 64 ký tự' },
         ]}
       >
-        <Input
-          disabled={isDisable}
-          placeholder="Họ và tên"
-          style={{ borderRadius: '50px' }}
-          size="large"
-          prefix={
-            <UserOutlined style={{ marginLeft: '5px', marginRight: '5px' }} />
-          }
-        />
+        <Input disabled={isDisable} placeholder="Họ và tên" size="large" />
       </Form.Item>
 
       <Form.Item<UserFieldType>
         name="username"
+        label="Tài khoản"
         tooltip="Yêu cầu nhập ký tự trong khoảng 8-32"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
@@ -93,19 +80,12 @@ const FormRegister: React.FC = () => {
           { max: 32, message: 'Vui lòng nhập ít hơn 32 ký tự' },
         ]}
       >
-        <Input
-          disabled={isDisable}
-          placeholder="Tài khoản"
-          style={{ borderRadius: '50px' }}
-          size="large"
-          prefix={
-            <UserOutlined style={{ marginLeft: '5px', marginRight: '5px' }} />
-          }
-        />
+        <Input disabled={isDisable} placeholder="Tài khoản" size="large" />
       </Form.Item>
 
       <Form.Item<UserFieldType>
         name="email"
+        label="Email"
         tooltip="Yêu cầu nhập ký tự ít hơn 128"
         rules={[
           {
@@ -116,78 +96,48 @@ const FormRegister: React.FC = () => {
           { max: 128, message: 'Vui lòng nhập ít hơn 128 ký tự' },
         ]}
       >
-        <Input
-          disabled={isDisable}
-          placeholder="Email"
-          style={{ borderRadius: '50px' }}
-          size="large"
-          prefix={
-            <MailOutlined style={{ marginLeft: '5px', marginRight: '5px' }} />
-          }
-        />
+        <Input disabled={isDisable} placeholder="Email" size="large" />
       </Form.Item>
 
       <Form.Item<UserFieldType>
         name="phone"
         tooltip="Yêu cầu nhập ký tự ít hơn 15"
+        label="Số điện thoại"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { max: 15, message: 'Vui lòng nhập ít hơn 15 ký tự' },
         ]}
       >
-        <Input
-          disabled={isDisable}
-          placeholder="Số điện thoại"
-          style={{ borderRadius: '50px' }}
-          size="large"
-          prefix={
-            <PhoneOutlined style={{ marginLeft: '5px', marginRight: '5px' }} />
-          }
-        />
+        <Input disabled={isDisable} placeholder="Số điện thoại" size="large" />
       </Form.Item>
 
       <Form.Item<UserFieldType>
         name="facebook"
+        label="Link facebook"
         tooltip="Yêu cầu nhập ký tự ít hơn 256"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { max: 256, message: 'Vui lòng nhập ít hơn 256 ký tự' },
         ]}
       >
-        <Input
-          disabled={isDisable}
-          placeholder="Link facebook"
-          style={{ borderRadius: '50px' }}
-          size="large"
-          prefix={
-            <FacebookOutlined
-              style={{ marginLeft: '5px', marginRight: '5px' }}
-            />
-          }
-        />
+        <Input disabled={isDisable} placeholder="Link facebook" size="large" />
       </Form.Item>
 
       <Form.Item<UserFieldType>
         name="zalo"
+        label="Link zalo"
         tooltip="Yêu cầu nhập ký tự ít hơn 64"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { max: 64, message: 'Vui lòng nhập ít hơn 64 ký tự' },
         ]}
       >
-        <Input
-          disabled={isDisable}
-          placeholder="Link zalo"
-          style={{ borderRadius: '50px' }}
-          size="large"
-          prefix={
-            <LinkOutlined style={{ marginLeft: '5px', marginRight: '5px' }} />
-          }
-        />
+        <Input disabled={isDisable} placeholder="Link zalo" size="large" />
       </Form.Item>
 
       <Form.Item<UserFieldType>
         name="password"
+        label="Mật khẩu"
         tooltip="Yêu cầu nhập ký tự trong khoảng 8-32"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
@@ -198,15 +148,12 @@ const FormRegister: React.FC = () => {
         <Input.Password
           disabled={isDisable}
           placeholder="Mật khẩu"
-          style={{ borderRadius: '50px' }}
           size="large"
-          prefix={
-            <KeyOutlined style={{ marginLeft: '5px', marginRight: '5px' }} />
-          }
         />
       </Form.Item>
 
       <Form.Item<UserFieldType>
+        label="Nhập lại mật khẩu"
         name="rePassword"
         rules={[
           {
@@ -228,11 +175,7 @@ const FormRegister: React.FC = () => {
         <Input.Password
           disabled={isDisable}
           placeholder="Nhập lại mật khẩu"
-          style={{ borderRadius: '50px' }}
           size="large"
-          prefix={
-            <KeyOutlined style={{ marginLeft: '5px', marginRight: '5px' }} />
-          }
         />
       </Form.Item>
 
@@ -243,11 +186,6 @@ const FormRegister: React.FC = () => {
           type="primary"
           className="hover:!bg-colorSelect"
           size="large"
-          style={{
-            borderRadius: '50px',
-            paddingLeft: '50px',
-            paddingRight: '50px',
-          }}
           htmlType="submit"
         >
           Đăng ký

@@ -16,4 +16,5 @@ export interface IPost {
   pictures: string[];
   postsStatus: number;
   ownerInformation?: IListUser;
+  holder?: IListUser;
 }

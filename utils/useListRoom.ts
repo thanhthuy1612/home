@@ -127,5 +127,62 @@ export const useListRoom = () => {
     dispatch(updateIsLoadingListRoom(false));
   };
 
-  return { fetchData, fetchDataPostMe, fetchDataAdmin };
+  const fetchDataHold = async (isFirst?: boolean) => {
+    dispatch(updateIsLoadingListRoom(true));
+    if (isFirst) {
+      dispatch(updateIsInitLoadingListRoom(true));
+      updateListRoom([]);
+      dispatch(updateTotalListRoom(0));
+      dispatch(updatePageNumberListRoom(0));
+    }
+    const res = await handlePosts.getHold({
+      index: isFirst ? 1 : pageNumberListRoom,
+      size: defaultPageSize,
+    });
+    if (res?.status === IStatusCode.SUCCESS) {
+      dispatch(
+        updateListRoom(
+          isFirst ? res.data?.values : [...listRoom, ...res.data?.values],
+        ),
+      );
+      dispatch(updateTotalListRoom(res.data?.total));
+      dispatch(updatePageNumberListRoom(isFirst ? 2 : pageNumberListRoom + 1));
+    }
+    dispatch(updateIsInitLoadingListRoom(false));
+    dispatch(updateIsLoadingListRoom(false));
+  };
+
+  const fetchDataAdminHold = async (isFirst?: boolean) => {
+    dispatch(updateIsLoadingListRoom(true));
+    if (isFirst) {
+      dispatch(updateIsInitLoadingListRoom(true));
+      updateListRoom([]);
+      dispatch(updateTotalListRoom(0));
+      dispatch(updatePageNumberListRoom(0));
+    }
+    const res = await handleAdmin.getHold({
+      index: isFirst ? 1 : pageNumberListRoom,
+      size: defaultPageSize,
+      name: searchValue ?? '',
+    });
+    if (res?.status === IStatusCode.SUCCESS) {
+      dispatch(
+        updateListRoom(
+          isFirst ? res.data?.values : [...listRoom, ...res.data?.values],
+        ),
+      );
+      dispatch(updateTotalListRoom(res.data?.total));
+      dispatch(updatePageNumberListRoom(isFirst ? 2 : pageNumberListRoom + 1));
+    }
+    dispatch(updateIsInitLoadingListRoom(false));
+    dispatch(updateIsLoadingListRoom(false));
+  };
+
+  return {
+    fetchData,
+    fetchDataPostMe,
+    fetchDataAdmin,
+    fetchDataAdminHold,
+    fetchDataHold,
+  };
 };

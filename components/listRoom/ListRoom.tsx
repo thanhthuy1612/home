@@ -10,6 +10,7 @@ export interface IListRoom {
   title: string;
   fetchData: (isFirst?: boolean) => Promise<void>;
   role?: Role;
+  isAdd?: boolean;
 }
 
 const ListItem = dynamic(() => import('./ListItem'), {
@@ -18,12 +19,12 @@ const ListItem = dynamic(() => import('./ListItem'), {
 });
 
 const ListRoom: React.FC<IListRoom> = (props) => {
-  const { title, fetchData, role } = props;
+  const { title, fetchData, role, isAdd } = props;
 
   const router = useRouter();
   return (
     <div className="px-[24px] mb-[24px]">
-      {role === Role.Saler && (
+      {isAdd && (
         <Button
           icon={<PlusOutlined />}
           className=" mt-[24px]"

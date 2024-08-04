@@ -30,7 +30,7 @@ const ListPost = () => {
       fetchDataAdmin(null, true);
     };
     initData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -39,6 +39,7 @@ const ListPost = () => {
         fetchData={(isFirst?: boolean) => fetchDataAdmin(null, isFirst)}
       />
       <ListRoom
+        isAdd
         role={Role.Admin}
         title="DANH SÁCH PHÒNG"
         fetchData={(isFirst?: boolean) => fetchDataAdmin(null, isFirst)}

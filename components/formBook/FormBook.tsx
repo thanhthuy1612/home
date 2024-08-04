@@ -1,22 +1,30 @@
+'use client';
+
 import { Button, DatePicker, Form, FormProps, GetProps, Input } from 'antd';
 import React from 'react';
 import dayjs from 'dayjs';
+import handlePosts from '@/app/api/HandPosts';
+import { IBookRoom } from '@/app/api/interfaces/IBookRoom';
+import { useNotification } from '@/utils/useNotification';
 
 type RangePickerProps = GetProps<typeof DatePicker.RangePicker>;
 
-const FormBook: React.FC = () => {
-  const [isDisable, setIsDisable] = React.useState<boolean>(false);
-  const onFinish: FormProps['onFinish'] = async (values) => {
-    console.log(values);
-    setIsDisable(true);
-  };
+export interface IFormBookProps {
+  id?: string;
+  onDismiss: () => void;
+}
 
-  const range = (start: number, end: number) => {
-    const result = [];
-    for (let i = start; i < end; i++) {
-      result.push(i);
-    }
-    return result;
+const FormBook: React.FC<IFormBookProps> = ({ id, onDismiss }) => {
+  const [isDisable, setIsDisable] = React.useState<boolean>(false);
+  const [form] = Form.useForm();
+
+  const { setNotification } = useNotification();
+  const onFinish: FormProps['onFinish'] = async (values) => {
+    setIsDisable(true);
+    const res = await handlePosts.postBook(id ?? '', values);
+    setNotification(res, 'Đặt lịch thành công', onDismiss, "Đặt lịch thất bại");
+
+    setIsDisable(false);
   };
 
   const disabledDate: RangePickerProps['disabledDate'] = (current) => {
@@ -24,18 +32,15 @@ const FormBook: React.FC = () => {
     return current && current < dayjs().endOf('day');
   };
 
-  const disabledDateTime = () => ({
-    disabledHours: () => range(0, 24).splice(4, 20),
-    disabledMinutes: () => range(30, 60),
-    disabledSeconds: () => [55, 56],
-  });
   return (
     <Form
+      form={form}
       scrollToFirstError
-      name="register"
-      style={{ width: '100%' }}
       onFinish={onFinish}
-      autoComplete="off"
+      style={{ paddingBlock: 32 }}
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 14 }}
+      className=" mx-[16px]"
     >
       <Form.Item
         name="fullname"
@@ -46,12 +51,32 @@ const FormBook: React.FC = () => {
           { max: 64, message: 'Vui lòng nhập ít hơn 64 ký tự' },
         ]}
       >
-        <Input disabled={isDisable} placeholder="Họ và tên" size="large" />
+        <Input
+          className=" w-[100%]"
+          disabled={isDisable}
+          placeholder="Họ và tên"
+          size="large"
+        />
       </Form.Item>
       <Form.Item
+        name="email"
+        label="Email"
+        tooltip="Yêu cầu nhập ký tự ít hơn 128"
+        rules={[
+          {
+            type: 'email',
+            message: 'The input is not valid E-mail!',
+          },
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 128, message: 'Vui lòng nhập ít hơn 128 ký tự' },
+        ]}
+      >
+        <Input disabled={isDisable} placeholder="Email" size="large" />
+      </Form.Item>
+      <Form.Item
+        tooltip="Yêu cầu nhập ký tự ít hơn 15"
         name="phone"
         label="Số điện thoại"
-        tooltip="Yêu cầu nhập ký tự ít hơn 15"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { max: 15, message: 'Vui lòng nhập ít hơn 15 ký tự' },
@@ -60,18 +85,30 @@ const FormBook: React.FC = () => {
         <Input disabled={isDisable} placeholder="Số điện thoại" size="large" />
       </Form.Item>
       <Form.Item
-        name="dateIn"
-        label="Ngày dự kiến chuyển vào ở"
-        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+        tooltip="Yêu cầu nhập ký tự ít hơn 256"
+        name="facebook"
+        label="Link facebook"
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 256, message: 'Vui lòng nhập ít hơn 256 ký tự' },
+        ]}
       >
-        <DatePicker
-          format="DD/MM/YYYY"
-          placeholder="Ngày dự kiến chuyển vào ở"
-          disabledDate={disabledDate}
-        />
+        <Input disabled={isDisable} placeholder="Link facebook" size="large" />
+      </Form.Item>
+
+      <Form.Item
+        tooltip="Yêu cầu nhập ký tự ít hơn 64"
+        name="zalo"
+        label="Link zalo"
+        rules={[
+          { required: true, message: 'Vui lòng nhập thông tin!' },
+          { max: 64, message: 'Vui lòng nhập ít hơn 64 ký tự' },
+        ]}
+      >
+        <Input disabled={isDisable} placeholder="Link zalo" size="large" />
       </Form.Item>
       <Form.Item
-        name="date"
+        name="bookingDate"
         label="Ngày/giờ hẹn xem phòng"
         rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
       >
@@ -79,8 +116,8 @@ const FormBook: React.FC = () => {
           format="DD-MM-YYYY HH:mm:ss"
           placeholder="Ngày/giờ hẹn xem phòng"
           disabledDate={disabledDate}
-          disabledTime={disabledDateTime}
           showTime={{ defaultValue: dayjs('00:00:00', 'HH:mm:ss') }}
+          className=" w-[100%]"
         />
       </Form.Item>
       <Form.Item

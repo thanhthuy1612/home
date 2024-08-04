@@ -1,6 +1,8 @@
 import axiosAuth from './axiosAuth';
 import axiosClient from './axiosClient';
+import { IBookRoom } from './interfaces/IBookRoom';
 import { IListRoom } from './interfaces/IListRoom';
+import { IPageSize } from './interfaces/IPageSize';
 import { IPostMe } from './interfaces/IPostMe';
 
 import { url } from './url';
@@ -40,8 +42,20 @@ class HandlePost {
   deletePost = async (id: string) => {
     return await axiosAuth.delete(`${path}/${id}`);
   };
+  postBook = async (id: string, body: IBookRoom) => {
+    return await axiosClient.post(`${path}/${id}/booking`, body);
+  };
   getContact = async () => {
     return await axiosClient.get(`${path}/contact`);
+  };
+  getHold = async (body: IPageSize) => {
+    return await axiosAuth.post(`${path}/myholding`, body);
+  };
+  holdRoom = async (id: string) => {
+    return await axiosAuth.post(`${path}/${id}/hold`);
+  };
+  unholdRoom = async (id: string) => {
+    return await axiosAuth.post(`${path}/${id}/unhold`);
   };
 }
 
