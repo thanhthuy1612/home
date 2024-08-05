@@ -30,6 +30,7 @@ import handlePosts from '@/app/api/HandPosts';
 import { defaultCity, hcm, hn } from '@/default/city';
 import { ISelected } from '@/interface/ISelected';
 import HeaderSettings from '@/app/settings/components/HeaderSettings';
+import { file2Base64 } from '@refinedev/core';
 
 export interface IEditForm {
   id: string;
@@ -93,10 +94,25 @@ const EditForm: React.FC<IEditForm> = ({
       };
 
       const address = `${values.address}, ${values.quan}, ${values.city}`;
+      const base64Files = [];
+
+      for (const file of fileImg) {
+        if (file.originFileObj) {
+          const base64String = await file2Base64(file);
+
+          base64Files.push({
+            ...file,
+            base64String,
+          });
+        } else {
+          base64Files.push(file);
+        }
+      }
 
       const fileListImg = fileImg.reduce((res: File[], item) => {
         const file = (item as UploadFile).originFileObj as File;
-        return [...res, file];
+        res.push(file);
+        return res;
       }, []);
 
       formData.append('Title', values.name);
@@ -112,7 +128,9 @@ const EditForm: React.FC<IEditForm> = ({
       formData.append('RoomStatus', values.roomStatus);
       formData.append('ServiceTags', JSON.stringify(service));
       formData.append('PriceTags', JSON.stringify(price));
-      formData.append('Pictures', JSON.stringify(fileListImg));
+      for (const image of fileListImg) {
+        formData.append('Pictures', image);
+      }
 
       const res = await handlePosts.updatePost(id, formData);
       const onSuccess = () => {

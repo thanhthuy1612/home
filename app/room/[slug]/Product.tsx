@@ -174,7 +174,7 @@ const Product: React.FC<IProduct> = ({ item }) => {
                 className=" object-cover"
               />
               <Flex gap={10} wrap>
-                {(imgList.length <= 2 ? imgList : imgList.slice(2)).map(
+                {(imgList.length <= 2 ? imgList : imgList.slice(0, 2)).map(
                   (imgItem, index) => (
                     <Image
                       key={index}
@@ -209,7 +209,7 @@ const Product: React.FC<IProduct> = ({ item }) => {
                           ? `${(300 - 20) / 3}px`
                           : `${(500 - 20) / 3}px`,
                     }}
-                    className=" bg-coborder-colorPrimary flex justify-center items-center"
+                    className=" bg-borderHeader flex justify-center items-center"
                   >
                     Xem thêm
                   </div>

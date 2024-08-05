@@ -1,3 +1,4 @@
+import { BookingStatus } from '@/enum/BookStatus';
 import axiosAuth from './axiosAuth';
 import { IAdminHold } from './interfaces/IAdminHold';
 import { IAdminPost } from './interfaces/IAdminPost';
@@ -35,8 +36,8 @@ class HandAdmin {
   getListBooking = async (body: IPageSize) => {
     return await axiosAuth.post(`${path}/bookings`, body);
   };
-  updateBooking = async (id: string) => {
-    return await axiosAuth.put(`${path}/booking/${id}`);
+  updateBooking = async (id: string, status: BookingStatus) => {
+    return await axiosAuth.put(`${path}/booking/${id}`, { status });
   };
   deleteBooking = async (id: string) => {
     return await axiosAuth.delete(`${path}/booking/${id}`);

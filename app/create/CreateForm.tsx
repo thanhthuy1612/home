@@ -109,7 +109,9 @@ const CreateForm: React.FC = () => {
       formData.append('RoomStatus', values.roomStatus);
       formData.append('ServiceTags', JSON.stringify(service));
       formData.append('PriceTags', JSON.stringify(price));
-      formData.append('Pictures', JSON.stringify(fileListImg));
+      for (const image of fileListImg) {
+        formData.append('Pictures', image);
+      }
 
       const res = await handlePosts.getCreatePost(formData);
       const onSuccess = () => {

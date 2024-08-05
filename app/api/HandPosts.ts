@@ -24,7 +24,7 @@ class HandlePost {
     });
   };
   updatePost = async (id: string, formData: FormData) => {
-    return await axiosAuth.post(`${path}/${id}`, formData, {
+    return await axiosAuth.put(`${path}/${id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

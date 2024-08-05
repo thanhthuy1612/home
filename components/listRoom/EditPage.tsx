@@ -35,6 +35,8 @@ const EditPage: React.FC<IEditPage> = ({ id, open, onClose }) => {
           name: i,
           status: 'done',
           url: res,
+          type:
+            i?.toString().split('.')[1] === 'jpg' ? 'image/jpeg' : 'image/png',
         } as UploadFile);
       }
       return list;
@@ -53,10 +55,14 @@ const EditPage: React.FC<IEditPage> = ({ id, open, onClose }) => {
 
         const img = [
           {
-            uid: res?.data?.previewPicture ?? '',
-            name: res?.data?.previewPicture ?? '',
+            uid: res?.data?.previewPicture,
+            name: res?.data?.previewPicture,
             status: 'done',
             url: image,
+            type:
+              res?.data?.previewPicture?.toString().split('.')[1] === 'jpg'
+                ? 'image/jpeg'
+                : 'image/png',
           } as UploadFile,
         ];
         setInitImg(img);

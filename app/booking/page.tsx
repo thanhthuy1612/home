@@ -3,7 +3,11 @@
 import ItemCard from '@/components/listRoom/ItemCard';
 import { BookingStatus } from '@/enum/BookStatus';
 import { IStatusCode } from '@/interface/IStatusCode';
-import { DataType } from '@/lib/features/listRoom';
+import {
+  DataType,
+  updatePageNumberListRoom,
+  updateTotalListRoom,
+} from '@/lib/features/listRoom';
 import { dateFormat } from '@/utils/useTime';
 import { defaultPageSize } from '@/utils/utils';
 import type { TableColumnsType, TablePaginationConfig, TableProps } from 'antd';
@@ -11,6 +15,8 @@ import { Button, Flex, Space, Table, Tooltip } from 'antd';
 import React from 'react';
 import handleAdmin from '../api/HandAdmin';
 import { useRouter } from 'next/navigation';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { useNotification } from '@/utils/useNotification';
 
 interface TableType {
   id: string;
@@ -27,14 +33,16 @@ interface TableType {
 }
 
 const Booking: React.FC = () => {
-  const [pagination, setPagination] = React.useState<TablePaginationConfig>({
-    current: 1,
-    pageSize: defaultPageSize,
-  });
   const [loading, setLoading] = React.useState(false);
   const [data, setData] = React.useState<TableType[]>([]);
 
+  const { pageNumberListRoom, totalListRoom } = useAppSelector(
+    (state) => state.listRoom,
+  );
+
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { setNotification } = useNotification();
 
   const columns: TableColumnsType<TableType> = [
     {
@@ -133,53 +141,59 @@ const Booking: React.FC = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          {record?.status === BookingStatus.ChuaXuLy && (
-            <Button onClick={() => handleUpdate(record?.id)}>Xử lý</Button>
-          )}
+          <Button onClick={() => handleUpdate(record?.id, record?.status)}>
+            {record?.status === BookingStatus.ChuaXuLy
+              ? 'Chưa xử lý'
+              : 'Đã xử lý'}
+          </Button>
           <Button onClick={() => handleDelete(record?.id)}>Xóa</Button>
         </Space>
       ),
     },
   ];
 
-  const handleUpdate = async (id: string) => {
-    const res = await handleAdmin.updateBooking(id);
-    if (res.status === IStatusCode.SUCCESS) {
-      fetchData();
-    }
+  const handleUpdate = async (id: string, status: BookingStatus) => {
+    const res = await handleAdmin.updateBooking(
+      id,
+      status === BookingStatus.ChuaXuLy
+        ? BookingStatus.DaXuLy
+        : BookingStatus.ChuaXuLy,
+    );
+
+    setNotification(res, 'Cập nhật thành công', fetchData);
   };
 
   const handleDelete = async (id: string) => {
     const res = await handleAdmin.deleteBooking(id);
-    if (res.status === IStatusCode.SUCCESS) {
-      fetchData();
-    }
+    setNotification(res, 'Xóa thành công', fetchData);
   };
 
   const fetchData = async () => {
     setLoading(true);
     const res = await handleAdmin.getListBooking({
       size: defaultPageSize,
-      index: pagination?.current ?? 1,
+      index: pageNumberListRoom,
     });
     setData(res?.data?.values ?? []);
-    setPagination({
-      current: pagination.current,
-      pageSize: defaultPageSize,
-      total: res?.data?.total,
-    });
+    dispatch(updateTotalListRoom(res?.data?.total));
     setLoading(false);
   };
 
   React.useEffect(() => {
+    dispatch(updatePageNumberListRoom(1));
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagination?.current]);
+  }, []);
+
+  React.useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageNumberListRoom]);
 
   const handleTableChange: TableProps['onChange'] = (
     pagination: TablePaginationConfig,
   ) => {
-    setPagination(pagination);
+    dispatch(updatePageNumberListRoom(Number(pagination)));
 
     // `dataSource` is useless since `pageSize` changed
     if (pagination.pageSize !== pagination?.pageSize) {
@@ -196,7 +210,11 @@ const Booking: React.FC = () => {
         loading={loading}
         columns={columns}
         dataSource={data}
-        pagination={pagination}
+        pagination={{
+          current: pageNumberListRoom,
+          pageSize: defaultPageSize,
+          total: totalListRoom,
+        }}
         onChange={handleTableChange}
         style={{ minWidth: '1000px' }}
       />
