@@ -152,17 +152,7 @@ const ItemCard: React.FC<IItemCard> = (props) => {
   };
   const renderBottom: () => Array<React.ReactNode> = () => {
     if (!role) {
-      return [
-        <Tooltip key={'Xem'} title="Xem chi tiết">
-          <EyeOutlined disabled={isLoading} onClick={bookRoom} />
-        </Tooltip>,
-        <Tooltip key={'Dat'} title="Đặt lịch xem phòng">
-          <PlusOutlined
-            disabled={isLoading}
-            onClick={() => setOpenBook(true)}
-          />
-        </Tooltip>,
-      ];
+      return [];
     }
     let base = [
       <Tooltip key={'Sua'} title="Sửa">
@@ -223,7 +213,7 @@ const ItemCard: React.FC<IItemCard> = (props) => {
             ...base,
           ];
         }
-        if (item?.holderId !== id) {
+        if (item?.holderId) {
           base = [
             <Tooltip key={'Giu'} title="Bỏ giữ phòng">
               <LockOutlined
@@ -249,7 +239,7 @@ const ItemCard: React.FC<IItemCard> = (props) => {
   return (
     <Card
       hoverable
-      loading={isLoading}
+      className=" shadow-xl hover:shadow-2xl"
       cover={
         <div className=" relative rounded-t-[8px]">
           <Image
@@ -287,11 +277,22 @@ const ItemCard: React.FC<IItemCard> = (props) => {
           }
         />
         <Descriptions className=" mt-[15px]" items={items} column={2} />
-        <div className=" font-[600] text-colorError text-[20px]">
+        <div className=" font-[600] text-colorError text-[20px] my-[8px]">
           {`${item?.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / tháng
         </div>
       </div>
-      {open && <EditPage id={item?.id} open onClose={onClose} />}
+      <Button
+        type="primary"
+        className="hover:bg-colorSelect mt-[8px] w-[100%]"
+        disabled={isLoading}
+        onClick={() => setOpenBook(true)}
+        size="large"
+      >
+        Đặt lịch xem phòng
+      </Button>
+      {open && (
+        <EditPage id={item?.id} open onClose={onClose} fetchData={fetchData} />
+      )}
       {openBook && (
         <CreateBook
           title={item?.title}

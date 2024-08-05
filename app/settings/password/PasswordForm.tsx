@@ -116,7 +116,11 @@ const PasswordForm: React.FC = () => {
       </Form.Item>
 
       <Form.Item className=" flex justify-center">
-        <Button className="hover:bg-colorSelect" htmlType="submit">
+        <Button
+          type="primary"
+          className="hover:bg-colorSelect"
+          htmlType="submit"
+        >
           Cập nhật
         </Button>
       </Form.Item>

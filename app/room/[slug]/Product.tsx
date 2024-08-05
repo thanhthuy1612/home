@@ -209,7 +209,7 @@ const Product: React.FC<IProduct> = ({ item }) => {
                           ? `${(300 - 20) / 3}px`
                           : `${(500 - 20) / 3}px`,
                     }}
-                    className=" bg-borderHeader flex justify-center items-center"
+                    className=" bg-borderHeader cursor-pointer flex justify-center items-center"
                   >
                     Xem thêm
                   </div>
@@ -221,6 +221,7 @@ const Product: React.FC<IProduct> = ({ item }) => {
                     setIsModalOpen(false);
                   }}
                   footer={null}
+                  width={width < 1600 ? 300 : 800}
                 >
                   <Flex wrap gap={10}>
                     {[img, ...imgList].map((imgItem, index) => (
@@ -276,11 +277,13 @@ const Product: React.FC<IProduct> = ({ item }) => {
       <div className=" w-[100%]">
         {role === Role.Admin && (
           <>
-            <Info
-              className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]"
-              item={item?.holder}
-              title="THÔNG TIN NGƯỜI GIỮ BÀI"
-            />
+            {item?.holder && (
+              <Info
+                className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]"
+                item={item?.holder}
+                title="THÔNG TIN NGƯỜI GIỮ BÀI"
+              />
+            )}
             <Info
               className=" mt-[16px] border-[1px] rounded-[15px] p-[16px]"
               item={item?.ownerInformation}

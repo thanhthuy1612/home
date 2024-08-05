@@ -96,14 +96,14 @@ const Booking: React.FC = () => {
       ),
     },
     {
-      title: 'Link zalo',
+      title: 'Zalo',
       dataIndex: 'zalo',
       key: 'zalo',
       render: (data) => (
         <div
           className="ml-10px  cursor-pointer hover:text-colorSelect"
-          onClick={() => {
-            window.location.href = data;
+          onClick={async () => {
+            await navigator.clipboard.writeText(data);
           }}
         >
           {data}

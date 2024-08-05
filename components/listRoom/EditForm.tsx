@@ -37,12 +37,16 @@ export interface IEditForm {
   initData: any;
   initListImg: UploadFile[];
   initImg: UploadFile[];
+  fetchData: (isFirst?: boolean) => Promise<void>;
+  onClose: () => void;
 }
 const EditForm: React.FC<IEditForm> = ({
   id,
   initData,
   initListImg,
   initImg,
+  onClose,
+  fetchData,
 }) => {
   const [isDisable, setIsDisable] = React.useState<boolean>(false);
   const [fileList, setFileList] = React.useState<UploadFile[]>(initImg);
@@ -51,9 +55,9 @@ const EditForm: React.FC<IEditForm> = ({
   const [previewOpen, setPreviewOpen] = React.useState(false);
   const [listQuan, setListQuan] = React.useState<ISelected[]>([]);
   const [city, setCity] = React.useState(undefined);
+  const [submit, setSubmit] = React.useState(false);
 
   const [form] = Form.useForm();
-  const router = useRouter();
   const { setNotification } = useNotification();
 
   React.useEffect(() => {
@@ -72,7 +76,7 @@ const EditForm: React.FC<IEditForm> = ({
   }, [city]);
 
   const onFinish: FormProps['onFinish'] = async (values) => {
-    if (fileList.length > 0 && fileImg.length > 0) {
+    if (fileList.length > 0 && fileImg.length > 0 && submit) {
       setIsDisable(true);
       const formData = new FormData();
       const service = {
@@ -94,33 +98,16 @@ const EditForm: React.FC<IEditForm> = ({
       };
 
       const address = `${values.address}, ${values.quan}, ${values.city}`;
-      const base64Files = [];
-
-      for (const file of fileImg) {
-        if (file.originFileObj) {
-          const base64String = await file2Base64(file);
-
-          base64Files.push({
-            ...file,
-            base64String,
-          });
-        } else {
-          base64Files.push(file);
-        }
-      }
-
-      const fileListImg = fileImg.reduce((res: File[], item) => {
-        const file = (item as UploadFile).originFileObj as File;
-        res.push(file);
-        return res;
-      }, []);
 
       formData.append('Title', values.name);
       formData.append('Description', values.description);
-      formData.append(
-        'PreviewPicture',
-        (fileList[0] as UploadFile).originFileObj as File,
-      );
+      if (fileList[0].name !== initImg[0].name) {
+        formData.append(
+          'PreviewPicture',
+          (fileList[0] as UploadFile).originFileObj as File,
+        );
+        formData.append('RemovedPictures', initImg[0].name);
+      }
       formData.append('Address', address);
       formData.append('MaxPeople', values.people);
       formData.append('Price', values.price);
@@ -128,13 +115,27 @@ const EditForm: React.FC<IEditForm> = ({
       formData.append('RoomStatus', values.roomStatus);
       formData.append('ServiceTags', JSON.stringify(service));
       formData.append('PriceTags', JSON.stringify(price));
-      for (const image of fileListImg) {
-        formData.append('Pictures', image);
+      formData.delete('Pictures');
+      for (const image of fileImg) {
+        const filter = initListImg.filter((item) => item.name === image.name);
+        if (filter.length === 0) {
+          const file = (image as UploadFile).originFileObj as File;
+          formData.append('Pictures', file);
+        }
+      }
+
+      for (const image of initListImg) {
+        const filter = fileImg.filter((item) => item.name === image.name);
+        if (filter.length === 0) {
+          formData.append('RemovedPictures', image.name);
+        }
       }
 
       const res = await handlePosts.updatePost(id, formData);
       const onSuccess = () => {
-        router.push('/');
+        onClose();
+        fetchData(true);
+        setSubmit(false);
       };
       setNotification(res, 'Thêm thành công', onSuccess);
       setIsDisable(false);
@@ -617,7 +618,11 @@ const EditForm: React.FC<IEditForm> = ({
         </Checkbox.Group>
       </Form.Item>
       <Form.Item className=" flex justify-center">
-        <Button className="hover:bg-colorSelect" htmlType="submit">
+        <Button
+          className="hover:bg-colorSelect"
+          htmlType="submit"
+          onClick={() => setSubmit(true)}
+        >
           Lưu thông tin
         </Button>
       </Form.Item>

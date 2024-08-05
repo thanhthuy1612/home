@@ -69,7 +69,7 @@ const Item: React.FC<IItem> = (props) => {
       {
         key: '7',
         label: 'Vai trò',
-        children: item?.role === Role.Admin ? 'Admin' : 'Saler',
+        children: item?.role === Role.Admin ? 'Admin' : 'Cộng tác viên',
       },
     ];
     setItems(initState);

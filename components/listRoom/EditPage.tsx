@@ -14,8 +14,9 @@ export interface IEditPage {
   id: string;
   onClose: () => void;
   open: boolean;
+  fetchData: (isFirst?: boolean) => Promise<void>;
 }
-const EditPage: React.FC<IEditPage> = ({ id, open, onClose }) => {
+const EditPage: React.FC<IEditPage> = ({ id, open, onClose, fetchData }) => {
   const [initData, setInitData] = React.useState<any>();
   const [initImg, setInitImg] = React.useState<UploadFile[]>([]);
   const [initListImg, setInitListImg] = React.useState<UploadFile[]>([]);
@@ -29,14 +30,18 @@ const EditPage: React.FC<IEditPage> = ({ id, open, onClose }) => {
       let list = [];
 
       for (var i of item?.pictures ?? []) {
-        const res = await handlePosts.getImg(item?.id ?? '', i ?? '');
+        const { url, file } = await handlePosts.getImgEdit(
+          item?.id ?? '',
+          i ?? '',
+        );
         list.push({
           uid: i,
           name: i,
           status: 'done',
-          url: res,
+          url: url,
           type:
             i?.toString().split('.')[1] === 'jpg' ? 'image/jpeg' : 'image/png',
+          originFileObj: file,
         } as UploadFile);
       }
       return list;
@@ -48,7 +53,7 @@ const EditPage: React.FC<IEditPage> = ({ id, open, onClose }) => {
           ? await handleAdmin.getPostAdmin(id)
           : await handlePosts.getPost(id);
       if (res?.status === IStatusCode.SUCCESS && res?.data?.id) {
-        const image = await handlePosts.getImg(
+        const { url, file } = await handlePosts.getImgEdit(
           id ?? '',
           res?.data?.previewPicture ?? '',
         );
@@ -58,11 +63,12 @@ const EditPage: React.FC<IEditPage> = ({ id, open, onClose }) => {
             uid: res?.data?.previewPicture,
             name: res?.data?.previewPicture,
             status: 'done',
-            url: image,
+            url: url,
             type:
               res?.data?.previewPicture?.toString().split('.')[1] === 'jpg'
                 ? 'image/jpeg'
                 : 'image/png',
+            originFileObj: file,
           } as UploadFile,
         ];
         setInitImg(img);
@@ -130,6 +136,8 @@ const EditPage: React.FC<IEditPage> = ({ id, open, onClose }) => {
             initData={initData}
             initImg={initImg}
             initListImg={initListImg}
+            fetchData={fetchData}
+            onClose={onClose}
           />
         )}
       </Drawer>

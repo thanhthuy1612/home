@@ -36,6 +36,17 @@ class HandlePost {
     });
     return URL?.createObjectURL(response?.data);
   };
+  getImgEdit = async (id: string, file: string) => {
+    const response = await axiosClient.get(`${path}/${id}/${file}`, {
+      responseType: 'blob',
+    });
+    return {
+      url: URL?.createObjectURL(response?.data),
+      file: new File([response?.data], file, {
+        type: response?.data.type,
+      }),
+    };
+  };
   getPost = async (id: string) => {
     return await axiosClient.get(`${path}/${id}`);
   };

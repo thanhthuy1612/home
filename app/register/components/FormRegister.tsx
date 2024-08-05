@@ -125,14 +125,14 @@ const FormRegister: React.FC = () => {
 
       <Form.Item<UserFieldType>
         name="zalo"
-        label="Link zalo"
+        label="Zalo"
         tooltip="Yêu cầu nhập ký tự ít hơn 64"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { max: 64, message: 'Vui lòng nhập ít hơn 64 ký tự' },
         ]}
       >
-        <Input disabled={isDisable} placeholder="Link zalo" size="large" />
+        <Input disabled={isDisable} placeholder="Zalo" size="large" />
       </Form.Item>
 
       <Form.Item<UserFieldType>

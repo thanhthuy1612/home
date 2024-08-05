@@ -99,13 +99,13 @@ const FormBook: React.FC<IFormBookProps> = ({ id, onDismiss }) => {
       <Form.Item
         tooltip="Yêu cầu nhập ký tự ít hơn 64"
         name="zalo"
-        label="Link zalo"
+        label="Zalo"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { max: 64, message: 'Vui lòng nhập ít hơn 64 ký tự' },
         ]}
       >
-        <Input disabled={isDisable} placeholder="Link zalo" size="large" />
+        <Input disabled={isDisable} placeholder="Zalo" size="large" />
       </Form.Item>
       <Form.Item
         name="bookingDate"
@@ -127,11 +127,6 @@ const FormBook: React.FC<IFormBookProps> = ({ id, onDismiss }) => {
           type="primary"
           className="hover:!bg-colorSelect"
           size="large"
-          style={{
-            borderRadius: '50px',
-            paddingLeft: '50px',
-            paddingRight: '50px',
-          }}
           htmlType="submit"
         >
           Đặt lịch xem phòng

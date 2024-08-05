@@ -116,13 +116,13 @@ const ProfileForm: React.FC = () => {
       <Form.Item<UserFieldType>
         tooltip="Yêu cầu nhập ký tự ít hơn 64"
         name="zalo"
-        label="Link zalo"
+        label="Zalo"
         rules={[
           { required: true, message: 'Vui lòng nhập thông tin!' },
           { max: 64, message: 'Vui lòng nhập ít hơn 64 ký tự' },
         ]}
       >
-        <Input disabled={isDisable} placeholder="Link zalo" size="large" />
+        <Input disabled={isDisable} placeholder="Zalo" size="large" />
       </Form.Item>
 
       <Form.Item className=" flex justify-center">
