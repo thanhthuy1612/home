@@ -54,6 +54,11 @@ const FooterLayout: React.FC = () => {
             await navigator.clipboard.writeText(res?.data?.zalo);
           },
         },
+        {
+          title: 'Địa chỉ',
+          Icon: HomeOutlined,
+          content: res?.data?.address,
+        },
       ];
       dispatch(updateContact(initData));
     };
