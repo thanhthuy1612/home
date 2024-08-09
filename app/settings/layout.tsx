@@ -68,7 +68,7 @@ const SettingLayout: React.FC<ISettingLayout> = ({ children }) => {
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
           }}
-          className=" shadow-2xl"
+          className=" shadow-2xl border-[1px]"
         >
           {children}
         </div>

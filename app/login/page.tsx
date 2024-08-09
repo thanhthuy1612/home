@@ -52,7 +52,7 @@ const LoginPage: React.FC = () => {
         borderRadius: borderRadiusLG,
         width: width < 1600 ? '100%' : '800px',
       }}
-      className=" shadow-2xl"
+      className=" shadow-2xl border-[1px]"
     >
       <Tabs
         size="large"

@@ -239,7 +239,7 @@ const ItemCard: React.FC<IItemCard> = (props) => {
   return (
     <Card
       hoverable
-      className=" shadow-xl hover:shadow-2xl"
+      className=" shadow-xl hover:shadow-2xl border-[1px]"
       cover={
         <div className=" relative rounded-t-[8px]">
           <Image
