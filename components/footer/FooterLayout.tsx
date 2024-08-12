@@ -29,7 +29,7 @@ const FooterLayout: React.FC = () => {
           },
         },
         {
-          title: 'Số diện thoại - zalo',
+          title: 'Số diện thoại / Zalo',
           Icon: PhoneOutlined,
           content: res?.data?.phone,
           onClick: async () => {
@@ -46,14 +46,6 @@ const FooterLayout: React.FC = () => {
             }
           },
         },
-        // {
-        //   title: 'Zalo',
-        //   Icon: LinkOutlined,
-        //   content: res?.data?.zalo,
-        //   onClick: async () => {
-        //     await navigator.clipboard.writeText(res?.data?.zalo);
-        //   },
-        // },
         {
           title: 'Địa chỉ',
           Icon: HomeOutlined,
