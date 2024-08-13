@@ -49,7 +49,7 @@ export const tienIchPhong = [
   'Cửa sổ giếng trời',
   'WC riêng',
   'Wifi',
-  'Ban côn',
+  'Ban công',
 ];
 
 export const tienNghiPhong = [
