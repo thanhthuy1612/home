@@ -49,7 +49,6 @@ export const hcm: ISelected[] = [
   'Củ Chi',
   'Nhà bè',
   'Quận 1',
-  'Quận 2',
   'Quận 3',
   'Quận 4',
   'Quận 5',
@@ -59,12 +58,13 @@ export const hcm: ISelected[] = [
   'Quận 10',
   'Quận 11',
   'Quận 12',
-  'Quận Tân Bình',
-  'Quận Bình Tân',
-  'Quận Bình Thạnh',
-  'Quận Tân Phú',
-  'Quận Gò Vấp',
-  'Quận Phú Nhuận',
+  'Tân Bình',
+  'Bình Tân',
+  'Bình Thạnh',
+  'Tân Phú',
+  'Gò Vấp',
+  'Phú Nhuận',
+  'Thủ Đức',
 ]
   .toSorted((a, b) => {
     return a.localeCompare(b);
