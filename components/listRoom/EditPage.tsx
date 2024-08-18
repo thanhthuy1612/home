@@ -92,6 +92,7 @@ const EditPage: React.FC<IEditPage> = ({ id, open, onClose, fetchData }) => {
           quan,
           people: res?.data?.maxPeople,
           price: res?.data?.price,
+          roomSrc: res?.data?.roomSrc,
           roomType: res?.data?.roomType.toString(),
           roomStatus: res?.data?.roomStatus.toString(),
           electric: res?.data?.priceTags?.Dien,

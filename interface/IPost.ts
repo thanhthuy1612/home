@@ -17,4 +17,5 @@ export interface IPost {
   postsStatus: number;
   ownerInformation?: IListUser;
   holder?: IListUser;
+  roomSrc?: string;
 }

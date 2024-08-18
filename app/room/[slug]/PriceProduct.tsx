@@ -16,48 +16,79 @@ const PriceProduct: React.FC<IPriceProduct> = (props) => {
   const { priceTag, price, className, item } = props;
   const { role } = useAppSelector((state) => state.user);
 
-  const items: DescriptionsProps['items'] = [
+  const initValue = [
     {
       key: '1',
       label: 'Giá điện',
-      children: `${priceTag['Dien'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / kW`,
+      value: priceTag['Dien'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+      unit: 'VNĐ / kW',
     },
     {
       key: '2',
       label: 'Giá nước',
-      children: `${priceTag['Nuoc'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ/ khối`,
+      value: priceTag['Nuoc'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+      unit: 'VNĐ/ khối',
     },
     {
       key: '3',
       label: 'Dịch vụ vệ sinh',
-      children: `${priceTag['DichVuVeSinh'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / phòng`,
+      value: priceTag['DichVuVeSinh']
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+      unit: 'VNĐ / phòng',
     },
     {
       key: '4',
       label: 'Gửi xe máy',
-      children: `${priceTag['GiuXeMay'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / xe`,
+      value: priceTag['GiuXeMay']
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+      unit: 'VNĐ / xe',
     },
     {
       key: '5',
       label: 'Gửi ô tô',
-      children: `${priceTag['GiuOto'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / xe`,
+      value: priceTag['GiuOto']
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+      unit: 'VNĐ / xe',
     },
     {
       key: '6',
       label: 'Máy giặt',
-      children: `${priceTag['MayGiat'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / người`,
+      value: priceTag['MayGiat']
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+      unit: 'VNĐ / người',
     },
     {
       key: '7',
       label: 'Rác thải',
-      children: `${priceTag['RacThai'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / người`,
+      value: priceTag['RacThai']
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+      unit: 'VNĐ / người',
     },
     {
       key: '8',
       label: 'Wifi',
-      children: `${priceTag['Wifi'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / người`,
+      value: priceTag['Wifi'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+      unit: 'VNĐ / người',
     },
   ];
+  const items: DescriptionsProps['items'] = initValue.reduce(
+    (result: DescriptionsProps['items'], item) => {
+      if (item.value !== '0') {
+        result?.push({
+          key: item.key,
+          label: item.label,
+          children: `${item.value} ${item.unit}`,
+        });
+      }
+      return result;
+    },
+    [],
+  );
   return (
     <div className={className}>
       <div className=" font-[600] mb-[8px] border-b-[1px] w-fit border-colorSelect">

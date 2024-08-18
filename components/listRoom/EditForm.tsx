@@ -113,6 +113,7 @@ const EditForm: React.FC<IEditForm> = ({
       formData.append('Price', values.price);
       formData.append('RoomType', values.roomType);
       formData.append('RoomStatus', values.roomStatus);
+      formData.append('RoomSrc', values.roomSrc);
       formData.append('ServiceTags', JSON.stringify(service));
       formData.append('PriceTags', JSON.stringify(price));
       formData.delete('Pictures');
@@ -307,6 +308,18 @@ const EditForm: React.FC<IEditForm> = ({
           disabled={isDisable}
           placeholder="Trạng thái"
           options={listRoomStatus}
+        />
+      </Form.Item>
+      <Form.Item
+        name="roomSrc"
+        label="Nguồn phòng"
+        rules={[{ required: true, message: 'Vui lòng nhập thông tin!' }]}
+      >
+        <Input
+          className=" w-[100%]"
+          disabled={isDisable}
+          placeholder="Nguồn phòng"
+          size="large"
         />
       </Form.Item>
       <Form.Item

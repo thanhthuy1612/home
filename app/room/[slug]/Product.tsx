@@ -99,6 +99,11 @@ const Product: React.FC<IProduct> = ({ item }) => {
           (e) => Number(e.value) === item?.postsStatus,
         )?.label,
       },
+      {
+        key: '12',
+        label: 'Nguồn phòng',
+        children: item?.roomSrc,
+      },
     ];
     const init: List[] = [
       {
@@ -119,23 +124,31 @@ const Product: React.FC<IProduct> = ({ item }) => {
       },
     ];
 
-    const items: DescriptionsProps['items'] = init.map((item) => {
-      return {
-        key: item.title,
-        label: item.title,
-        children: (
-          <Flex wrap gap={8}>
-            {item.contents.map((content) => (
-              <div key={content}>{content},</div>
-            ))}
-          </Flex>
-        ),
-      };
-    });
+    const items: DescriptionsProps['items'] =
+      init.reduce((result: DescriptionsProps['items'], item) => {
+        if (item?.contents.length) {
+          (result ?? []).push({
+            key: item.title,
+            label: item.title,
+            children: (
+              <Flex wrap gap={8}>
+                {item.contents.map((content, index) => (
+                  <div key={content}>
+                    {content}
+                    {index !== item.contents.length - 1 && ','}
+                  </div>
+                ))}
+              </Flex>
+            ),
+          });
+        }
+        return result;
+      }, []) ?? [];
+
     setItems(
       role !== Role.Admin
         ? [...initState, ...items]
-        : [...initState, ...adminList],
+        : [...initState, ...items, ...adminList],
     );
   }, [item, role]);
 

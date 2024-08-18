@@ -281,15 +281,17 @@ const ItemCard: React.FC<IItemCard> = (props) => {
           {`${item?.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VNĐ / tháng
         </div>
       </div>
-      <Button
-        type="primary"
-        className="hover:bg-colorSelect mt-[8px] w-[100%]"
-        disabled={isLoading}
-        onClick={() => setOpenBook(true)}
-        size="large"
-      >
-        Đặt lịch xem phòng
-      </Button>
+      {!role && (
+        <Button
+          type="primary"
+          className="hover:bg-colorSelect mt-[8px] w-[100%]"
+          disabled={isLoading}
+          onClick={() => setOpenBook(true)}
+          size="large"
+        >
+          Đặt lịch xem phòng
+        </Button>
+      )}
       {open && (
         <EditPage id={item?.id} open onClose={onClose} fetchData={fetchData} />
       )}
