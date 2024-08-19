@@ -96,7 +96,7 @@ const ItemCard: React.FC<IItemCard> = (props) => {
   }, [item]);
 
   const bookRoom = () => {
-    router.push(`/room/${item?.title.replace(' ', '_')}/${item?.id}`);
+    router.push(`/room/${item?.title.replace(/ /g, '_')}/${item?.id}`);
   };
 
   const activatePost = async () => {

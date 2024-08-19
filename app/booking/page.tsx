@@ -130,7 +130,7 @@ const Booking: React.FC = () => {
           <div
             onClick={() =>
               router.push(
-                `/room/${posts?.title.replace(' ', '_')}/${posts?.id}`,
+                `/room/${posts?.title.replace(/ /g, '_')}/${posts?.id}`,
               )
             }
             className=" cursor-pointer"
