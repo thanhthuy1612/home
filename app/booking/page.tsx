@@ -128,7 +128,11 @@ const Booking: React.FC = () => {
           overlayInnerStyle={{ width: '300px' }}
         >
           <div
-            onClick={() => router.push(`/room/${posts?.id}`)}
+            onClick={() =>
+              router.push(
+                `/room/${posts?.title.replace(' ', '_')}/${posts?.id}`,
+              )
+            }
             className=" cursor-pointer"
           >
             {posts?.title}

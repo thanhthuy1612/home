@@ -17,6 +17,7 @@ const CarouselHome: React.FC = () => {
             alignItems: 'center',
             justifyContent: 'center',
           }}
+          className=" relative"
         >
           <Image
             height={width / 4}
@@ -27,6 +28,17 @@ const CarouselHome: React.FC = () => {
               height: `${width / 4}px`,
             }}
           />
+          <div
+            style={{ height: `${width / 4}px`, width: '100%' }}
+            className=" absolute top-0 flex flex-col items-center justify-center bg-[rgba(0,0,0,0.5)]"
+          >
+            <div className="text-justify text-bgColor text-[30px] font-[600]">
+              TROSINHVIEN.VN
+            </div>
+            <div className="text-justify text-bgColor text-[20px]">
+              Chuyên kênh thông tin phòng trọ cho thuê.
+            </div>
+          </div>
         </div>
       ))}
     </Carousel>

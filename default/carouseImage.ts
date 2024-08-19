@@ -1,6 +1,6 @@
-import images1 from '@/assets/images1.png';
-import images2 from '@/assets/home2.png';
-import images3 from '@/assets/home3.png';
+import images1 from '@/public/images1.jpg';
+import images2 from '@/public/images2.jpg';
+import images3 from '@/public/images3.jpg';
 
 export const carouseImage = [
   { id: 1, src: images1 },
